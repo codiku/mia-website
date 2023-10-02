@@ -2,11 +2,11 @@ import { db } from "@/app/utils/db";
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import { User } from "@prisma/client";
-import { ZodEmailPassword } from "@/app/utils/validators";
+import { zodEmailPassword } from "@/app/utils/validators";
 
 export async function POST(req: Request) {
   try {
-    const body = ZodEmailPassword.parse(await req.json());
+    const body = zodEmailPassword.parse(await req.json());
     const { email, password } = body;
     const existingUser = await db.user.findUnique({ where: { email: email } });
     if (existingUser) {

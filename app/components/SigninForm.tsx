@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ZodEmailPassword } from "../utils/validators";
+import { zodEmailPassword } from "../utils/validators";
 
 export const SigninForm = () => {
   const [email, setEmail] = useState("");
@@ -7,7 +7,7 @@ export const SigninForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const body = ZodEmailPassword.parse({ email, password });
+    const body = zodEmailPassword.parse({ email, password });
     const response = await fetch("/api/user", {
       method: "POST",
       headers: {
