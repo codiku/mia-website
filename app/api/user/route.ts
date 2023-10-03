@@ -1,9 +1,8 @@
-import { db } from "@/app/utils/db";
-import { NextResponse } from "next/server";
-import { hash } from "bcrypt";
+import { db } from "@/lib/db";
+import { zodEmailPassword } from "@/lib/validators";
 import { User } from "@prisma/client";
-import { zodEmailPassword } from "@/app/utils/validators";
-
+import { hash } from "bcrypt";
+import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const body = zodEmailPassword.parse(await req.json());
