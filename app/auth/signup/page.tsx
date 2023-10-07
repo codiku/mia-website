@@ -12,27 +12,29 @@ import { Input } from "@/components/ui/input";
 import { zodEmailPassword } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 type Form = z.infer<typeof zodEmailPassword>;
 
 export default function Signup() {
+  const router = useRouter();
   const form = useForm<Form>({
     resolver: zodResolver(zodEmailPassword),
   });
 
   async function onSubmit(values: Form) {
-    // const response = await fetch("/api/user", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(values),
-    // });
-    // const data = await response.json();
-    // console.log(data);
-    alert("sub");
+    const response = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    const data = await response.json();
+    alert("sub" + JSON.stringify(data));
+    router.push("/auth/signin");
   }
 
   return (

@@ -1,8 +1,9 @@
 import { db } from "@/lib/db";
 import { zodEmailPassword } from "@/lib/validators";
-import { User } from "@prisma/client";
 import { hash } from "bcrypt";
 import { NextResponse } from "next/server";
+import { unsensitiveUser } from "./utils";
+
 export async function POST(req: Request) {
   try {
     const body = zodEmailPassword.parse(await req.json());
@@ -14,7 +15,7 @@ export async function POST(req: Request) {
         { status: 409 }
       );
     } else {
-      const hashedPassword = await hash(password, 10);
+      const hashedPassword = await hash(password, 12);
       const newUser = await db.user.create({
         data: {
           email,
@@ -22,12 +23,9 @@ export async function POST(req: Request) {
         },
       });
 
-      delete (newUser as Omit<User, "password"> & { password?: string })
-        .password;
-
       return NextResponse.json(
         {
-          user: newUser,
+          user: unsensitiveUser(newUser),
           message: "User created successfully",
         },
         { status: 201 }
