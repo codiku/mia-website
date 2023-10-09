@@ -1,13 +1,16 @@
 import { db } from "@/lib/db";
 import { decodeJwtToken } from "@/lib/jwt";
 import { getParam } from "@/lib/request";
+import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const token = getParam("token", req);
-  const email = decodeJwtToken(token as string);
-  if (email) {
-    const existingUser = await db.user.findUnique({ where: { email: email } });
+  const user = decodeJwtToken(token as string) as User;
+  if (user.id) {
+    const existingUser = await db.user.findUnique({
+      where: { email: user.email },
+    });
     if (existingUser) {
       if (!existingUser.isVerified) {
         await db.user.update({

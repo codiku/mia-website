@@ -9,24 +9,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { SIGNIN_SCHEMA } from "@/lib/vaidators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
-const FORM_SCHEMA = z.object({
-  email: z.string().email("Invalid email").min(1, "Email is required"),
-  password: z.string().min(8, "The password must be at least 8 characters"),
-});
-
-type Form = z.infer<typeof FORM_SCHEMA>;
+type Form = z.infer<typeof SIGNIN_SCHEMA>;
 
 export default function Signin() {
   const router = useRouter();
   const form = useForm<Form>({
-    resolver: zodResolver(FORM_SCHEMA),
+    resolver: zodResolver(SIGNIN_SCHEMA),
     defaultValues: {
       email: "",
       password: "",
@@ -34,18 +31,17 @@ export default function Signin() {
   });
 
   async function onSubmit({ email, password }: Form) {
-    console.log("*** send ", email, password);
     const signinResp = await signIn("credentials", {
       email: email,
       password: password,
       redirect: false,
     });
-    console.log("*** siggnin resp", signinResp);
     if (signinResp?.error) {
-      alert("Signin failed : " + signinResp?.error);
+      toast.error("Signin failed");
     } else {
       router.refresh();
       router.push("/");
+      toast.success("You are know signed in");
     }
   }
 

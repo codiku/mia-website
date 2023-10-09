@@ -1,5 +1,6 @@
 "use client";
 import { UnsensitiveUser } from "@/app/api/auth/utils";
+import { api } from "@/app/configs/axios-config";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,14 +12,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-
-const FORM_SCHEMA = z
+import { Resp } from "@/types/api-type";
+const SIGNUP_SCHEMA = z
   .object({
     email: z.string().email("Invalid email").min(1, "Email is required"),
     password: z.string().min(8, "The password must be at least 8 characters"),
@@ -31,11 +30,11 @@ const FORM_SCHEMA = z
     path: ["passwordConfirm"],
   });
 
-type Form = z.infer<typeof FORM_SCHEMA>;
+type Form = z.infer<typeof SIGNUP_SCHEMA>;
 
 export default function Signup() {
   const form = useForm<Form>({
-    resolver: zodResolver(FORM_SCHEMA),
+    resolver: zodResolver(SIGNUP_SCHEMA),
     defaultValues: {
       email: "",
       password: "",
@@ -44,8 +43,7 @@ export default function Signup() {
   });
 
   async function onSubmit(values: Form) {
-    await axios.post<UnsensitiveUser>("/api/auth/register/", values);
-    toast("An email has been sent to activate your account");
+    api.post<Resp<UnsensitiveUser>>("/api/auth/register/", values);
   }
 
   return (

@@ -1,3 +1,4 @@
+import "./configs/axios-config";
 import { SessionProvider } from "@/providers/SessionProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SessionProvider>
-        <Toaster richColors />
-        <body className={`${inter.className} p-16 h-screen`}>{children}</body>
+        <body className={`${inter.className} p-16 h-screen`}>
+          <Toaster richColors position="top-right" />
+          <>{children}</>
+        </body>
       </SessionProvider>
     </html>
   );
