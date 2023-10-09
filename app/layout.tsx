@@ -17,15 +17,15 @@ export const metadata: Metadata = {
 export default function RootLayout(p: { children: ReactNode }) {
   return (
     <html lang="en">
-      <SessionProvider>
+      <body className={`${inter.className} p-16 h-screen`}>
         <ReactQueryProvider>
-          <body className={`${inter.className} p-16 h-screen`}>
+          <SessionProvider>
             <Toaster richColors position="top-right" />
             {p.children}
-          </body>
-          <ReactQueryDevtools />
+            <ReactQueryDevtools />
+          </SessionProvider>
         </ReactQueryProvider>
-      </SessionProvider>
+      </body>
     </html>
   );
 }

@@ -18,10 +18,25 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+const SPECIAL_CHARACTERS = /[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/;
+
 const SIGNUP_SCHEMA = z
   .object({
     email: z.string().email("Invalid email").min(1, "Email is required"),
-    password: z.string().min(8, "The password must be at least 8 characters"),
+    password: z
+      .string()
+      .min(8, "The password must be at least 8 characters")
+      .regex(/[A-Z]+/, "Password must contain at least 1 uppercase letter")
+      .regex(/[a-z]+/, "Password must contain at least 1 lowercase letter")
+      .regex(/[0-9]+/, "Password must contain at least 1 number")
+      .regex(
+        SPECIAL_CHARACTERS,
+        "Password must contain at least 1 special character"
+      )
+      .refine((value) => !/(.)\1{2,}/.test(value), {
+        message:
+          "Password cannot have the same character repeated 3 times or more",
+      }),
     passwordConfirm: z
       .string()
       .min(8, "The password must be at least 8 characters"),
@@ -57,6 +72,7 @@ export default function Signup() {
     signup(values);
   }
 
+  console.log("***", form.formState.errors);
   return (
     <div className="flex-center mt-20">
       {isEmailSent ? (
