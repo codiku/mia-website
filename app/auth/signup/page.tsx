@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,21 +26,12 @@ const SIGNUP_SCHEMA = z
     email: z.string().email("Invalid email").min(1, "Email is required"),
     password: z
       .string()
-      .min(8, "The password must be at least 8 characters")
-      .regex(/[A-Z]+/, "Password must contain at least 1 uppercase letter")
-      .regex(/[a-z]+/, "Password must contain at least 1 lowercase letter")
-      .regex(/[0-9]+/, "Password must contain at least 1 number")
-      .regex(
-        SPECIAL_CHARACTERS,
-        "Password must contain at least 1 special character"
-      )
-      .refine((value) => !/(.)\1{2,}/.test(value), {
-        message:
-          "Password cannot have the same character repeated 3 times or more",
-      }),
-    passwordConfirm: z
-      .string()
-      .min(8, "The password must be at least 8 characters"),
+      .min(8, "Must be at least 8 characters")
+      .regex(/[A-Z]+/, "Must contain at least 1 uppercase letter")
+      .regex(/[a-z]+/, "Must contain at least 1 lowercase letter")
+      .regex(/[0-9]+/, "Must contain at least 1 number")
+      .regex(SPECIAL_CHARACTERS, "Must contain at least 1 special character"),
+    passwordConfirm: z.string().min(8, "Must be at least 8 characters"),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: "Passwords don't match",
@@ -66,13 +58,13 @@ export default function Signup() {
       password: "",
       passwordConfirm: "",
     },
+    mode: "onChange",
   });
 
   async function onSubmit(values: Form) {
     signup(values);
   }
 
-  console.log("***", form.formState.errors);
   return (
     <div className="flex-center mt-20">
       {isEmailSent ? (
@@ -122,6 +114,11 @@ export default function Signup() {
                           {...field}
                         />
                       </FormControl>
+                      <ul className="text-xs font-light">
+                        <li>At least 8 characters</li>
+                        <li>At least 1 lowercase, 1 uppercase,</li>
+                        <li>At least 1 number, 1 special character</li>
+                      </ul>
                       <FormMessage />
                     </FormItem>
                   )}
