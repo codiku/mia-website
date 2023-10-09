@@ -97,9 +97,12 @@ export default function Signin() {
           </Button>
           <div className="mt-4 text-sm">
             You already have an account, please{" "}
-            <Link href="/auth/signup" className="ml-1 underline font-semibold">
+            <Button
+              onClick={() => router.push("/auth/signup")}
+              variant={"link"}
+            >
               Sign up
-            </Link>
+            </Button>
           </div>
         </form>
       </Form>

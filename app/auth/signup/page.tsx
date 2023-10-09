@@ -11,12 +11,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Resp } from "@/types/api-type";
-import { useState } from "react";
 const SIGNUP_SCHEMA = z
   .object({
     email: z.string().email("Invalid email").min(1, "Email is required"),
@@ -34,6 +35,15 @@ type Form = z.infer<typeof SIGNUP_SCHEMA>;
 
 export default function Signup() {
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const { mutate: signup, isLoading } = useMutation(
+    async (formData: Form) =>
+      api.post<Resp<UnsensitiveUser>>("/api/auth/register/", formData),
+    {
+      onSuccess: () => {
+        setIsEmailSent(true);
+      },
+    }
+  );
   const form = useForm<Form>({
     resolver: zodResolver(SIGNUP_SCHEMA),
     defaultValues: {
@@ -44,8 +54,7 @@ export default function Signup() {
   });
 
   async function onSubmit(values: Form) {
-    await api.post<Resp<UnsensitiveUser>>("/api/auth/register/", values);
-    setIsEmailSent(true);
+    signup(values);
   }
 
   return (
@@ -125,7 +134,7 @@ export default function Signup() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full mt-10">
+            <Button disabled={isLoading} type="submit" className="w-full mt-10">
               Sign up
             </Button>
             <div className="mt-4 text-sm">

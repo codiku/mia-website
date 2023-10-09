@@ -1,7 +1,7 @@
 "use client";
 import { UserSession } from "@/components/UserSession/User";
 import { signIn, useSession } from "next-auth/react";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -11,7 +11,7 @@ export function SigninProvider(p: { children: ReactNode }) {
   const token = searchParams.get("token");
   const session = useSession();
   const router = useRouter();
-
+  const [isRedirectionDone, setIsRedirectionDone] = useState(false);
   useEffect(() => {
     if (token && session.status != "authenticated") {
       (async () => {
@@ -27,8 +27,11 @@ export function SigninProvider(p: { children: ReactNode }) {
           router.replace("/");
           toast.success("You are know signed in");
         }
+        setIsRedirectionDone(true);
       })();
+    } else {
+      setIsRedirectionDone(true);
     }
   }, [token]);
-  return <>{p.children}</>;
+  return <>{isRedirectionDone && p.children}</>;
 }

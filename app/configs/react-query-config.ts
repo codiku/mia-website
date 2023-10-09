@@ -1,4 +1,4 @@
-import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 
 // Defaut config for react-query
 // Added a display toast when an error is thrown be any query or mutation
