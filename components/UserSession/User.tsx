@@ -12,11 +12,13 @@ export function UserSession() {
       {session.status === "authenticated" ? (
         <>
           {JSON.stringify(session)}
-          {/* <ButtonSignout />*/}
+          <div>
+            <ButtonSignout />
+          </div>
         </>
       ) : (
         <span>
-          Not connected please{" "}
+          Not connected please
           <Link href="/auth/signin" className="underline">
             signin
           </Link>
