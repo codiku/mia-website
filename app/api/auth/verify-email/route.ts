@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const token = getParam("token", req);
+
   const user = decodeJwtToken(token as string) as User;
   if (user.id) {
     const existingUser = await db.user.findUnique({
@@ -19,8 +20,9 @@ export async function GET(req: Request) {
         });
       }
     }
+
     return NextResponse.redirect(
-      process.env.SMTP_VERIFY_EMAIL_REDIRECT_URL as string
+      (process.env.NEXTAUTH_URL as string) + "?token=" + token
     );
   } else {
     return NextResponse.json(

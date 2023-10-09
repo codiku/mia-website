@@ -1,14 +1,12 @@
 import { UserSession } from "@/components/UserSession/User";
-import { getServerSession } from "next-auth";
+import { SigninProvider } from "@/providers/SigninInProvider";
 
 export default async function Home() {
-  const d = await getServerSession();
   return (
-    <main className="">
-      <div>User server side : {JSON.stringify(d?.user)}</div>
-      <div>
-        User client side <UserSession />
-      </div>
-    </main>
+    <SigninProvider>
+      <main className="">
+        <UserSession />
+      </main>
+    </SigninProvider>
   );
 }

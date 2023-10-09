@@ -1,0 +1,34 @@
+"use client";
+import { UserSession } from "@/components/UserSession/User";
+import { signIn, useSession } from "next-auth/react";
+import { ReactNode, useEffect } from "react";
+import { toast } from "sonner";
+import { useRouter, useSearchParams } from "next/navigation";
+
+/* Only use to auto login after clicking on verification email in mail box */
+export function SigninProvider(p: { children: ReactNode }) {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+  const session = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (token && session.status != "authenticated") {
+      (async () => {
+        const signinResp = await signIn("credentials", {
+          email: null,
+          password: null,
+          token: token,
+          redirect: false,
+        });
+        if (signinResp?.error) {
+          toast.error("Signin failed");
+        } else {
+          router.replace("/");
+          toast.success("You are know signed in");
+        }
+      })();
+    }
+  }, [token]);
+  return <>{p.children}</>;
+}

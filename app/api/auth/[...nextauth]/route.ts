@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { decodeJwtToken } from "@/lib/jwt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { compare } from "bcrypt";
 import NextAuth, { AuthOptions } from "next-auth";
@@ -20,14 +21,38 @@ export const authOptions: AuthOptions = {
       credentials: {
         email: { label: "Email", type: "text", placeholder: "Type your email" },
         password: { label: "Password", type: "password" },
+        token: { label: "Token", type: "text" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
+        let email = credentials?.email;
+        let token = credentials?.token;
+        let password = credentials?.password;
+
+        // auto connexion after clicking on email
+        if (token) {
+          const decodedUser = decodeJwtToken(token);
+          if (decodedUser) {
+            const existingUser = await db.user.findUnique({
+              where: {
+                email: decodedUser?.email,
+                password: decodedUser?.password,
+              },
+            });
+            if (existingUser?.id) {
+              return {
+                id: existingUser.id.toString(),
+                email: existingUser.email,
+              };
+            }
+          }
+        }
+
+        if (!email || !password) {
           return null;
         }
 
         const existingUser = await db.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: email },
         });
 
         if (!existingUser) {
@@ -37,10 +62,7 @@ export const authOptions: AuthOptions = {
         if (!existingUser.isVerified) {
           return null;
         }
-        const passwordMatch = await compare(
-          credentials.password,
-          existingUser.password
-        );
+        const passwordMatch = await compare(password, existingUser.password);
 
         if (!passwordMatch) {
           return null;
