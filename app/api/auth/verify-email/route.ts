@@ -21,7 +21,7 @@ export async function GET(req: Request) {
     );
   } else {
     return NextResponse.json(
-      { error: "Could not verify the user" },
+      { message: "Could not verify the user", error: true },
       { status: 401 }
     );
   }

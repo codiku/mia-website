@@ -13,17 +13,24 @@ export async function POST(req: Request) {
     const { email, password } = body;
     const existingUser = await db.user.findUnique({ where: { email: email } });
     if (existingUser) {
-      return NextResponse.json(
-        { user: null, message: "User already exist" },
-        { status: 409 }
-      );
+      if (existingUser.isVerified) {
+        return NextResponse.json(
+          { user: null, message: "User already exist" },
+          { status: 409 }
+        );
+      } else {
+        return NextResponse.json(
+          { user: null, message: "Please verify your account", error: true },
+          { status: 409 }
+        );
+      }
     } else {
       const token = generateJwtToken(email);
 
       const emailResponse = await sendVerificationEmail(email, token);
       if (emailResponse.rejected.length > 0) {
         return NextResponse.json(
-          { user: null, message: "Email has been rejected" },
+          { user: null, message: "Email has been rejected", error: true },
           { status: 500 }
         );
       }
@@ -45,7 +52,7 @@ export async function POST(req: Request) {
     }
   } catch (err) {
     return NextResponse.json(
-      { error: (err as Error).message },
+      { message: (err as Error).message, error: true },
       { status: 500 }
     );
   }

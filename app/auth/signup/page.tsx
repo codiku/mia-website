@@ -34,7 +34,6 @@ const FORM_SCHEMA = z
 type Form = z.infer<typeof FORM_SCHEMA>;
 
 export default function Signup() {
-  const router = useRouter();
   const form = useForm<Form>({
     resolver: zodResolver(FORM_SCHEMA),
     defaultValues: {
