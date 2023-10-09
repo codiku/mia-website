@@ -15,7 +15,12 @@ export function UserSession(p: {}) {
           <ButtonSignout />
         </>
       ) : (
-        <Link href="/auth/signin">Not connected please signin</Link>
+        <span>
+          Not connected please{" "}
+          <Link href="/auth/signin" className="underline">
+            signin
+          </Link>
+        </span>
       )}
     </>
   );

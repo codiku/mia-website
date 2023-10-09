@@ -1,4 +1,5 @@
 "use client";
+import { UnsensitiveUser } from "@/app/api/auth/utils";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -9,26 +10,43 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodEmailPassword } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
-type Form = z.infer<typeof zodEmailPassword>;
+const FORM_SCHEMA = z
+  .object({
+    email: z.string().email("Invalid email").min(1, "Email is required"),
+    password: z.string().min(8, "The password must be at least 8 characters"),
+    passwordConfirm: z
+      .string()
+      .min(8, "The password must be at least 8 characters"),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: "Passwords don't match",
+    path: ["passwordConfirm"],
+  });
+
+type Form = z.infer<typeof FORM_SCHEMA>;
 
 export default function Signup() {
   const router = useRouter();
   const form = useForm<Form>({
-    resolver: zodResolver(zodEmailPassword),
+    resolver: zodResolver(FORM_SCHEMA),
+    defaultValues: {
+      email: "",
+      password: "",
+      passwordConfirm: "",
+    },
   });
 
   async function onSubmit(values: Form) {
-    const data = await axios.post("/api/auth/email-verification", values);
-    alert(JSON.stringify(data));
-    // router.push("/auth/signin");
+    await axios.post<UnsensitiveUser>("/api/auth/register/", values);
+    toast("An email has been sent to activate your account");
   }
 
   return (
@@ -39,6 +57,7 @@ export default function Signup() {
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <div className="space-y-4">
+            <h2 className="font-bold text-xl">Register</h2>
             <div>
               <FormField
                 control={form.control}
@@ -63,7 +82,31 @@ export default function Signup() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your password" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Enter your password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormMessage />
+            </div>
+            <div>
+              <FormField
+                control={form.control}
+                name="passwordConfirm"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Type your password again"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

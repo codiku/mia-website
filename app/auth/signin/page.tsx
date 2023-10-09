@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodEmailPassword } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -17,12 +16,17 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-type Form = z.infer<typeof zodEmailPassword>;
+const FORM_SCHEMA = z.object({
+  email: z.string().email("Invalid email").min(1, "Email is required"),
+  password: z.string().min(8, "The password must be at least 8 characters"),
+});
+
+type Form = z.infer<typeof FORM_SCHEMA>;
 
 export default function Signin() {
   const router = useRouter();
   const form = useForm<Form>({
-    resolver: zodResolver(zodEmailPassword),
+    resolver: zodResolver(FORM_SCHEMA),
     defaultValues: {
       email: "",
       password: "",
@@ -53,6 +57,7 @@ export default function Signin() {
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <div className="space-y-4">
+            <h2 className="font-bold text-xl">Signin</h2>
             <div>
               <FormField
                 control={form.control}

@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { User } from "@prisma/client";
 import { compare } from "bcrypt";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -54,14 +55,14 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ account, token, user }): Promise<any> {
+    async jwt({ account, token, user }): Promise<any | null> {
       if (user) {
         return {
           ...token,
           ...user,
         };
       }
-      return;
+      return null;
     },
     async session({ session, token }) {
       return {
