@@ -1,6 +1,5 @@
 import { db } from "@/lib/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { User } from "@prisma/client";
 import { compare } from "bcrypt";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -14,6 +13,7 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/auth/signin",
   },
+
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -22,7 +22,6 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("*** authorize", credentials);
         if (!credentials?.email || !credentials.password) {
           return null;
         }
@@ -55,23 +54,12 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ account, token, user }): Promise<any | null> {
-      if (user) {
-        return {
-          ...token,
-          ...user,
-        };
-      }
-      return null;
+    async jwt({ token, user }) {
+      return { ...token, ...user };
     },
-    async session({ session, token }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          ...token,
-        },
-      };
+    async session({ session, token, user }) {
+      session.user = token as any;
+      return session;
     },
   },
 };

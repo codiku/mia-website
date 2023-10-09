@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 const axiosDefaults = {};
 const api = axios.create(axiosDefaults);
+/*
 api.interceptors.response.use(
   (response) => {
     const data = response.data as Resp<unknown>;
@@ -19,4 +20,5 @@ api.interceptors.response.use(
     }
   }
 );
+*/
 export { api };

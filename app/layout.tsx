@@ -17,13 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <SessionProvider>
+    <SessionProvider>
+      <html lang="en">
         <body className={`${inter.className} p-16 h-screen`}>
           <Toaster richColors position="top-right" />
           <>{children}</>
         </body>
-      </SessionProvider>
-    </html>
+      </html>
+    </SessionProvider>
   );
 }

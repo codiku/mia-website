@@ -39,7 +39,7 @@ export default function Signin() {
     if (signinResp?.error) {
       toast.error("Signin failed");
     } else {
-      router.refresh();
+      // router.refresh();
       router.push("/");
       toast.success("You are know signed in");
     }

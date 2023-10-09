@@ -46,7 +46,6 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           user: unsensitiveUser(newUser),
-          message: "User created, verify email to activate account",
         },
         { status: 201 }
       );

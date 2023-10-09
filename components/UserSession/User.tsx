@@ -4,15 +4,15 @@ import { ButtonSignout } from "@/app/auth/signin/components/ButtonSignout";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-export function UserSession(p: {}) {
+export function UserSession() {
   const session = useSession();
+  console.log("***", session);
   return (
     <>
-      User :
       {session.status === "authenticated" ? (
         <>
           {JSON.stringify(session)}
-          <ButtonSignout />
+          {/* <ButtonSignout />*/}
         </>
       ) : (
         <span>
