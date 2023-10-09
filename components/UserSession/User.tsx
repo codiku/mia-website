@@ -6,7 +6,6 @@ import Link from "next/link";
 
 export function UserSession() {
   const session = useSession();
-  console.log("***", session);
   return (
     <>
       {session.status === "authenticated" ? (
@@ -18,7 +17,7 @@ export function UserSession() {
         </>
       ) : (
         <span>
-          Not connected please
+          Not connected please{" "}
           <Link href="/auth/signin" className="underline">
             signin
           </Link>
