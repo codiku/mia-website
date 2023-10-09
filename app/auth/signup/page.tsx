@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodEmailPassword } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -25,16 +26,9 @@ export default function Signup() {
   });
 
   async function onSubmit(values: Form) {
-    const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    const data = await response.json();
-    alert("sub" + JSON.stringify(data));
-    router.push("/auth/signin");
+    const data = await axios.post("/api/auth/email-verification", values);
+    alert(JSON.stringify(data));
+    // router.push("/auth/signin");
   }
 
   return (

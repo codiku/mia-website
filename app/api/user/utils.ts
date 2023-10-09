@@ -1,9 +1,9 @@
 import { User } from "@prisma/client";
 
-type SafeUser = Omit<User, "password" | " id"> & {
+export type UnsensitiveUser = Omit<User, "password" | " id"> & {
   password?: string;
 };
-export function unsensitiveUser(user: User): SafeUser {
-  delete (user as SafeUser).password;
+export function unsensitiveUser(user: User): UnsensitiveUser {
+  delete (user as UnsensitiveUser).password;
   return user;
 }

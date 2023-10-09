@@ -34,6 +34,9 @@ export const authOptions: AuthOptions = {
           return null;
         }
 
+        if (!existingUser.isVerified) {
+          return null;
+        }
         const passwordMatch = await compare(
           credentials.password,
           existingUser.password

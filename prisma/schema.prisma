@@ -14,4 +14,5 @@ model User {
   username    String   @default(uuid())
   createdAt   DateTime @default(now())
   updatedAnpt DateTime @updatedAt
+  isVerified  Boolean  @default(false)
 }
