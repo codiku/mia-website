@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { decodeJwtToken } from "@/lib/jwt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { User } from "@prisma/client";
 import { compare } from "bcrypt";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -30,7 +31,7 @@ export const authOptions: AuthOptions = {
 
         // auto connexion after clicking on email
         if (token) {
-          const decodedUser = decodeJwtToken(token);
+          const decodedUser = decodeJwtToken<User>(token);
           if (decodedUser) {
             const existingUser = await db.user.findUnique({
               where: {

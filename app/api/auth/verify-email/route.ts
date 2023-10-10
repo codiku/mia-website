@@ -7,8 +7,8 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   const token = getParam("token", req);
 
-  const user = decodeJwtToken(token as string) as User;
-  if (user.id) {
+  const user = decodeJwtToken<User>(token as string);
+  if (user?.id) {
     const existingUser = await db.user.findUnique({
       where: { email: user.email },
     });

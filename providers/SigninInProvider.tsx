@@ -1,5 +1,4 @@
 "use client";
-import { UserSession } from "@/components/UserSession/User";
 import { signIn, useSession } from "next-auth/react";
 import { ReactNode, useEffect, useState } from "react";
 import { toast } from "sonner";

@@ -2,14 +2,13 @@ import { Resp } from "@/types/api-type";
 import axios from "axios";
 import { toast } from "sonner";
 
-const axiosDefaults = {};
-const api = axios.create(axiosDefaults);
-/*
+const api = axios.create({});
+
 api.interceptors.response.use(
   (response) => {
-    const data = response.data as Resp<unknown>;
-    if (data.message && !data.error) {
-      toast.success(data.message);
+    const resp = response as Resp<unknown>;
+    if (resp?.data.message && !resp.data.error) {
+      toast.success(resp.data.message);
     }
     return response;
   },
@@ -20,5 +19,5 @@ api.interceptors.response.use(
     }
   }
 );
-*/
+
 export { api };

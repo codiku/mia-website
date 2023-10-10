@@ -1,19 +1,16 @@
-import { User } from "@prisma/client";
 import jwt from "jsonwebtoken";
 
 // Generate a JWT token with user information
-export function generateJwtToken(user: User) {
+export function generateJwtToken(data: string | object | Buffer) {
   // Create a token with user data and sign it with the secret key
-  const token = jwt.sign(user, process.env.NEXTAUTH_SECRET as string);
-
-  return token;
+  return jwt.sign(data, process.env.NEXTAUTH_SECRET as string);
 }
 
-export function decodeJwtToken(token: string) {
+export function decodeJwtToken<T>(token: string) {
   try {
     // Verify the token using the secret key
     const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET as string);
-    return decoded as User;
+    return decoded as T;
   } catch (error) {
     // Token verification failed
     return null;

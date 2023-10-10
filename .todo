@@ -1,3 +1,11 @@
 - smaller url email
 
-- verif password complexite
+- forgot password
+
+- zod les input api
+
+- match password utilisr watch quan on change d'input
+
+- clear session reset password
+
+- invalider les token

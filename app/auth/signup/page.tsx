@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { SPECIAL_CHARACTERS } from "@/lib/validators";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -19,7 +19,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-const SPECIAL_CHARACTERS = /[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/;
 
 const SIGNUP_SCHEMA = z
   .object({

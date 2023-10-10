@@ -1,12 +1,12 @@
 import { db } from "@/lib/db";
 import { hash } from "bcrypt";
 
+import { sendEmail } from "@/lib/email";
+import { generateJwtToken } from "@/lib/jwt";
+import { SIGNIN_SCHEMA } from "@/lib/validators";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { unsensitiveUser } from "../utils";
-import { sendVerificationEmail } from "@/lib/email";
-import { generateJwtToken } from "@/lib/jwt";
-import { SIGNIN_SCHEMA } from "@/lib/vaidators";
-
 export async function POST(req: Request) {
   try {
     const body = SIGNIN_SCHEMA.parse(await req.json());
@@ -35,10 +35,17 @@ export async function POST(req: Request) {
 
       const token = generateJwtToken(newUser);
 
-      const emailResponse = await sendVerificationEmail(email, token);
+      const emailResponse = await sendEmail(
+        email,
+        "Verify your email", // Email subject
+        `Click the following link to verify your email: http://${headers().get(
+          "host"
+        )}/api/auth/verify-email?token=${token}`
+      );
+
       if (emailResponse.rejected.length > 0) {
         return NextResponse.json(
-          { user: null, message: "Email has been rejected", error: true },
+          { message: "Email has been rejected", error: true },
           { status: 500 }
         );
       }

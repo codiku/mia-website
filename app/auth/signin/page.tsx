@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SIGNIN_SCHEMA } from "@/lib/vaidators";
+import { SIGNIN_SCHEMA } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -90,19 +90,25 @@ export default function Signin() {
               />
               <FormMessage />
             </div>
+            <Link
+              href={"/auth/forgot-password"}
+              className="underline text-sm inline-block pl-1"
+            >
+              Forgot password ?
+            </Link>
           </div>
 
           <Button type="submit" className="w-full mt-10">
             Sign in
           </Button>
           <div className="mt-4 text-sm">
-            You already have an account, please{" "}
-            <Button
-              onClick={() => router.push("/auth/signup")}
-              variant={"link"}
+            You already have an account, please
+            <Link
+              href={"/auth/signup"}
+              className="ml-1 underline font-semibold"
             >
               Sign up
-            </Button>
+            </Link>
           </div>
         </form>
       </Form>
