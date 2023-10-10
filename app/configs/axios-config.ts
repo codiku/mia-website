@@ -1,13 +1,17 @@
 import { Resp } from "@/types/api-type";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { toast } from "sonner";
 
 const api = axios.create({});
 
 api.interceptors.response.use(
   (response) => {
-    const resp = response as Resp<unknown>;
-    if (resp?.data.message && !resp.data.error) {
+    const resp = response as AxiosResponse<Resp<unknown>>;
+    if (
+      !response.headers.isToastDisabled &&
+      resp?.data.message &&
+      !resp.data.error
+    ) {
       toast.success(resp.data.message);
     }
     return response;

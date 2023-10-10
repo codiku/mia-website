@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { SPECIAL_CHARACTERS } from "@/lib/validators";
-import { Resp } from "@/types/api-type";
+import { ApiResponse, Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
@@ -43,17 +43,23 @@ export default function ResetPassword() {
   const router = useRouter();
   const { mutate: resetPassword, isLoading } = useMutation(
     async (data: { token: string; password: string }) =>
-      api.post<Resp<{}>>("/api/auth/reset-password", {
-        token: data.token,
-        password: data.password,
-      }),
+      api.post<Resp<{}>>(
+        "/api/auth/reset-password",
+        {
+          token: data.token,
+          password: data.password,
+        },
+        { headers: { isToastDisabled: true } }
+      ),
     {
-      onSuccess: async () => {
+      onSuccess: async ({ data }) => {
         await signOut({
           redirect: false,
         });
-        router.push("/auth/signin");
-        toast.success("Password has been updated");
+        if (!data.error) {
+          router.push("/auth/signin");
+          toast.success("Password has been updated");
+        }
       },
     }
   );

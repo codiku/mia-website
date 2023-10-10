@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 
-interface Response {
+export interface ApiResponse {
   message?: string;
   error?: boolean;
 }
-export type Resp<T> = AxiosResponse<Response & T>;
+export type Resp<T> = ApiResponse & T;

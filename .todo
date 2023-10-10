@@ -2,8 +2,4 @@
 
 - zod les input api
 
-- match password utilisr watch quan on change d'input
-
-- clear session reset password
-
-- prevent same password reset
+- match password utiliser watch quan on change d'input
