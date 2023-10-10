@@ -16,7 +16,7 @@ import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -59,10 +59,23 @@ export default function Signup() {
     },
     mode: "onChange",
   });
+  const password = form.watch("password");
 
   async function onSubmit(values: Form) {
     signup(values);
   }
+
+  // Revalidate confirm password when password changes
+  useEffect(() => {
+    if (password !== form.getValues().passwordConfirm) {
+      form.setError("passwordConfirm", {
+        type: "manual",
+        message: "Passwords don't match",
+      });
+    } else {
+      form.clearErrors("passwordConfirm");
+    }
+  }, [password]);
 
   return (
     <div className="flex-center mt-20">
