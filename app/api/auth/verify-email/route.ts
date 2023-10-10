@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { decodeJwtToken } from "@/lib/jwt";
-import { getParam, invalidInputResponse } from "@/lib/request";
+import { getParams, invalidInputResponse } from "@/lib/request";
 import { User } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -11,7 +11,7 @@ export const RESET_PASSWORD_SCHEMA = z.object({
 
 export async function GET(req: NextRequest) {
   try {
-    const { token } = RESET_PASSWORD_SCHEMA.parse(getParam("token", req));
+    const { token } = RESET_PASSWORD_SCHEMA.parse(getParams(req));
 
     const user = decodeJwtToken<User>(token as string);
     if (user?.id) {

@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const getParam = (key: string, req: NextRequest) => {
-  return new URL(req.url).searchParams.get(key);
-};
+interface QueryParams {
+  [key: string]: string;
+}
 
+export function getParams(req: NextRequest): QueryParams {
+  const queryParams = new URL(req.url).searchParams;
+  const queryParamsObject: QueryParams = {};
+  queryParams.forEach((value, key) => {
+    queryParamsObject[key] = value;
+  });
+
+  return queryParamsObject;
+}
 export const invalidInputResponse = () => {
   return NextResponse.json(
     { message: "Invalid parameters", error: true },
