@@ -7,6 +7,7 @@ import { SIGNIN_SCHEMA } from "@/lib/validators";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { unsensitiveUser } from "../utils";
+import { invalidInputResponse } from "@/lib/request";
 export async function POST(req: Request) {
   try {
     const body = SIGNIN_SCHEMA.parse(await req.json());
@@ -58,9 +59,6 @@ export async function POST(req: Request) {
       );
     }
   } catch (err) {
-    return NextResponse.json(
-      { message: (err as Error).message, error: true },
-      { status: 500 }
-    );
+    return invalidInputResponse();
   }
 }

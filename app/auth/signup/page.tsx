@@ -75,7 +75,7 @@ export default function Signup() {
     } else {
       form.clearErrors("passwordConfirm");
     }
-  }, [password]);
+  }, [form, password]);
 
   return (
     <div className="flex-center mt-20">
