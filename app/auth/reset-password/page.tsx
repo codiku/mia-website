@@ -14,6 +14,7 @@ import { SPECIAL_CHARACTERS } from "@/lib/validators";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { signOut } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -47,8 +48,12 @@ export default function ResetPassword() {
         password: data.password,
       }),
     {
-      onSuccess: () => {
+      onSuccess: async () => {
+        await signOut({
+          redirect: false,
+        });
         router.push("/auth/signin");
+        toast.success("Password has been updated");
       },
     }
   );

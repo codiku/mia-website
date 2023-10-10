@@ -1,29 +1,25 @@
 import { db } from "@/lib/db";
 import { decodeJwtToken } from "@/lib/jwt";
 import { hash } from "bcrypt";
-import { NextResponse } from "next/server";
-
-export async function POST(req: Request) {
+import { NextRequest, NextResponse } from "next/server";
+export async function POST(req: NextRequest, res: NextResponse) {
   const body = await req.json();
-  console.log("body", body);
 
   const { password, token } = body;
-  const email = decodeJwtToken<string>(token);
-  console.log("email", email);
+  const data = decodeJwtToken<{ email: string }>(token);
 
-  if (email) {
-    const user = await db.user.findUnique({ where: { email: email } });
+  if (data?.email) {
+    const user = await db.user.findUnique({ where: { email: data?.email } });
 
     if (user) {
       const hashedPassword = await hash(password, 12);
 
       const userUpdated = await db.user.update({
-        where: { email: email },
+        where: { email: data?.email },
         data: { password: hashedPassword },
       });
       if (userUpdated) {
         return NextResponse.json({
-          message: "Password successfully updated",
           error: false,
         });
       }

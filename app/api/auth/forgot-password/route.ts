@@ -6,9 +6,9 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const body = FORGOT_PASSWORD_SCHEMA.parse(await req.json());
   const { email } = body;
-  console.log("*** POST email", email);
+
   if (email) {
-    const token = generateJwtToken(email);
+    const token = generateJwtToken({ email });
     const emailResponse = await sendEmail(
       email,
       "Reset password", // Email subject

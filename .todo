@@ -1,11 +1,9 @@
 - smaller url email
 
-- forgot password
-
 - zod les input api
 
 - match password utilisr watch quan on change d'input
 
 - clear session reset password
 
-- invalider les token
+- prevent same password reset

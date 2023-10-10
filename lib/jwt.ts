@@ -1,9 +1,11 @@
-import jwt from "jsonwebtoken";
+import jwt, { Jwt } from "jsonwebtoken";
+import { JWTOptions } from "next-auth/jwt";
 
 // Generate a JWT token with user information
 export function generateJwtToken(data: string | object | Buffer) {
-  // Create a token with user data and sign it with the secret key
-  return jwt.sign(data, process.env.NEXTAUTH_SECRET as string);
+  return jwt.sign(data, process.env.NEXTAUTH_SECRET as string, {
+    expiresIn: "2 days",
+  });
 }
 
 export function decodeJwtToken<T>(token: string) {
