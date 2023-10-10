@@ -1,5 +1,3 @@
-import { AxiosResponse } from "axios";
-
 export interface ApiResponse {
   message?: string;
   error?: boolean;
