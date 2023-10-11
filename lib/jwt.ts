@@ -1,5 +1,4 @@
-import jwt, { Jwt } from "jsonwebtoken";
-import { JWTOptions } from "next-auth/jwt";
+import jwt from "jsonwebtoken";
 
 // Generate a JWT token with user information
 export function generateJwtToken(data: string | object | Buffer) {

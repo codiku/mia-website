@@ -1,25 +1,15 @@
 import { db } from "@/lib/db";
 import { decodeJwtToken } from "@/lib/jwt";
-import { invalidInputResponse } from "@/lib/request";
-import { SPECIAL_CHARACTERS } from "@/lib/validators";
+import { getBodyAsync, errorResponse } from "@/lib/request";
+import { RESET_PASSWORD_SCHEMA } from "@/lib/validators";
 import { compare, hash } from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-
-export const RESET_PASSWORD_SCHEMA = z.object({
-  password: z
-    .string()
-    .min(8, "Must be at least 8 characters")
-    .regex(/[A-Z]+/, "Must contain at least 1 uppercase letter")
-    .regex(/[a-z]+/, "Must contain at least 1 lowercase letter")
-    .regex(/[0-9]+/, "Must contain at least 1 number")
-    .regex(SPECIAL_CHARACTERS, "Must contain at least 1 special character"),
-  token: z.string().min(1),
-});
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const { password, token } = RESET_PASSWORD_SCHEMA.parse(await req.json());
+    const { password, token } = RESET_PASSWORD_SCHEMA.parse(
+      await getBodyAsync(req)
+    );
     const data = decodeJwtToken<{ email: string }>(token);
 
     if (data?.email) {
@@ -55,6 +45,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
       { status: 500 }
     );
   } catch (err) {
-    return invalidInputResponse();
+    return errorResponse(err as Error);
   }
 }

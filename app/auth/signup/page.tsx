@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SPECIAL_CHARACTERS } from "@/lib/validators";
+import { PASSWORD_SCHEMA } from "@/lib/validators";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -23,13 +23,7 @@ import { z } from "zod";
 const SIGNUP_SCHEMA = z
   .object({
     email: z.string().email("Invalid email").min(1, "Email is required"),
-    password: z
-      .string()
-      .min(8, "Must be at least 8 characters")
-      .regex(/[A-Z]+/, "Must contain at least 1 uppercase letter")
-      .regex(/[a-z]+/, "Must contain at least 1 lowercase letter")
-      .regex(/[0-9]+/, "Must contain at least 1 number")
-      .regex(SPECIAL_CHARACTERS, "Must contain at least 1 special character"),
+    password: PASSWORD_SCHEMA,
     passwordConfirm: z.string().min(8, "Must be at least 8 characters"),
   })
   .refine((data) => data.password === data.passwordConfirm, {

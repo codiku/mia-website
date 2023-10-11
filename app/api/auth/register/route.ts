@@ -5,13 +5,13 @@ import { sendEmail } from "@/lib/email";
 import { generateJwtToken } from "@/lib/jwt";
 import { SIGNIN_SCHEMA } from "@/lib/validators";
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { unsensitiveUser } from "../utils";
-import { invalidInputResponse } from "@/lib/request";
-export async function POST(req: Request) {
+import { getBodyAsync, errorResponse } from "@/lib/request";
+export async function POST(req: NextRequest) {
   try {
-    const body = SIGNIN_SCHEMA.parse(await req.json());
-    const { email, password } = body;
+    const { email, password } = SIGNIN_SCHEMA.parse(await getBodyAsync(req));
+
     const existingUser = await db.user.findUnique({ where: { email: email } });
     if (existingUser) {
       if (existingUser.isVerified) {
@@ -59,6 +59,6 @@ export async function POST(req: Request) {
       );
     }
   } catch (err) {
-    return invalidInputResponse();
+    return errorResponse(err as Error);
   }
 }

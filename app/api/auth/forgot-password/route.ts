@@ -1,14 +1,13 @@
 import { sendEmail } from "@/lib/email";
 import { generateJwtToken } from "@/lib/jwt";
-import { invalidInputResponse } from "@/lib/request";
+import { getBodyAsync, errorResponse } from "@/lib/request";
 import { FORGOT_PASSWORD_SCHEMA } from "@/lib/validators";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = FORGOT_PASSWORD_SCHEMA.parse(await req.json());
-    const { email } = body;
+    const { email } = FORGOT_PASSWORD_SCHEMA.parse(await getBodyAsync(req));
     console.log("*** RUN", email);
     const token = generateJwtToken({ email });
     const emailResponse = await sendEmail(
@@ -30,6 +29,6 @@ export async function POST(req: NextRequest) {
       });
     }
   } catch (err) {
-    return invalidInputResponse();
+    return errorResponse(err as Error);
   }
 }

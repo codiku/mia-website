@@ -1,0 +1,135 @@
+{
+    "POST": {
+        "prefix": "postendpoint",
+        "body": [
+            "import { errorResponse } from '@/lib/request';",
+            "import { NextRequest, NextResponse } from 'next/server';",
+            "",
+            "export async function POST(req: NextRequest) {",
+            "  try {",
+            "    const {} = $1.parse(await getBodyAsync());",
+            "       $3",
+            "    return NextResponse.json({",
+            "       error : false,",
+            "       message : \"$2\"""    });",
+            "  } catch (err) {",
+            "    return errorResponse();",
+            "  }",
+            "}"
+        ],
+        "description": "Returns an invalid input response."
+    },
+    "GET": {
+        "prefix": "getendpoint",
+        "body": [
+            "import { getParams, errorResponse } from \"@/lib/request\";""import { NextRequest, NextResponse } from 'next/server';",
+            "",
+            "export async function GET(req: NextRequest) {",
+            "  try {",
+            "   const { $2 } = $1.parse(getParams(req));",
+            "   $3",
+            "    return NextResponse.json({",
+            "       error : false,",
+            "       message : \"\"""    });",
+            "  } catch (err) {",
+            "    return errorResponse();",
+            "  }",
+            "}"
+        ],
+        "description": "Returns an invalid input response."
+    },
+    "resp": {
+        "prefix": "resp",
+        "body": [
+            "return NextResponse.json({",
+            "   error : false,",
+            "   message : \"$1\"",
+            "   $2",
+            "});",
+            "}"
+        ],
+        "description": "Returns an invalid input response."
+    },
+    "rrouter": {
+        "prefix": "rrouter",
+        "body": [
+            "const router = useRouter()"
+        ]
+    },
+    "reactConst": {
+        "prefix": "rconst",
+        "body": [
+            "const $1 = () => {",
+            "return $2",
+            "}"
+        ]
+    },
+    "reactFun": {
+        "prefix": "rfun",
+        "body": [
+            "function $1() {",
+            "return $2",
+            "}"
+        ]
+    },
+    "React UseMutation": {
+        "prefix": "rmutation",
+        "body": [
+            "const { mutate: $1, isLoading } = useMutation(async () =>",
+            "  api.post<Resp<$2>>(\"/api/$3\")",
+            ");"
+        ],
+        "description": "React UseMutation snippet"
+    },
+    "React Query - useQuery Hook": {
+        "prefix": "rquery",
+        "body": [
+            "const { data, isLoading, isError, error } = useQuery(['$1'], async () => $2 ",
+            "});"
+        ],
+        "description": "React Query - useQuery Hook snippet"
+    },
+    "React useEffect Hook": {
+        "prefix": "ruseffect",
+        "body": [
+            "useEffect(function $1() {",
+            "$2",
+            "}, []);"
+        ],
+        "description": "React useEffect Hook"
+    },
+    "log": {
+        "prefix": "ll",
+        "body": [
+            "console.log('***',$1)"
+        ]
+    },
+    "React State with useState": {
+        "prefix": "rstate",
+        "body": [
+            "import { useState } from 'react'",
+            "const [${1:stateName}, ${1/(.)(.*)/${1:/downcase}${2:/capitalize}/}] = useState(${2:initialValue});"
+        ],
+        "description": "Create a React state using the useState hook."
+    },
+    "React Componcnt with Typescript Props Interface": {
+        "prefix": "rComp",
+        "body": [
+            "export function $1 (p: { $2 }) {",
+            "  return (",
+            "    <>",
+            "    </>",
+            "  );",
+            "}"
+        ],
+        "description": "Create a React component with Typescript props interface."
+    },
+    "Next Page with Typescript Props Interface": {
+        "prefix": "rpage",
+        "body": [
+            "export default function $1(p: {}) {",
+            "  return <></>;",
+            "}"
+        ]
+    }
+}

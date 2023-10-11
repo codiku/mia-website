@@ -1,17 +1,14 @@
 import { db } from "@/lib/db";
 import { decodeJwtToken } from "@/lib/jwt";
-import { getParams, invalidInputResponse } from "@/lib/request";
+import { getParams, errorResponse } from "@/lib/request";
+import { RESET_PASSWORD_SCHEMA, VERIFY_EMAIL_SCHEMA } from "@/lib/validators";
 import { User } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-
-export const RESET_PASSWORD_SCHEMA = z.object({
-  token: z.string().min(1),
-});
+import { ZodError } from "zod";
 
 export async function GET(req: NextRequest) {
   try {
-    const { token } = RESET_PASSWORD_SCHEMA.parse(getParams(req));
+    const { token } = VERIFY_EMAIL_SCHEMA.parse(getParams(req).token + "a");
 
     const user = decodeJwtToken<User>(token as string);
     if (user?.id) {
@@ -26,7 +23,6 @@ export async function GET(req: NextRequest) {
           });
         }
       }
-
       return NextResponse.redirect(
         (process.env.NEXTAUTH_URL as string) + "?token=" + token
       );
@@ -36,7 +32,7 @@ export async function GET(req: NextRequest) {
         { status: 401 }
       );
     }
-  } catch (error) {
-    return invalidInputResponse();
+  } catch (err) {
+    return errorResponse(err);
   }
 }
