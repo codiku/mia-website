@@ -8,6 +8,7 @@ api.interceptors.response.use(
   (response) => {
     const resp = response as AxiosResponse<Resp<unknown>>;
     if (
+      !response.config.headers.isToastDisabled &&
       !response.headers.isToastDisabled &&
       resp?.data.message &&
       !resp.data.error

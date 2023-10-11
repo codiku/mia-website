@@ -28,7 +28,6 @@ export const authOptions: AuthOptions = {
         let email = credentials?.email;
         let token = credentials?.token;
         let password = credentials?.password;
-
         // auto connexion after clicking on email
         if (token) {
           const decodedUser = decodeJwtToken<User>(token);
@@ -63,6 +62,7 @@ export const authOptions: AuthOptions = {
         if (!existingUser.isVerified) {
           return null;
         }
+
         const passwordMatch = await compare(password, existingUser.password);
 
         if (!passwordMatch) {

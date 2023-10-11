@@ -6,22 +6,25 @@ import { StatusCodes } from "http-status-codes";
 
 export async function DELETE(req: NextRequest) {
   try {
-    const token = await getToken({ req });
-    if (token?.email) {
-      db.user.delete({ where: { email: token.email } });
-      return NextResponse.json({
-        error: false,
-        message: "Account deleted successfully",
+    const jwtToken = await getToken({ req });
+    if (jwtToken?.email) {
+      const userDeleted = await db.user.delete({
+        where: { email: jwtToken.email },
       });
-    } else {
-      return NextResponse.json(
-        {
-          error: true,
-          message: "Invalid token",
-        },
-        { errorResponse StatusCodes.BAD_REQUEST }
-      );
+      if (userDeleted) {
+        return NextResponse.json({
+          error: false,
+          message: "Account deleted successfully",
+        });
+      }
     }
+    return NextResponse.json(
+      {
+        error: true,
+        message: "Couldn't delete the user",
+      },
+      { status: StatusCodes.BAD_REQUEST }
+    );
   } catch (err) {
     return errorResponse(err as Error);
   }

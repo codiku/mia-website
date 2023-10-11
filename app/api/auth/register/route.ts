@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
         data: {
           email,
           password: hashedPassword,
+          isVerified: process.env.NODE_ENV == "development",
         },
       });
 

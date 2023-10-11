@@ -9,7 +9,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const { email } = FORGOT_PASSWORD_SCHEMA.parse(await getBodyAsync(req));
-    console.log("*** RUN", email);
     const token = generateJwtToken({ email });
     const emailResponse = await sendEmail(
       email,

@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { SIGNIN_SCHEMA } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -21,6 +22,25 @@ import { z } from "zod";
 type Form = z.infer<typeof SIGNIN_SCHEMA>;
 
 export default function Signin() {
+  const { mutate: signinMut, isLoading } = useMutation(
+    async (form: Form) =>
+      signIn("credentials", {
+        email: form.email,
+        password: form.password,
+        redirect: false,
+      }),
+    {
+      onSuccess: (signinResp) => {
+        if (signinResp?.error) {
+          toast.error("Signin failed");
+        } else {
+          router.refresh();
+          router.push("/");
+          toast.success("You are know signed in");
+        }
+      },
+    }
+  );
   const router = useRouter();
   const form = useForm<Form>({
     resolver: zodResolver(SIGNIN_SCHEMA),
@@ -30,19 +50,8 @@ export default function Signin() {
     },
   });
 
-  async function onSubmit({ email, password }: Form) {
-    const signinResp = await signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: false,
-    });
-    if (signinResp?.error) {
-      toast.error("Signin failed");
-    } else {
-      // router.refresh();
-      router.push("/");
-      toast.success("You are know signed in");
-    }
+  async function onSubmit(formData: Form) {
+    signinMut(formData);
   }
 
   return (
@@ -98,7 +107,7 @@ export default function Signin() {
             </Link>
           </div>
 
-          <Button type="submit" className="w-full mt-10">
+          <Button disabled={isLoading} type="submit" className="w-full mt-10">
             Sign in
           </Button>
           <div className="mt-4 text-sm">
