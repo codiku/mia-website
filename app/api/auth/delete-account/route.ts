@@ -1,16 +1,27 @@
-import { getParams, errorResponse } from "@/lib/request";
-import { DELETE_ACCOUNT_SCHEMA } from "@/lib/validators";
+import { errorResponse } from "@/lib/request";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { getToken } from "next-auth/jwt";
+import { db } from "@/lib/db";
+import { StatusCodes } from "http-status-codes";
 
-export async function POST(req: NextRequest) {
+export async function DELETE(req: NextRequest) {
   try {
-    const { token } = DELETE_ACCOUNT_SCHEMA.parse(getParams(req));
-
-    return NextResponse.json({
-      error: false,
-      message: "Account deleted successfully",
-    });
+    const token = await getToken({ req });
+    if (token?.email) {
+      db.user.delete({ where: { email: token.email } });
+      return NextResponse.json({
+        error: false,
+        message: "Account deleted successfully",
+      });
+    } else {
+      return NextResponse.json(
+        {
+          error: true,
+          message: "Invalid token",
+        },
+        { errorResponse StatusCodes.BAD_REQUEST }
+      );
+    }
   } catch (err) {
     return errorResponse(err as Error);
   }

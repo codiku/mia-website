@@ -8,6 +8,7 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { unsensitiveUser } from "../utils";
 import { getBodyAsync, errorResponse } from "@/lib/request";
+import { StatusCodes } from "http-status-codes";
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = SIGNIN_SCHEMA.parse(await getBodyAsync(req));
@@ -16,13 +17,13 @@ export async function POST(req: NextRequest) {
     if (existingUser) {
       if (existingUser.isVerified) {
         return NextResponse.json(
-          { user: null, message: "User already exist" },
-          { status: 409 }
+          { message: "User already exist", error: true },
+          { status: StatusCodes.CONFLICT }
         );
       } else {
         return NextResponse.json(
-          { user: null, message: "Please verify your account", error: true },
-          { status: 409 }
+          { message: "Please verify your account", error: true },
+          { status: StatusCodes.CONFLICT }
         );
       }
     } else {
@@ -47,16 +48,13 @@ export async function POST(req: NextRequest) {
       if (emailResponse.rejected.length > 0) {
         return NextResponse.json(
           { message: "Email has been rejected", error: true },
-          { status: 500 }
+          { status: StatusCodes.INTERNAL_SERVER_ERROR }
         );
       }
 
-      return NextResponse.json(
-        {
-          user: unsensitiveUser(newUser),
-        },
-        { status: 201 }
-      );
+      return NextResponse.json({
+        user: unsensitiveUser(newUser),
+      });
     }
   } catch (err) {
     return errorResponse(err as Error);

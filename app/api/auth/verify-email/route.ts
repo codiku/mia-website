@@ -3,6 +3,7 @@ import { decodeJwtToken } from "@/lib/jwt";
 import { getParams, errorResponse } from "@/lib/request";
 import { RESET_PASSWORD_SCHEMA, VERIFY_EMAIL_SCHEMA } from "@/lib/validators";
 import { User } from "@prisma/client";
+import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 
@@ -10,6 +11,7 @@ export async function GET(req: NextRequest) {
   try {
     const { token } = VERIFY_EMAIL_SCHEMA.parse(getParams(req));
     const user = decodeJwtToken<User>(token as string);
+
     if (user?.id) {
       const existingUser = await db.user.findUnique({
         where: { email: user.email },
@@ -27,8 +29,8 @@ export async function GET(req: NextRequest) {
       );
     } else {
       return NextResponse.json(
-        { message: "Could not verify the user", error: true },
-        { status: 401 }
+        { message: "User not found from token", error: true },
+        { status: StatusCodes.FORBIDDEN }
       );
     }
   } catch (err) {

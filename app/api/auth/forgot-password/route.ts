@@ -2,6 +2,7 @@ import { sendEmail } from "@/lib/email";
 import { generateJwtToken } from "@/lib/jwt";
 import { getBodyAsync, errorResponse } from "@/lib/request";
 import { FORGOT_PASSWORD_SCHEMA } from "@/lib/validators";
+import { StatusCodes } from "http-status-codes";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest) {
     if (emailResponse.rejected.length > 0) {
       return NextResponse.json(
         { message: "Email has been rejected", error: true },
-        { status: 500 }
+        { status: StatusCodes.INTERNAL_SERVER_ERROR }
       );
     } else {
       return NextResponse.json({
