@@ -31,7 +31,9 @@ export const errorResponse = (error: unknown) => {
     errorMessage = "";
     error.issues.forEach((issue) => {
       const field = issue.path.join(".");
-      errorMessage += `Validation error on field ${field} - ${issue.message}`;
+      errorMessage += `Validation error ${field ? "on field" : ""} - ${
+        issue.message
+      }`;
     });
     statusCode = 400; // You may want to use a different status code for client errors
   } else {

@@ -8,8 +8,7 @@ import { ZodError } from "zod";
 
 export async function GET(req: NextRequest) {
   try {
-    const { token } = VERIFY_EMAIL_SCHEMA.parse(getParams(req).token + "a");
-
+    const { token } = VERIFY_EMAIL_SCHEMA.parse(getParams(req));
     const user = decodeJwtToken<User>(token as string);
     if (user?.id) {
       const existingUser = await db.user.findUnique({

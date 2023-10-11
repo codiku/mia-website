@@ -11,9 +11,10 @@
             "       $3",
             "    return NextResponse.json({",
             "       error : false,",
-            "       message : \"$2\"""    });",
+            "       message : \"$2\"",
+            "    });",
             "  } catch (err) {",
-            "    return errorResponse();",
+            "    return errorResponse(err);",
             "  }",
             "}"
         ],
@@ -22,7 +23,8 @@
     "GET": {
         "prefix": "getendpoint",
         "body": [
-            "import { getParams, errorResponse } from \"@/lib/request\";""import { NextRequest, NextResponse } from 'next/server';",
+            "import { getParams, errorResponse } from \"@/lib/request\";",
+            "import { NextRequest, NextResponse } from 'next/server';",
             "",
             "export async function GET(req: NextRequest) {",
             "  try {",
@@ -30,9 +32,10 @@
             "   $3",
             "    return NextResponse.json({",
             "       error : false,",
-            "       message : \"\"""    });",
+            "       message : \"\"",
+            "    });",
             "  } catch (err) {",
-            "    return errorResponse();",
+            "    return errorResponse(error);",
             "  }",
             "}"
         ],
