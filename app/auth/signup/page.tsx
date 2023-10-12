@@ -49,6 +49,7 @@ export default function Signup() {
       },
     }
   );
+
   const form = useForm<Form>({
     resolver: zodResolver(SIGNUP_SCHEMA),
     defaultValues: {
@@ -98,6 +99,7 @@ export default function Signup() {
 
         <h2 className="mt-20">{"Didn't receive the email ?"}</h2>
         <Button
+          type="submit"
           variant={"outline"}
           disabled={isLoading || disabledEmailButton}
           className="w-full mt-10"
@@ -105,7 +107,7 @@ export default function Signup() {
           {isLoading
             ? "Loading..."
             : disabledEmailButton
-            ? "Wait 30 secondes before sending again"
+            ? "Wait 15 secondes before sending again"
             : "Send email again"}
         </Button>
       </div>

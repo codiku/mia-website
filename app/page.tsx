@@ -11,7 +11,7 @@ export default async function Home() {
         {serverSession?.user?.email ? (
           <>
             <div>Hello {serverSession.user.email}</div>
-            <Link href="/auth/profil">Profil</Link>
+            <Link href="/auth/account">Account</Link>
           </>
         ) : (
           <div>

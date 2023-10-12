@@ -22,6 +22,7 @@ api.interceptors.response.use(
     if (msg) {
       toast.error(msg);
     }
+    return Promise.reject(error);
   }
 );
 

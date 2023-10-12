@@ -28,12 +28,10 @@ export default function Account() {
       }),
     {
       onSuccess: async ({ data }) => {
-        if (!data.error) {
-          await signOut({ redirect: false });
-          router.refresh();
-          router.push("/");
-          toast.success(data.message);
-        }
+        await signOut({ redirect: false });
+        router.refresh();
+        router.push("/");
+        toast.success(data.message);
       },
     }
   );
@@ -69,7 +67,7 @@ export default function Account() {
     session?.data && (
       <div className="flex-center">
         <div className="space-y-4  mt-20 bg-slate-100 p-6 rounded-sm">
-          <h2 className="font-bold text-2xl">Profil</h2>
+          <h2 className="font-bold text-2xl">Account</h2>
           {session.status === "authenticated" && (
             <>
               <div>{JSON.stringify(session.data)}</div>
