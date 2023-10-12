@@ -2,8 +2,6 @@
 
 - Update password
 
-- delete account
-
 - refresh token
 
 - protect routes
@@ -11,3 +9,9 @@
 - i18n
 
 - resend link for signup or verify
+
+- remember me
+
+- page account intstead of profil
+
+- Display profile
