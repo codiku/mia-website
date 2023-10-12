@@ -28,6 +28,12 @@ export const SIGNIN_SCHEMA = z.object({
   password: PASSWORD_SCHEMA,
 });
 
+export const REGISTER_SCHEMA = z.object({
+  email: z.string().email("Invalid email").min(1, "Email is required"),
+  password: PASSWORD_SCHEMA,
+  resendEmail: z.boolean().optional(),
+});
+
 export const RESET_PASSWORD_SCHEMA = z.object({
   password: PASSWORD_SCHEMA,
   token: JWT_TOKEN_SCHEMA,
