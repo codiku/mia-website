@@ -19,25 +19,20 @@ export async function POST(req: NextRequest) {
     const existingUser = await db.user.findUnique({ where: { email: email } });
 
     if (existingUser) {
-      if (existingUser.isVerified) {
+      if (resendEmail) {
+        // If the user exist and just want another email
+        sendVerificationEmail(existingUser);
+        //RETURN RESPONSE
+        return NextResponse.json({
+          message: "Email has been sent",
+          error: false,
+        });
+      } else {
+        // Just trying to create the same account twice
         return NextResponse.json(
           { message: "User already exist", error: true },
           { status: StatusCodes.CONFLICT }
         );
-      } else {
-        if (resendEmail) {
-          sendVerificationEmail(existingUser);
-          //RETURN RESPONSE
-          return NextResponse.json({
-            message: "Email has been sent",
-            error: false,
-          });
-        } else {
-          return NextResponse.json(
-            { message: "Please verify your account", error: true },
-            { status: StatusCodes.CONFLICT }
-          );
-        }
       }
     } else {
       const hashedPassword = await hash(password, 12);
