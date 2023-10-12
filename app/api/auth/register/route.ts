@@ -10,6 +10,8 @@ import { getBodyAsync, errorResponse } from "@/lib/request";
 import { StatusCodes } from "http-status-codes";
 import { User } from "@prisma/client";
 
+// Register can be call, with a resendEmail params , that will just resend an email link
+// to redirect the user to get verified
 export async function POST(req: NextRequest) {
   try {
     const { email, password, resendEmail } = REGISTER_SCHEMA.parse(

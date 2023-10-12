@@ -1,11 +1,10 @@
 import { db } from "@/lib/db";
 import { decodeJwtToken } from "@/lib/jwt";
 import { getParams, errorResponse } from "@/lib/request";
-import { RESET_PASSWORD_SCHEMA, VERIFY_EMAIL_SCHEMA } from "@/lib/validators";
+import { VERIFY_EMAIL_SCHEMA } from "@/lib/validators";
 import { User } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
-import { ZodError } from "zod";
 
 export async function GET(req: NextRequest) {
   try {

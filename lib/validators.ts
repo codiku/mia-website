@@ -21,7 +21,6 @@ export const PASSWORD_SCHEMA = z
 
 export const FORGOT_PASSWORD_SCHEMA = z.object({
   email: z.string().email("Invalid email").min(1, "Email is required"),
-  resendEmail: z.boolean().optional(),
 });
 
 export const SIGNIN_SCHEMA = z.object({

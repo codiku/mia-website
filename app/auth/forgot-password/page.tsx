@@ -21,7 +21,7 @@ import { z } from "zod";
 type Form = z.infer<typeof FORGOT_PASSWORD_SCHEMA>;
 
 export default function ForgotPassword() {
-  const [isEmailSent, setISEmailSent] = useState(false);
+  const [isEmailSent, setIsEmailSent] = useState(false);
   const [disabledEmailButton, setDisabledEmailButton] = useState(false);
 
   const formDataRef = useRef<Form>();
@@ -31,7 +31,7 @@ export default function ForgotPassword() {
     },
     {
       onSuccess: () => {
-        setISEmailSent(true);
+        setIsEmailSent(true);
       },
     }
   );
@@ -43,11 +43,8 @@ export default function ForgotPassword() {
     },
   });
   async function onSubmit(values: Form) {
-    if (!formDataRef.current) {
-      formDataRef.current = values;
-      forgotPassword({ ...values });
-    } else {
-      forgotPassword({ ...values, resendEmail: true });
+    forgotPassword({ ...values });
+    if (isEmailSent) {
       setDisabledEmailButton(true);
       setTimeout(() => {
         setDisabledEmailButton(false);

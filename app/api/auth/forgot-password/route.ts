@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
     const { email } = FORGOT_PASSWORD_SCHEMA.parse(await getBodyAsync(req));
     const token = generateJwtToken({ email });
     const existingUser = await db.user.findUnique({ where: { email: email } });
+
     if (existingUser) {
       const emailResponse = await sendEmail(
         email,
