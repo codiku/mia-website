@@ -13,7 +13,6 @@ export async function POST(req: NextRequest) {
     const token = generateJwtToken({ email });
     const existingUser = await db.user.findUnique({ where: { email: email } });
     if (existingUser) {
-      console.log("*** MAIL FOR EXISTING USER");
       const emailResponse = await sendEmail(
         email,
         "Reset password", // Email subject

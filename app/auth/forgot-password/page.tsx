@@ -27,7 +27,6 @@ export default function ForgotPassword() {
   const formDataRef = useRef<Form>();
   const { mutate: forgotPassword, isLoading } = useMutation(
     async (formData: Form) => {
-      console.log("CALLING API from front");
       return api.post<Resp<{}>>("/api/auth/forgot-password", formData);
     },
     {
