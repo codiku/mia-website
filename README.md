@@ -21,3 +21,11 @@ FORGOT_PASSWORD_CALLBACK_URL=http://localhost:3000/auth/reset-password
 ## Toast and response
 
 By default axios-config display alerts. Unless you send isToastDisabled:false in header
+
+## Route Protection
+
+See middleware.ts
+
+## Session
+
+To make sure you have access to the session, use withSession
