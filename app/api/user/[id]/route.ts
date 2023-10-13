@@ -32,14 +32,14 @@ export async function PATCH(
   route: { params: { id: string } }
 ) {
   try {
-    // if (await getToken({ req })) {
-    const id: number = Number(route.params.id);
-    const body = await getBodyAsync(req);
+    if (await getToken({ req })) {
+      const id: number = Number(route.params.id);
+      const body = await getBodyAsync(req);
 
-    return NextResponse.json({});
-    //}else {
-    //   return requireAuth(req);
-    // }
+      return NextResponse.json({});
+    } else {
+      return requireAuth(req);
+    }
   } catch (err) {
     return errorResponse(err as Error);
   }
