@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 export async function sendEmail(
   toEmail: string,
   subject: string,
-  text: string
+  html: string
 ) {
   try {
     // Create a transporter for sending email
@@ -21,7 +21,7 @@ export async function sendEmail(
       from: process.env.SMTP_FROM, // Replace with your email address
       to: toEmail, // Recipient's email address
       subject,
-      text,
+      html,
     });
 
     return info;

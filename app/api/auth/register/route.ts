@@ -62,11 +62,17 @@ async function sendVerificationEmail(user: User) {
   const emailResponse = await sendEmail(
     user.email,
     "Verify your email", // Email subject
-    `Click the following link to verify your email: http://${headers().get(
-      "host"
-    )}/api/auth/verify-email?token=${token}`
+    `<html>
+      <body>
+        <p>Click the following link to verify your account:</p>
+        <a href="http://${headers().get(
+          "host"
+        )}/api/auth/verify-email?token=${token}">
+          Verify account
+        </a>
+      </body>
+    </html>`
   );
-
   if (emailResponse.rejected.length > 0) {
     return NextResponse.json(
       { message: "Email has been rejected", error: true },

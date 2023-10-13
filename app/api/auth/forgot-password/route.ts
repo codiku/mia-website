@@ -17,9 +17,16 @@ export async function POST(req: NextRequest) {
       const emailResponse = await sendEmail(
         email,
         "Reset password", // Email subject
-        `Click the following link to reset your password: http://${headers().get(
+        `<html>
+      <body>
+        <p>Click the following link to reset your password:</p>
+        <a href="http://${headers().get(
           "host"
-        )}/auth/reset-password?token=${token}`
+        )}/auth/reset-password?token=${token}">
+          Reset Password
+        </a>
+      </body>
+    </html>`
       );
 
       if (emailResponse.rejected.length > 0) {
