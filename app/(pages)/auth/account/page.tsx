@@ -17,9 +17,40 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/utils/validators";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import withSession from "@/hoc/with-session";
 
-export default function Account() {
+const ACCOUNT_FORM_SCHEMA = z.object({
+  email: EMAIL_SCHEMA,
+  password: PASSWORD_SCHEMA,
+});
+type Form = z.infer<typeof ACCOUNT_FORM_SCHEMA>;
+
+function Account() {
   const router = useRouter();
+  const { data: session } = useSession();
+  console.log("***", session?.user?.email);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const form = useForm<Form>({
+    resolver: zodResolver(ACCOUNT_FORM_SCHEMA),
+    defaultValues: {
+      email: session?.user?.email!,
+      password: "",
+    },
+  });
   const { mutate: deleteAccount, isLoading } = useMutation(
     async () =>
       api.delete<Resp<{}>>("/api/auth/delete-account", {
@@ -34,8 +65,8 @@ export default function Account() {
       },
     }
   );
-  const session = useSession();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  async function onSubmit(values: Form) {}
 
   const confirmDialog = (
     <AlertDialog open={isDialogOpen}>
@@ -63,37 +94,56 @@ export default function Account() {
     </AlertDialog>
   );
   return (
-    session?.data && (
-      <div className="flex-center">
-        <div className="space-y-4  mt-20 bg-slate-100 p-6 rounded-sm">
-          <h2 className="font-bold text-2xl">Account</h2>
-          {session.status === "authenticated" && (
-            <>
-              <div>{JSON.stringify(session.data)}</div>
-            </>
-          )}
-          <Button
-            className="block"
-            onClick={() =>
-              signOut({
-                redirect: true,
-                callbackUrl: "/auth/signin",
-              })
-            }
-            variant={"outline"}
-          >
-            Logout
-          </Button>
-          <Button
-            onClick={() => setIsDialogOpen(true)}
-            variant={"destructive"}
-            className="block mt-10"
-          >
-            Delete account
-          </Button>
-          {confirmDialog}
-        </div>
+    <div className="flex-center">
+      <div className="space-y-4  w-96 mt-20 bg-slate-100 p-6 rounded-sm">
+        <h2 className="font-bold text-2xl">Account</h2>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled
+                        type="email"
+                        placeholder="Email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </form>
+        </Form>
+        <Button
+          className="block"
+          onClick={() =>
+            signOut({
+              redirect: true,
+              callbackUrl: "/auth/signin",
+            })
+          }
+          variant={"outline"}
+        >
+          Logout
+        </Button>
+        <Button
+          onClick={() => setIsDialogOpen(true)}
+          variant={"destructive"}
+          className="block mt-10"
+        >
+          Delete account
+        </Button>
+        {confirmDialog}
       </div>
-    )
+    </div>
   );
 }
+
+export default withSession(Account);

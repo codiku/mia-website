@@ -24,7 +24,6 @@ export default function ForgotPassword() {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [disabledEmailButton, setDisabledEmailButton] = useState(false);
 
-  const formDataRef = useRef<Form>();
   const { mutate: forgotPassword, isLoading } = useMutation(
     async (formData: Form) => {
       return api.post<Resp<{}>>("/api/auth/forgot-password", formData);

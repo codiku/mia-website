@@ -19,17 +19,22 @@ export const PASSWORD_SCHEMA = z
     "Must contain at least 1 special character"
   );
 
+export const EMAIL_SCHEMA = z
+  .string()
+  .email("Invalid email")
+  .min(1, "Email is required");
+
 export const FORGOT_PASSWORD_SCHEMA = z.object({
-  email: z.string().email("Invalid email").min(1, "Email is required"),
+  email: EMAIL_SCHEMA,
 });
 
 export const SIGNIN_SCHEMA = z.object({
-  email: z.string().email("Invalid email").min(1, "Email is required"),
+  email: EMAIL_SCHEMA,
   password: PASSWORD_SCHEMA,
 });
 
 export const REGISTER_SCHEMA = z.object({
-  email: z.string().email("Invalid email").min(1, "Email is required"),
+  email: EMAIL_SCHEMA,
   password: PASSWORD_SCHEMA,
   resendEmail: z.boolean().optional(),
 });

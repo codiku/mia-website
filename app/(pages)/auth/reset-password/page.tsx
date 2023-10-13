@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { FieldPassword } from "@/components/ui/field-password";
 
 export const RESET_PASSWORD_SCHEMA = z
   .object({
@@ -92,8 +93,7 @@ export default function ResetPassword() {
                 <FormItem>
                   <FormLabel>New password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <FieldPassword
                       placeholder="Enter your password"
                       {...field}
                     />
@@ -117,8 +117,7 @@ export default function ResetPassword() {
                 <FormItem>
                   <FormLabel>Confirm password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <FieldPassword
                       placeholder="Type your password again"
                       {...field}
                     />

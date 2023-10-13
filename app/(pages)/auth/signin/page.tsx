@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { FieldPassword } from "@/components/ui/field-password";
 import {
   Form,
   FormControl,
@@ -15,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -24,6 +26,8 @@ type Form = z.infer<typeof SIGNIN_SCHEMA>;
 export default function Signin() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
+  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+
   const { mutate: signinMut, isLoading } = useMutation(
     async (form: Form) =>
       signIn("credentials", {
@@ -92,9 +96,8 @@ export default function Signin() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Enter your password"
+                      <FieldPassword
+                        placeholder="Type your password"
                         {...field}
                       />
                     </FormControl>
