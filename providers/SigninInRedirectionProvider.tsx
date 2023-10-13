@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 
 /* Only use to auto login after clicking on verification email in mail box */
-export function SigninProvider(p: { children: ReactNode }) {
+export function SigninInRedirectionProvider(p: { children: ReactNode }) {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const session = useSession();

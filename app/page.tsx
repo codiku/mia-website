@@ -1,11 +1,11 @@
-import { SigninProvider } from "@/providers/SigninInProvider";
+import { SigninInRedirectionProvider } from "@/providers/SigninInRedirectionProvider";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 export default async function Home() {
   const serverSession = await getServerSession();
   return (
-    <SigninProvider>
+    <SigninInRedirectionProvider>
       <main className="">
         <h1 className="text-4xl">Index</h1>
         {serverSession?.user?.email ? (
@@ -19,6 +19,6 @@ export default async function Home() {
           </div>
         )}
       </main>
-    </SigninProvider>
+    </SigninInRedirectionProvider>
   );
 }

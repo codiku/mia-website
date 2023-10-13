@@ -1,15 +1,15 @@
-- smaller url email
+- remember me
 
 - Update password
 
-- refresh token
-
 - protect routes
 
-- i18n
+- refresh token
 
-- remember me
+- i18n
 
 - Display profile
 
 - Signin memory previous request
+
+- Google auth
