@@ -1,8 +1,8 @@
-- remember me
+- Protect routes
+
+- Google auth
 
 - Update password
-
-- protect routes
 
 - refresh token
 
@@ -11,5 +11,3 @@
 - Display profile
 
 - Signin memory previous request
-
-- Google auth

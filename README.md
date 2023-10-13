@@ -14,3 +14,7 @@ SMTP_PASSWORD=SG.5ZAhU7XNTbWkE3x3jzh01Q.X36ZCUw32Eshs-l20RrwPv3ElEf6oR2eoSd4kScY
 SMTP_HOST=smtp.sendgrid.net
 SMTP_PORT=587
 SMTP_FROM=robin.lebhar.chill.studio@gmail.com
+
+## Toast and response
+
+By default axios-config display alerts. Unless you send isToastDisabled:false in header
