@@ -81,5 +81,5 @@
 }
 
 a {
-  @apply underline font-semibold text-sm;
+  @apply underline font-medium text-sm;
 }
