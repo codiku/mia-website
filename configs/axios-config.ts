@@ -1,4 +1,4 @@
-import { Resp } from "../types/api-type";
+import { Resp } from "@/types/api-type";
 import axios, { AxiosResponse } from "axios";
 import { toast } from "sonner";
 

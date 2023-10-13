@@ -2,7 +2,7 @@ import { db } from "@/utils/db";
 import { sendEmail } from "@/utils/email";
 import { generateJwtToken } from "@/utils/jwt";
 import { getBodyAsync, errorResponse } from "@/utils/request";
-import { FORGOT_PASSWORD_SCHEMA } from "../../../../utils/validators";
+import { FORGOT_PASSWORD_SCHEMA } from "@/utils/validators";
 import { StatusCodes } from "http-status-codes";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";

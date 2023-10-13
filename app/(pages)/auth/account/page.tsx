@@ -1,18 +1,17 @@
 "use client";
-import { api } from "../../../configs/axios-config";
+import { api } from "@/configs/axios-config";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../../../components/ui/alert-dialog";
-import { Button } from "../../../components/ui/button";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
-import { Resp } from "../../../types/api-type";
+import { Resp } from "@/types/api-type";
 import { useMutation } from "@tanstack/react-query";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
