@@ -1,4 +1,57 @@
 {
+    "React Form Component": {
+        "prefix": "rformtag",
+        "body": [
+            "<Form {...form}>",
+            "  <form onSubmit={form.handleSubmit(onSubmit)}>"
+        ],
+        "description": "React Form Component"
+    },
+    "React onSubmit Function": {
+        "prefix": "rsubmit",
+        "body": [
+            "async function onSubmit(values: Form) {",
+            "  $2",
+            "}"
+        ],
+        "description": "React onSubmit Function"
+    },
+    "React useForm": {
+        "prefix": "rform",
+        "body": [
+            "const form = useForm<$1>({",
+            "  resolver: zodResolver($2),",
+            "  defaultValues: {",
+            "    $3",
+            "  },",
+            "});"
+        ],
+        "description": "React useForm with zodResolver"
+    },
+    "React FormField": {
+        "prefix": "rfield",
+        "body": [
+            "<div>",
+            "  <FormField",
+            "    control={form.control}",
+            "    name=\"$1\"",
+            "    render={({ field }) => (",
+            "      <FormItem>",
+            "        <FormLabel>$2</FormLabel>",
+            "        <FormControl>",
+            "          <Input",
+            "            placeholder=\"$3\"",
+            "            {...field}",
+            "          />",
+            "        </FormControl>",
+            "        <FormMessage />",
+            "      </FormItem>",
+            "    )}",
+            "  />",
+            "</div>"
+        ],
+        "description": "React FormField Password Component"
+    },
     "POST": {
         "prefix": "postendpoint",
         "body": [
