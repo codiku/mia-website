@@ -20,9 +20,7 @@ export async function POST(req: NextRequest) {
         `<html>
       <body>
         <p>Click the following link to reset your password:</p>
-        <a href="http://${headers().get(
-          "host"
-        )}/auth/reset-password?token=${token}">
+        <a href="${process.env.FORGOT_PASSWORD_CALLBACK_URL}?token=${token}">
           Reset Password
         </a>
       </body>

@@ -15,6 +15,9 @@ SMTP_HOST=smtp.sendgrid.net
 SMTP_PORT=587
 SMTP_FROM=robin.lebhar.chill.studio@gmail.com
 
+SIGNUP_CALLBACK_URL=http://localhost:3000
+FORGOT_PASSWORD_CALLBACK_URL=http://localhost:3000/auth/reset-password
+
 ## Toast and response
 
 By default axios-config display alerts. Unless you send isToastDisabled:false in header

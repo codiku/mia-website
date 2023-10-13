@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
         }
       }
       return NextResponse.redirect(
-        (process.env.NEXTAUTH_URL as string) + "?token=" + token
+        (process.env.SIGNUP_CALLBACK_URL as string) + "?token=" + token
       );
     } else {
       return NextResponse.json(
