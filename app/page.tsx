@@ -1,4 +1,4 @@
-import { UrlTokenAutoSignin } from "@/providers/UrlTokenAutoSignin";
+import { UrlTokenAutoSignin } from "../providers/UrlTokenAutoSignin";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 

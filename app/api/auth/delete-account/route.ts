@@ -1,7 +1,7 @@
-import { errorResponse } from "@/api/utils/request";
+import { errorResponse } from "@/utils/request";
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
-import { db } from "@/api/utils/db";
+import { db } from "@/utils/db";
 import { StatusCodes } from "http-status-codes";
 
 export async function DELETE(req: NextRequest) {

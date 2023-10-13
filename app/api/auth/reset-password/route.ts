@@ -1,7 +1,7 @@
-import { db } from "@/api/utils/db";
-import { decodeJwtToken } from "@/api/utils/jwt";
-import { getBodyAsync, errorResponse } from "@/api/utils/request";
-import { RESET_PASSWORD_SCHEMA } from "@/utils/validators";
+import { db } from "@/utils/db";
+import { decodeJwtToken } from "@/utils/jwt";
+import { getBodyAsync, errorResponse } from "@/utils/request";
+import { RESET_PASSWORD_SCHEMA } from "../../../../utils/validators";
 import { compare, hash } from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";

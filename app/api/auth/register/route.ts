@@ -1,12 +1,12 @@
-import { db } from "@/api/utils/db";
+import { db } from "@/utils/db";
 import { hash } from "bcrypt";
-import { sendEmail } from "@/api/utils/email";
-import { generateJwtToken } from "@/api/utils/jwt";
-import { REGISTER_SCHEMA } from "@/utils/validators";
+import { sendEmail } from "@/utils/email";
+import { generateJwtToken } from "@/utils/jwt";
+import { REGISTER_SCHEMA } from "../../../../utils/validators";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { unsensitiveUser } from "../../utils/user";
-import { getBodyAsync, errorResponse } from "@/api/utils/request";
+import { unsensitiveUser } from "../../../../utils/user";
+import { getBodyAsync, errorResponse } from "@/utils/request";
 import { StatusCodes } from "http-status-codes";
 import { User } from "@prisma/client";
 

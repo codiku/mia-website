@@ -1,7 +1,7 @@
-import { db } from "@/api/utils/db";
-import { decodeJwtToken } from "@/api/utils/jwt";
-import { getParams, errorResponse } from "@/api/utils/request";
-import { VERIFY_EMAIL_SCHEMA } from "@/utils/validators";
+import { db } from "@/utils/db";
+import { decodeJwtToken } from "@/utils/jwt";
+import { getParams, errorResponse } from "@/utils/request";
+import { VERIFY_EMAIL_SCHEMA } from "../../../../utils/validators";
 import { User } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
