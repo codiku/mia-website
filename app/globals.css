@@ -79,3 +79,7 @@
     @apply flex justify-center items-center;
   }
 }
+
+a {
+  @apply underline font-semibold text-sm;
+}

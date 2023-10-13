@@ -198,10 +198,7 @@ export default function Signup() {
               </Button>
               <div className="mt-4 text-sm">
                 You already have an account, please
-                <Link
-                  href="/auth/signin"
-                  className="ml-1 underline font-semibold"
-                >
+                <Link href="/auth/signin" className="ml-1">
                   Sign in
                 </Link>
               </div>

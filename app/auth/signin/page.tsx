@@ -102,10 +102,7 @@ export default function Signin() {
               />
               <FormMessage />
             </div>
-            <Link
-              href={"/auth/forgot-password"}
-              className="underline text-sm inline-block pl-1"
-            >
+            <Link href={"/auth/forgot-password"} className="inline-block pl-1">
               Forgot password ?
             </Link>
           </div>
@@ -115,10 +112,7 @@ export default function Signin() {
           </Button>
           <div className="mt-4 text-sm">
             You already have an account, please
-            <Link
-              href={"/auth/signup"}
-              className="ml-1 underline font-semibold"
-            >
+            <Link href={"/auth/signup"} className="ml-1">
               Sign up
             </Link>
           </div>
