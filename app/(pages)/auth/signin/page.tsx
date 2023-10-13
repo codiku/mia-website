@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SIGNIN_SCHEMA } from "@/utils/validators";
+import { SIGNIN_MODEL } from "@/utils/models";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-type Form = z.infer<typeof SIGNIN_SCHEMA>;
+type Form = z.infer<typeof SIGNIN_MODEL>;
 
 export default function Signin() {
   const searchParams = useSearchParams();
@@ -52,7 +52,7 @@ export default function Signin() {
   );
   const router = useRouter();
   const form = useForm<Form>({
-    resolver: zodResolver(SIGNIN_SCHEMA),
+    resolver: zodResolver(SIGNIN_MODEL),
     defaultValues: {
       email: "",
       password: "",
@@ -71,7 +71,7 @@ export default function Signin() {
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <div className="space-y-4">
-            <h2 className="font-bold text-xl">Signin</h2>
+            <h2>Signin</h2>
             <div>
               <FormField
                 control={form.control}

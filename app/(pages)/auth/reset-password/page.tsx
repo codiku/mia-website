@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { PASSWORD_SCHEMA } from "@/utils/validators";
+import { PASSWORD_MODEL } from "@/utils/models";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -22,9 +22,9 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { FieldPassword } from "@/components/ui/field-password";
 
-export const RESET_PASSWORD_SCHEMA = z
+export const RESET_PASSWORD_MODEL = z
   .object({
-    password: PASSWORD_SCHEMA,
+    password: PASSWORD_MODEL,
     passwordConfirm: z.string().min(1),
   })
   .refine((data) => data.password === data.passwordConfirm, {
@@ -32,7 +32,7 @@ export const RESET_PASSWORD_SCHEMA = z
     path: ["passwordConfirm"],
   });
 
-type Form = z.infer<typeof RESET_PASSWORD_SCHEMA>;
+type Form = z.infer<typeof RESET_PASSWORD_MODEL>;
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -61,7 +61,7 @@ export default function ResetPassword() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const form = useForm<Form>({
-    resolver: zodResolver(RESET_PASSWORD_SCHEMA),
+    resolver: zodResolver(RESET_PASSWORD_MODEL),
     mode: "onChange",
     defaultValues: {
       password: "",
@@ -84,7 +84,7 @@ export default function ResetPassword() {
           className="w-96bg-white p-6 rounded-sm space-y-6"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <h2 className="font-bold text-xl">Request a password reset</h2>
+          <h2>Request a password reset</h2>
           <div>
             <FormField
               control={form.control}

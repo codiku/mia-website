@@ -53,6 +53,7 @@
     "postcss": "latest",
     "prisma": "^5.3.1",
     "tailwindcss": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "zod-prisma": "^0.5.4"
   }
 }

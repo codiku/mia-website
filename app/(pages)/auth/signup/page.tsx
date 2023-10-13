@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { PASSWORD_SCHEMA } from "@/utils/validators";
+import { EMAIL_MODEL, PASSWORD_MODEL } from "@/utils/models";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -20,11 +20,11 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const SIGNUP_SCHEMA = z
+const SIGNUP_MODEL = z
   .object({
-    email: z.string().email("Invalid email").min(1, "Email is required"),
-    password: PASSWORD_SCHEMA,
-    passwordConfirm: z.string().min(8, "Must be at least 8 characters"),
+    email: EMAIL_MODEL,
+    password: PASSWORD_MODEL,
+    passwordConfirm: z.string().min(1, "Required"),
     resendEmail: z.boolean().optional(),
   })
   .refine((data) => data.password === data.passwordConfirm, {
@@ -32,7 +32,7 @@ const SIGNUP_SCHEMA = z
     path: ["passwordConfirm"],
   });
 
-type Form = z.infer<typeof SIGNUP_SCHEMA>;
+type Form = z.infer<typeof SIGNUP_MODEL>;
 
 export default function Signup() {
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -50,7 +50,7 @@ export default function Signup() {
   );
 
   const form = useForm<Form>({
-    resolver: zodResolver(SIGNUP_SCHEMA),
+    resolver: zodResolver(SIGNUP_MODEL),
     defaultValues: {
       email: "",
       password: "",
@@ -89,7 +89,7 @@ export default function Signup() {
   const renderEmailSent = () => {
     return (
       <div>
-        <h2 className="font-bold mb-5 text-xl">Email sent</h2>
+        <h2 className="mb-5">Email sent</h2>
         <p>Check your inbox and click the link to activate your account.</p>
         <p>
           <br />
@@ -124,7 +124,7 @@ export default function Signup() {
           ) : (
             <>
               <div className="space-y-4">
-                <h2 className="font-bold text-xl">Register</h2>
+                <h2>Register</h2>
                 <div>
                   <FormField
                     control={form.control}

@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FORGOT_PASSWORD_SCHEMA } from "@/utils/validators";
+import { FORGOT_PASSWORD_MODEL } from "@/utils/models";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -18,7 +18,7 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-type Form = z.infer<typeof FORGOT_PASSWORD_SCHEMA>;
+type Form = z.infer<typeof FORGOT_PASSWORD_MODEL>;
 
 export default function ForgotPassword() {
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -36,7 +36,7 @@ export default function ForgotPassword() {
   );
 
   const form = useForm<Form>({
-    resolver: zodResolver(FORGOT_PASSWORD_SCHEMA),
+    resolver: zodResolver(FORGOT_PASSWORD_MODEL),
     defaultValues: {
       email: "",
     },
@@ -54,7 +54,7 @@ export default function ForgotPassword() {
   const renderEmailSent = () => {
     return (
       <div>
-        <h2 className="font-bold mb-5 text-xl">Email sent</h2>
+        <h2 className="mb-5">Email sent</h2>
         <p>Check your inbox and click the link to reset your password.</p>
         <p>
           <br />
@@ -87,7 +87,7 @@ export default function ForgotPassword() {
             renderEmailSent()
           ) : (
             <>
-              <h2 className="font-bold text-xl">Request a password reset</h2>
+              <h2>Request a password reset</h2>
               <div>
                 <FormField
                   control={form.control}

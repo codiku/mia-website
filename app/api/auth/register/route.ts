@@ -2,7 +2,7 @@ import { db } from "@/utils/db";
 import { hash } from "bcrypt";
 import { sendEmail } from "@/utils/email";
 import { generateJwtToken } from "@/utils/jwt";
-import { REGISTER_SCHEMA } from "@/utils/validators";
+import { REGISTER_MODEL } from "@/utils/models";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { unsensitiveUser } from "@/utils/user";
@@ -14,7 +14,7 @@ import { User } from "@prisma/client";
 // to redirect the user to get verified
 export async function POST(req: NextRequest) {
   try {
-    const { email, password, resendEmail } = REGISTER_SCHEMA.parse(
+    const { email, password, resendEmail } = REGISTER_MODEL.parse(
       await getBodyAsync(req)
     );
 

@@ -27,14 +27,11 @@ export async function getBodyAsync(req: NextRequest): Promise<BodyParams> {
 export const errorResponse = (error: unknown) => {
   let errorMessage = "";
   let statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
-
   if (error instanceof ZodError) {
     errorMessage = "";
     error.issues.forEach((issue) => {
       const field = issue.path.join(".");
-      errorMessage += `Validation error ${field ? "on field" : ""} - ${
-        issue.message
-      }`;
+      errorMessage += `${field} - ${issue.message}\n`;
     });
     statusCode = StatusCodes.BAD_REQUEST; // You may want to use a different status code for client errors
   } else {
@@ -45,3 +42,13 @@ export const errorResponse = (error: unknown) => {
     { status: statusCode }
   );
 };
+
+export async function requireAuth(req: NextRequest) {
+  return NextResponse.json(
+    {
+      error: true,
+      message: "You must be authenticated",
+    },
+    { status: StatusCodes.UNAUTHORIZED }
+  );
+}

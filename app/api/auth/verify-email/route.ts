@@ -1,14 +1,14 @@
 import { db } from "@/utils/db";
 import { decodeJwtToken } from "@/utils/jwt";
 import { getParams, errorResponse } from "@/utils/request";
-import { VERIFY_EMAIL_SCHEMA } from "@/utils/validators";
+import { VERIFY_EMAIL_MODEL } from "@/utils/models";
 import { User } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const { token } = VERIFY_EMAIL_SCHEMA.parse(getParams(req));
+    const { token } = VERIFY_EMAIL_MODEL.parse(getParams(req));
     const user = decodeJwtToken<User>(token as string);
 
     if (user?.id) {

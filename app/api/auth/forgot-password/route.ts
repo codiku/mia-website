@@ -2,14 +2,14 @@ import { db } from "@/utils/db";
 import { sendEmail } from "@/utils/email";
 import { generateJwtToken } from "@/utils/jwt";
 import { getBodyAsync, errorResponse } from "@/utils/request";
-import { FORGOT_PASSWORD_SCHEMA } from "@/utils/validators";
+import { FORGOT_PASSWORD_MODEL } from "@/utils/models";
 import { StatusCodes } from "http-status-codes";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email } = FORGOT_PASSWORD_SCHEMA.parse(await getBodyAsync(req));
+    const { email } = FORGOT_PASSWORD_MODEL.parse(await getBodyAsync(req));
     const token = generateJwtToken({ email });
     const existingUser = await db.user.findUnique({ where: { email: email } });
 

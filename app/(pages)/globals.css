@@ -73,13 +73,21 @@
   body {
     @apply bg-slate-100 text-foreground;
   }
+  a {
+    @apply underline font-medium text-sm;
+  }
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl font-semibold;
+  }
+  h3 {
+    @apply text-lg;
+  }
 }
 @layer components {
   .flex-center {
     @apply flex justify-center items-center;
   }
-}
-
-a {
-  @apply underline font-medium text-sm;
 }

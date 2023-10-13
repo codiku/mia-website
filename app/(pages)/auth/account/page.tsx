@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/utils/validators";
+import { EMAIL_MODEL, PASSWORD_MODEL } from "@/utils/models";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -30,13 +30,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import withSession from "@/hoc/with-session";
+import withSession from "@/components/hoc/with-session";
+import Link from "next/link";
 
-const ACCOUNT_FORM_SCHEMA = z.object({
-  email: EMAIL_SCHEMA,
-  password: PASSWORD_SCHEMA,
+const ACCOUNT_FORM_MODEL = z.object({
+  email: EMAIL_MODEL,
+  password: PASSWORD_MODEL,
 });
-type Form = z.infer<typeof ACCOUNT_FORM_SCHEMA>;
+type Form = z.infer<typeof ACCOUNT_FORM_MODEL>;
 
 function Account() {
   const router = useRouter();
@@ -45,7 +46,7 @@ function Account() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const form = useForm<Form>({
-    resolver: zodResolver(ACCOUNT_FORM_SCHEMA),
+    resolver: zodResolver(ACCOUNT_FORM_MODEL),
     defaultValues: {
       email: session?.user?.email!,
       password: "",
@@ -96,7 +97,7 @@ function Account() {
   return (
     <div className="flex-center">
       <div className="space-y-4 w-96 mt-20 bg-white p-6 rounded-sm">
-        <h2 className="font-bold text-2xl">Account</h2>
+        <h2>Account</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div>
@@ -121,6 +122,9 @@ function Account() {
             </div>
           </form>
         </Form>
+        <Link href="/auth/account/update-password" className="ml-1 block mt-4">
+          Update password
+        </Link>
         <Button
           className="block"
           onClick={() =>

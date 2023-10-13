@@ -1,14 +1,14 @@
 import { db } from "@/utils/db";
 import { decodeJwtToken } from "@/utils/jwt";
 import { getBodyAsync, errorResponse } from "@/utils/request";
-import { RESET_PASSWORD_SCHEMA } from "@/utils/validators";
+import { RESET_PASSWORD_MODEL } from "@/utils/models";
 import { compare, hash } from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const { password, token } = RESET_PASSWORD_SCHEMA.parse(
+    const { password, token } = RESET_PASSWORD_MODEL.parse(
       await getBodyAsync(req)
     );
     const data = decodeJwtToken<{ email: string }>(token);
