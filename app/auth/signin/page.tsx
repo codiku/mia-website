@@ -9,12 +9,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SIGNIN_SCHEMA } from "@/lib/validators";
+import { SIGNIN_SCHEMA } from "@/utils/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -22,6 +22,8 @@ import { z } from "zod";
 type Form = z.infer<typeof SIGNIN_SCHEMA>;
 
 export default function Signin() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const { mutate: signinMut, isLoading } = useMutation(
     async (form: Form) =>
       signIn("credentials", {
@@ -38,7 +40,7 @@ export default function Signin() {
           toast.error("Signin failed");
         } else {
           router.refresh();
-          router.push("/");
+          router.push(callbackUrl || "/");
           toast.success("You are know signed in");
         }
       },

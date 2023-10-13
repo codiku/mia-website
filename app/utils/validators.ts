@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { decodeJwtToken } from "./jwt";
+import { decodeJwtToken } from "@/api/utils/jwt";
 
 export const JWT_TOKEN_SCHEMA = z
   .string()

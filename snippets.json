@@ -2,7 +2,7 @@
     "POST": {
         "prefix": "postendpoint",
         "body": [
-            "import { errorResponse } from '@/lib/request';",
+            "import { errorResponse } from '@/utils/request';",
             "import { NextRequest, NextResponse } from 'next/server';",
             "",
             "export async function POST(req: NextRequest) {",
@@ -23,7 +23,7 @@
     "GET": {
         "prefix": "getendpoint",
         "body": [
-            "import { getParams, errorResponse } from \"@/lib/request\";",
+            "import { getParams, errorResponse } from \"@/utils/request\";",
             "import { NextRequest, NextResponse } from 'next/server';",
             "",
             "export async function GET(req: NextRequest) {",

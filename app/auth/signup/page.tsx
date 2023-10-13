@@ -1,6 +1,6 @@
 "use client";
-import { UnsensitiveUser } from "@/app/api/auth/utils";
-import { api } from "@/app/configs/axios-config";
+import { UnsensitiveUser } from "@/api/utils/user";
+import { api } from "@/configs/axios-config";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,11 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { PASSWORD_SCHEMA } from "@/lib/validators";
+import { PASSWORD_SCHEMA } from "@/utils/validators";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { register } from "module";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";

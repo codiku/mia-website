@@ -1,5 +1,5 @@
 "use client";
-import { api } from "@/app/configs/axios-config";
+import { api } from "@/configs/axios-config";
 import {
   AlertDialog,
   AlertDialogAction,

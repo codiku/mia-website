@@ -1,5 +1,5 @@
 "use client";
-import { api } from "@/app/configs/axios-config";
+import { api } from "@/configs/axios-config";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FORGOT_PASSWORD_SCHEMA } from "@/lib/validators";
+import { FORGOT_PASSWORD_SCHEMA } from "@/utils/validators";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";

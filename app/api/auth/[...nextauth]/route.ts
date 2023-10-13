@@ -1,5 +1,5 @@
-import { db } from "@/lib/db";
-import { decodeJwtToken } from "@/lib/jwt";
+import { db } from "@/api/utils/db";
+import { decodeJwtToken } from "@/api/utils/jwt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { User } from "@prisma/client";
 import { compare } from "bcrypt";

@@ -1,8 +1,8 @@
-import { db } from "@/lib/db";
-import { sendEmail } from "@/lib/email";
-import { generateJwtToken } from "@/lib/jwt";
-import { getBodyAsync, errorResponse } from "@/lib/request";
-import { FORGOT_PASSWORD_SCHEMA } from "@/lib/validators";
+import { db } from "@/api/utils/db";
+import { sendEmail } from "@/api/utils/email";
+import { generateJwtToken } from "@/api/utils/jwt";
+import { getBodyAsync, errorResponse } from "@/api/utils/request";
+import { FORGOT_PASSWORD_SCHEMA } from "@/utils/validators";
 import { StatusCodes } from "http-status-codes";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
