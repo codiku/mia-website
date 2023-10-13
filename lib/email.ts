@@ -9,11 +9,11 @@ export async function sendEmail(
   try {
     // Create a transporter for sending email
     const transporter = nodemailer.createTransport({
-      host: "smtp.sendgrid.net",
-      port: 587 as unknown as number,
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT as unknown as number,
       auth: {
-        user: "apikey",
-        pass: "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",
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
       },
     });
     // Send the email
