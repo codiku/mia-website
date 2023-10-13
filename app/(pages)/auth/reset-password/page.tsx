@@ -81,7 +81,7 @@ export default function ResetPassword() {
     <div className="flex-center mt-20">
       <Form {...form}>
         <form
-          className="w-96  bg-slate-100 p-6 rounded-sm space-y-6"
+          className="w-96bg-white p-6 rounded-sm space-y-6"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <h2 className="font-bold text-xl">Request a password reset</h2>

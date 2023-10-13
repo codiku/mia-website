@@ -95,7 +95,7 @@ function Account() {
   );
   return (
     <div className="flex-center">
-      <div className="space-y-4  w-96 mt-20 bg-slate-100 p-6 rounded-sm">
+      <div className="space-y-4 w-96 mt-20 bg-white p-6 rounded-sm">
         <h2 className="font-bold text-2xl">Account</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

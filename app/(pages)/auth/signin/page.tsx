@@ -67,7 +67,7 @@ export default function Signin() {
     <div className="flex-center mt-20">
       <Form {...form}>
         <form
-          className="w-96  bg-slate-100 p-6 rounded-sm"
+          className="w-96  bg-white p-6 rounded-sm"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <div className="space-y-4">
