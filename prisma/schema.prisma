@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  email       String    @unique
-  password    String
-  username    String?   @default(uuid())
-  createdAt   DateTime? @default(now())
-  updatedAnpt DateTime? @updatedAt
-  isVerified  Boolean?  @default(false)
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
+  password   String
+  username   String?   @default(uuid())
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  isVerified Boolean?  @default(false)
 }
 
 generator zod {
@@ -38,4 +38,9 @@ generator zod {
   // https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-by-null-values
   prismaJsonNullability = true // (default) uses prisma's scheme for JSON field nullability
   // prismaJsonNullability = false // allows null assignment to optional JSON fields
+}
+
+model Products {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime? @default(now())
 }

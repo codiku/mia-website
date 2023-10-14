@@ -7,6 +7,6 @@ export const UserModel = z.object({
   password: z.string(),
   username: z.string().nullish(),
   createdAt: z.date().nullish(),
-  updatedAnpt: z.date().nullish(),
+  updatedAt: z.date().nullish(),
   isVerified: z.boolean().nullish(),
 })
