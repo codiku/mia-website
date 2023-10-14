@@ -42,13 +42,3 @@ export const errorResponse = (error: unknown) => {
     { status: statusCode }
   );
 };
-
-export async function requireAuth(req: NextRequest) {
-  return NextResponse.json(
-    {
-      error: true,
-      message: "You must be authenticated",
-    },
-    { status: StatusCodes.UNAUTHORIZED }
-  );
-}

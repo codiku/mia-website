@@ -24,7 +24,13 @@ By default axios-config display alerts. Unless you send isToastDisabled:false in
 
 ## Route Protection
 
-See middleware.ts
+Pages :
+
+See middleware.ts to protect a page
+
+Api routes :
+
+Just wrap your handler with auth() hoc, (you can send true or false as second param to enable/disabled)
 
 ## Session
 

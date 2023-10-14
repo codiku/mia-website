@@ -1,15 +1,14 @@
 import { errorResponse, getBodyAsync } from "@/utils/request";
 import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 import { StatusCodes } from "http-status-codes";
 import { db } from "@/utils/db";
-import { requireAuth } from "@/utils/request";
 import { UserModel } from "@/prisma/zod";
 import { User } from "@prisma/client";
+import { auth } from "@/utils/jwt";
 
-export async function GET(req: NextRequest, route: { params: { id: string } }) {
-  try {
-    if (await getToken({ req })) {
+export const GET = auth(
+  async (req: NextRequest, route: { params: { id: string } }) => {
+    try {
       let user: User | null = null;
       let id = Number(route.params.id);
       if (id) {
@@ -20,20 +19,16 @@ export async function GET(req: NextRequest, route: { params: { id: string } }) {
       return NextResponse.json(user || { error: true, message: "Not found" }, {
         status: StatusCodes.BAD_REQUEST,
       });
-    } else {
-      return requireAuth(req);
+    } catch (err) {
+      return errorResponse(err as Error);
     }
-  } catch (err) {
-    return errorResponse(err as Error);
-  }
-}
+  },
+  true
+);
 
-export async function PATCH(
-  req: NextRequest,
-  route: { params: { id: string } }
-) {
-  try {
-    if (await getToken({ req })) {
+export const PATCH = auth(
+  async (req: NextRequest, route: { params: { id: string } }) => {
+    try {
       let user: User | null = null;
       let id = Number(route.params.id);
       if (id) {
@@ -46,20 +41,16 @@ export async function PATCH(
           }
         );
       }
-    } else {
-      return requireAuth(req);
+    } catch (err) {
+      return errorResponse(err as Error);
     }
-  } catch (err) {
-    return errorResponse(err as Error);
-  }
-}
+  },
+  false
+);
 
-export async function DELETE(
-  req: NextRequest,
-  route: { params: { id: string } }
-) {
-  try {
-    if (await getToken({ req })) {
+export const DELETE = auth(
+  async (req: NextRequest, route: { params: { id: string } }) => {
+    try {
       let user: User | null = null;
       let id = Number(route.params.id);
       if (id) {
@@ -71,10 +62,9 @@ export async function DELETE(
           }
         );
       }
-    } else {
-      return requireAuth(req);
+    } catch (err) {
+      return errorResponse(err as Error);
     }
-  } catch (err) {
-    return errorResponse(err as Error);
-  }
-}
+  },
+  false
+);

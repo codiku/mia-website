@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
 import { UserModel } from "@/prisma/zod";
 import { getToken } from "next-auth/jwt";
+import { auth } from "@/utils/jwt";
 
-export async function POST(req: NextRequest) {
+export const POST = auth(async (req: NextRequest) => {
   try {
     if (await getToken({ req })) {
       const body = UserModel.omit({ id: true }).parse(await getBodyAsync(req));
@@ -16,4 +17,4 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     return errorResponse(err as Error);
   }
-}
+}, false);
