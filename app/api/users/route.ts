@@ -1,4 +1,4 @@
-import { errorResponse, getBodyAsync, getParams } from "@/utils/request";
+import { errorResponse, getBodyAsync } from "@/utils/request";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
 import { UserModel } from "@/prisma/zod";
