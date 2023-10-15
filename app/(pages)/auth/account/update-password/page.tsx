@@ -10,13 +10,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import withSession from "@/components/hoc/with-session";
-import { PASSWORD_MODEL, STRING_REQUIRED_MODEL } from "@/utils/models";
+import {
+  PASSWORD_MODEL,
+  STRING_REQUIRED_MODEL,
+  UPDATE_PASSWORD_MODEL,
+} from "@/utils/models";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const UPDATE_PASSWORD_MODEL = z
+const UPDATE_PASSWORD_FORM_MODEL = z
   .object({
     oldPassword: STRING_REQUIRED_MODEL,
     newPassword: PASSWORD_MODEL,
@@ -27,11 +31,11 @@ const UPDATE_PASSWORD_MODEL = z
     path: ["newPasswordConfirm"],
   });
 
-type Form = z.infer<typeof UPDATE_PASSWORD_MODEL>;
+type Form = z.infer<typeof UPDATE_PASSWORD_FORM_MODEL>;
 
 function UpdatePassword(p: {}) {
   const form = useForm<Form>({
-    resolver: zodResolver(UPDATE_PASSWORD_MODEL),
+    resolver: zodResolver(UPDATE_PASSWORD_FORM_MODEL),
     defaultValues: {
       oldPassword: "",
       newPassword: "",

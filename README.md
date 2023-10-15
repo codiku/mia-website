@@ -35,3 +35,9 @@ Just wrap your handler with auth() hoc, (you can send true or false as second pa
 ## Session
 
 To make sure you have access to the session, use withSession
+
+## Crud
+
+`npm run crud`
+
+will create GET,POST,PATCH,DELETE, a prisma schema, a zod prisma schema.

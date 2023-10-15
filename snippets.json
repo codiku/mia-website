@@ -1,4 +1,21 @@
 {
+    "Endpoint Function": {
+        "prefix": "rendpoint",
+        "body": [
+            "export const $1 = auth(async (req: NextRequest, route: { params: { id: string } }) => {",
+            "  try {",
+            "    const body = $2.parse(await getBodyAsync(req));",
+            "    const params = $2.parse(getParams(req));",
+            "    const uriParams = route.params;",
+            "",
+            "    return NextResponse.json({});",
+            "  } catch (err) {",
+            "    return errorResponse(err as Error);",
+            "  }",
+            "}, false);"
+        ],
+        "description": "Endpoint Function"
+    },
     "React Form Component": {
         "prefix": "rformtag",
         "body": [
@@ -19,10 +36,16 @@
     "React useForm": {
         "prefix": "rform",
         "body": [
-            "const form = useForm<$1>({",
-            "  resolver: zodResolver($2),",
+            "const $1 = z.object({",
+            "",
+            "});",
+            "",
+            "type Form = z.infer<typeof $1>;",
+            "",
+            "const form = useForm<Form>({",
+            "  resolver: zodResolver($1),",
             "  defaultValues: {",
-            "    $3",
+            "    $2",
             "  },",
             "});"
         ],
@@ -51,48 +74,6 @@
             "</div>"
         ],
         "description": "React FormField Password Component"
-    },
-    "POST": {
-        "prefix": "postendpoint",
-        "body": [
-            "import { errorResponse } from '@/utils//request';",
-            "import { NextRequest, NextResponse } from 'next/server';",
-            "",
-            "export async function POST(req: NextRequest) {",
-            "  try {",
-            "    const {} = $1.parse(await getBodyAsync());",
-            "       $3",
-            "    return NextResponse.json({",
-            "       error : false,",
-            "       message : \"$2\"",
-            "    });",
-            "  } catch (err) {",
-            "    return errorResponse(err);",
-            "  }",
-            "}"
-        ],
-        "description": "Returns an invalid input response."
-    },
-    "GET": {
-        "prefix": "getendpoint",
-        "body": [
-            "import { getParams, errorResponse } from \"@/utils//request\";",
-            "import { NextRequest, NextResponse } from 'next/server';",
-            "",
-            "export async function GET(req: NextRequest) {",
-            "  try {",
-            "   const { $2 } = $1.parse(getParams(req));",
-            "   $3",
-            "    return NextResponse.json({",
-            "       error : false,",
-            "       message : \"\"",
-            "    });",
-            "  } catch (err) {",
-            "    return errorResponse(error);",
-            "  }",
-            "}"
-        ],
-        "description": "Returns an invalid input response."
     },
     "resp": {
         "prefix": "resp",

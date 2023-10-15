@@ -54,3 +54,8 @@ export const VERIFY_EMAIL_MODEL = z.object({
 export const DELETE_ACCOUNT_MODEL = z.object({
   token: JWT_TOKEN_MODEL,
 });
+
+export const UPDATE_PASSWORD_MODEL = z.object({
+  oldPassword: STRING_REQUIRED_MODEL,
+  newPassword: PASSWORD_MODEL,
+});

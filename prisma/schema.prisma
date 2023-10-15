@@ -39,8 +39,3 @@ generator zod {
   prismaJsonNullability = true // (default) uses prisma's scheme for JSON field nullability
   // prismaJsonNullability = false // allows null assignment to optional JSON fields
 }
-
-model Products {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime? @default(now())
-}
