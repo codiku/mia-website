@@ -27,7 +27,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
             { status: StatusCodes.CONFLICT }
           );
         }
-        const hashedPassword = await hash(password, 12);
+        const hashedPassword = await hash(
+          password,
+          Number(process.env.HASH_ROUND)
+        );
         const userUpdated = await db.user.update({
           where: { email: data?.email },
           data: { password: hashedPassword },

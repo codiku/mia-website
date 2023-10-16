@@ -10,15 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import withSession from "@/components/hoc/with-session";
-import {
-  PASSWORD_MODEL,
-  STRING_REQUIRED_MODEL,
-  UPDATE_PASSWORD_MODEL,
-} from "@/utils/models";
+import { PASSWORD_MODEL, STRING_REQUIRED_MODEL } from "@/utils/models";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Resp } from "@/types/api-type";
+import { api } from "@/configs/axios-config";
+import { useMutation } from "@tanstack/react-query";
 
 const UPDATE_PASSWORD_FORM_MODEL = z
   .object({
@@ -29,12 +28,22 @@ const UPDATE_PASSWORD_FORM_MODEL = z
   .refine((data) => data.newPassword === data.newPasswordConfirm, {
     message: "Passwords don't match",
     path: ["newPasswordConfirm"],
+  })
+  .refine((data) => data.oldPassword !== data.newPassword, {
+    message: "New assword can't be the same as old password",
+    path: ["newPassword"],
   });
 
 type Form = z.infer<typeof UPDATE_PASSWORD_FORM_MODEL>;
 
 function UpdatePassword(p: {}) {
+  const { mutate: updatePassword, isLoading } = useMutation(
+    async (formData: Form) =>
+      api.patch<Resp<{}>>("/api/auth/update-password", formData)
+  );
+
   const form = useForm<Form>({
+    mode: "onChange",
     resolver: zodResolver(UPDATE_PASSWORD_FORM_MODEL),
     defaultValues: {
       oldPassword: "",
@@ -55,7 +64,10 @@ function UpdatePassword(p: {}) {
     }
   }, [form, newPassword]);
 
-  async function onSubmit(values: Form) {}
+  async function onSubmit(values: Form) {
+    updatePassword(values);
+  }
+
   return (
     <div className="flex-center mt-20">
       <Form {...form}>
@@ -114,7 +126,9 @@ function UpdatePassword(p: {}) {
               />
             </div>
           </div>
-          <Button className="mt-10 w-full">Update password</Button>
+          <Button disabled={isLoading} className="mt-10 w-full">
+            Update password
+          </Button>
         </form>
       </Form>
     </div>

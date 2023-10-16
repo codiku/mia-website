@@ -1,9 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
-import { getToken } from "next-auth/jwt";
+import { JWT, getToken } from "next-auth/jwt";
 
 import { NextResponse, NextRequest } from "next/server";
-import { errorResponse } from "./request";
+import { errorResponse, getBodyAsync } from "./request";
+import { ZodAny, ZodSchema } from "zod";
 // Generate a JWT token with user information
 export function generateJwtToken(data: string | object | Buffer) {
   return jwt.sign(data, process.env.NEXTAUTH_SECRET as string, {
@@ -22,24 +23,39 @@ export function decodeJwtToken<T>(token: string) {
   }
 }
 // Create a function that wraps your route handler with the authentication logic.
-export function auth(routeHandler: Function, enabled = true) {
+export function auth<T>(
+  routeHandler: (
+    req: NextRequest,
+    route: { params: any },
+    body: Awaited<T>,
+    token?: JWT
+  ) => void,
+  enabled = true,
+  model?: ZodSchema<T>
+) {
   return async (req: NextRequest, route: { params: { id: string } }) => {
-    try {
-      if (enabled) {
-        if (await getToken({ req })) {
-          return routeHandler(req, route);
-        } else {
-          return handleUnauthorized();
-        }
+    if (enabled) {
+      const token = await getToken({ req });
+      if (token) {
+        let body = model ? await parseBody(req, model) : undefined;
+        return routeHandler(req, route, body as never, token);
       } else {
-        return routeHandler(req, route);
+        return handleUnauthorized();
       }
-    } catch (err) {
-      return errorResponse(err as Error);
+    } else {
+      try {
+        let body = model ? await parseBody(req, model) : undefined;
+        return routeHandler(req, route, body as never);
+      } catch (error) {
+        return errorResponse(error as Error);
+      }
     }
   };
 }
 
+const parseBody = async <T>(req: NextRequest, model: ZodSchema<T>) => {
+  return model.parse(await getBodyAsync(req));
+};
 function handleUnauthorized() {
   return NextResponse.json(
     {

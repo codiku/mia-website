@@ -37,7 +37,10 @@ export async function POST(req: NextRequest) {
         );
       }
     } else {
-      const hashedPassword = await hash(password, 12);
+      const hashedPassword = await hash(
+        password,
+        Number(process.env.HASH_ROUND)
+      );
       const newUser = await db.user.create({
         data: {
           email,

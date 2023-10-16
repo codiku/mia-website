@@ -1,19 +1,55 @@
+import { db } from "@/utils/db";
 import { auth } from "@/utils/jwt";
-import { PASSWORD_MODEL, STRING_REQUIRED_MODEL, UPDATE_PASSWORD_MODEL } from "@/utils/models";
-import { getBodyAsync, getParams, errorResponse } from "@/utils/request";
+import { UPDATE_PASSWORD_MODEL } from "@/utils/models";
+import { compare, hash } from "bcrypt";
+import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 
+export const PATCH = auth(
+  async (req: NextRequest, _, { newPassword, oldPassword }, token) => {
+    const user = await db.user.findUnique({
+      where: { email: token!.email! },
+    });
 
-
-export const PATCH = auth(async (req: NextRequest, route: { params: { id: string } }) => {
-  try {
-    const body = UPDATE_PASSWORD_MODEL.parse(await getBodyAsync(req));
-    const params = .parse(getParams(req));
-    const uriParams = route.params;
-
-    return NextResponse.json({});
-  } catch (err) {
-    return errorResponse(err as Error);
-  }
-}, false);
+    if (user) {
+      const oldPasswordMatch = await compare(oldPassword, user.password);
+      // Correctly type his own current password
+      if (oldPasswordMatch) {
+        // Prevent using same as before
+        const newPasswordMatch = await compare(newPassword, user.password);
+        if (newPasswordMatch) {
+          return NextResponse.json({
+            error: false,
+            message: "You can't set the same password",
+          });
+        }
+        // It's ok it's a new password and the user remember his old password
+        const newPasswordHash = await hash(
+          newPassword,
+          Number(process.env.HASH_ROUND)
+        );
+        // Updating the password with the hash of the new one
+        const updatedUser = await db.user.update({
+          where: { id: user.id },
+          data: { password: newPasswordHash },
+        });
+        if (updatedUser) {
+          return NextResponse.json({
+            error: false,
+            message: "Password updated successfully",
+          });
+        }
+      } else {
+        return NextResponse.json(
+          {
+            error: true,
+            message: "That is not your old password",
+          },
+          { status: StatusCodes.BAD_REQUEST }
+        );
+      }
+    }
+  },
+  true,
+  UPDATE_PASSWORD_MODEL
+);
