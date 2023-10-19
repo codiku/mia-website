@@ -4,7 +4,6 @@ import { generateJwtToken } from "@/utils/jwt";
 import { getBodyAsync, errorResponse } from "@/utils/request";
 import { FORGOT_PASSWORD_MODEL } from "@/utils/models";
 import { StatusCodes } from "http-status-codes";
-import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

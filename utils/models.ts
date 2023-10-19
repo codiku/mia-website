@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { decodeJwtToken } from "@/utils/jwt";
-import { db } from "./db";
+
 
 export const JWT_TOKEN_MODEL = z
   .string()

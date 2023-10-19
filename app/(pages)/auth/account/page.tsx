@@ -42,7 +42,7 @@ type Form = z.infer<typeof ACCOUNT_FORM_MODEL>;
 function Account() {
   const router = useRouter();
   const { data: session } = useSession();
-  console.log("***", session?.user?.email);
+  console.log("***", session);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const form = useForm<Form>({
@@ -122,9 +122,14 @@ function Account() {
             </div>
           </form>
         </Form>
-        <Link href="/auth/account/update-password" className="ml-1 block mt-4">
-          Update password
-        </Link>
+        {session?.user?.password === undefined && (
+          <Link
+            href="/auth/account/update-password"
+            className="ml-1 block mt-4"
+          >
+            Update password
+          </Link>
+        )}
         <Button
           className="block"
           onClick={() =>

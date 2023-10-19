@@ -1,0 +1,18 @@
+declare namespace NodeJS {
+
+    interface ProcessEnv {
+        GOOGLE_CLIENT_ID: string;
+        GOOGLE_CLIENT_SECRET: string
+        NEXTAUTH_URL: string
+        DATABASE_URL: string
+        NEXTAUTH_SECRET: string
+        HASH_ROUND: string
+        SMTP_USER: string
+        SMTP_PASSWORD: string
+        SMTP_HOST: string
+        SMTP_PORT: string
+        SMTP_FROM: string
+        SIGNUP_CALLBACK_URL: string
+        FORGOT_PASSWORD_CALLBACK_URL: string
+    }
+}

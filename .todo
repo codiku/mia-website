@@ -1,11 +1,7 @@
-- Update password
-
 - refresh token
 
 - Google auth
 
 - i18n
-
-- Typer entrée des rq
 
 - handle deco si user delete en db

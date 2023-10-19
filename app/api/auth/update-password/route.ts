@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const PATCH = auth(
   async (req: NextRequest, _, { newPassword, oldPassword }, token) => {
+
     const user = await db.user.findUnique({
       where: { email: token!.email! },
     });

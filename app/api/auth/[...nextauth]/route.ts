@@ -1,10 +1,11 @@
 import { db } from "@/utils/db";
 import { decodeJwtToken } from "@/utils/jwt";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import { User } from "@prisma/client";
 import { compare } from "bcrypt";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(db),
@@ -17,6 +18,11 @@ export const authOptions: AuthOptions = {
   },
 
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -24,7 +30,8 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
         token: { label: "Token", type: "text" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
+        console.log('*** AUTHORIZE', credentials, req.body, req.query)
         let email = credentials?.email;
         let token = credentials?.token;
         let password = credentials?.password;
@@ -77,6 +84,12 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ account, profile }) {
+      if (account?.provider === "google") {
+        console.log('*** callback ', account, profile)
+      }
+      return true // Do different verification for other providers that don't have `email_verified`
+    },
     async jwt({ token, user }) {
       return { ...token, ...user };
     },

@@ -1,4 +1,5 @@
 "use client";
+import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import { FieldPassword } from "@/components/ui/field-password";
 import {
@@ -26,7 +27,6 @@ type Form = z.infer<typeof SIGNIN_MODEL>;
 export default function Signin() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
-  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
 
   const { mutate: signinMut, isLoading } = useMutation(
     async (form: Form) =>
@@ -115,6 +115,20 @@ export default function Signin() {
           <Button disabled={isLoading} type="submit" className="w-full mt-10">
             Sign in
           </Button>
+          <div className="flex-center mt-5">
+            <div
+              onClick={async () => {
+                const r = await signIn("google", {
+                  redirect: true,
+                  callbackUrl: "http://localhost:3000",
+                });
+                console.log("***", r);
+              }}
+              className="rounded-full border  cursor-pointer p-2 "
+            >
+              <FcGoogle size={25} />
+            </div>
+          </div>
           <div className="mt-4 text-sm">
             You already have an account, please
             <Link href={"/auth/signup"} className="ml-1">
