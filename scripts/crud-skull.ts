@@ -9,19 +9,13 @@ import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
 import { getToken } from "next-auth/jwt";
 import { safeEndPoint } from "@/utils/jwt";
 
-export const POST = safeEndPoint(async (req: NextRequest) => {
-  try {
-    if (await getToken({ req })) {
-      const body = ${pascalCaseEndpoint}Model.omit({ id: true }).parse(await getBodyAsync(req));
+export const POST = safeEndPoint(async (req: NextRequest,body,_,token) => {
       const created = await db.${camelCaseEndpoint}.create({
         data: body,
       });
       return NextResponse.json(created);
-    }
-  } catch (err) {
-    return errorResponse(err as Error);
-  }
-}, true);`,
+      
+    }, true, ${pascalCaseEndpoint}Model.omit({ id: true }));`,
 
   getSkull: (
     camelCaseEndpoint: string,
@@ -35,7 +29,7 @@ import { ${pascalCaseEndpoint} } from "@prisma/client";
 import { safeEndPoint } from "@/utils/jwt";
 
 export const GET = safeEndPoint(
-  async (req: NextRequest, route: { params: { id: string } }) => {
+  async (req: NextRequest, route) => {
     try {
       let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;
       let id = Number(route.params.id);
@@ -56,12 +50,10 @@ export const GET = safeEndPoint(
 
   patchSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 export const PATCH = safeEndPoint(
-  async (req: NextRequest, route: { params: { id: string } }) => {
-    try {
+  async (req: NextRequest, route, body) => {
       let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;
       let id = Number(route.params.id);
       if (id) {
-        const body = ${pascalCaseEndpoint}Model.partial().parse(await getBodyAsync(req));
         ${camelCaseEndpoint} = await db.${camelCaseEndpoint}.update({ where: { id: id }, data: body });
         return NextResponse.json(
           ${camelCaseEndpoint} || { error: true, message: "Not found" },
@@ -70,17 +62,15 @@ export const PATCH = safeEndPoint(
           }
         );
       }
-    } catch (err) {
-      return errorResponse(err as Error);
-    }
+   
   },
-  true
+  true,
+  ${pascalCaseEndpoint}Model.partial()
 );`,
 
   deleteSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 export const DELETE = safeEndPoint(
-  async (req: NextRequest, route: { params: { id: string } }) => {
-    try {
+  async (req: NextRequest, route) => {
       let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;
       let id = Number(route.params.id);
       if (id) {
@@ -92,9 +82,6 @@ export const DELETE = safeEndPoint(
           }
         );
       }
-    } catch (err) {
-      return errorResponse(err as Error);
-    }
   },
   true
 );`,
