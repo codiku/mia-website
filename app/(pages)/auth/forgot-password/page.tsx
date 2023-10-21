@@ -79,10 +79,7 @@ export default function ForgotPassword() {
   return (
     <div className="flex-center mt-20">
       <Form {...form}>
-        <form
-          className="w-96 bg-white p-6 rounded-sm space-y-6"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
+        <form className="card" onSubmit={form.handleSubmit(onSubmit)}>
           {isEmailSent ? (
             renderEmailSent()
           ) : (

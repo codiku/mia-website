@@ -19,6 +19,9 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
+import { Divider } from "@/components/ui/divider";
 
 const SIGNUP_MODEL = z
   .object({
@@ -115,10 +118,7 @@ export default function Signup() {
   return (
     <div className="flex-center mt-20">
       <Form {...form}>
-        <form
-          className="w-96  bg-white p-6 rounded-sm"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
+        <form className="card" onSubmit={form.handleSubmit(onSubmit)}>
           {isEmailSent ? (
             renderEmailSent()
           ) : (
@@ -195,6 +195,21 @@ export default function Signup() {
               >
                 Sign up
               </Button>
+              <Divider>Or continue with</Divider>
+              <div className="flex-center mt-5">
+                <div
+                  onClick={async () => {
+                    signIn("google", {
+                      redirect: true,
+                      callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
+                    });
+                  }}
+                  className="rounded-full border  cursor-pointer p-2 "
+                >
+                  <FcGoogle size={25} />
+                </div>
+              </div>
+
               <div className="mt-4 text-sm">
                 You already have an account, please
                 <Link href="/auth/signin" className="ml-1">

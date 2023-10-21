@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { Divider } from "@/components/ui/divider";
 
 type Form = z.infer<typeof SIGNIN_MODEL>;
 
@@ -66,10 +67,7 @@ export default function Signin() {
   return (
     <div className="flex-center mt-20">
       <Form {...form}>
-        <form
-          className="w-96  bg-white p-6 rounded-sm"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
+        <form className="card" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-4">
             <h2>Signin</h2>
             <div>
@@ -115,10 +113,10 @@ export default function Signin() {
           <Button disabled={isLoading} type="submit" className="w-full mt-10">
             Sign in
           </Button>
+          <Divider>Or continue with</Divider>
           <div className="flex-center mt-5">
             <div
               onClick={async () => {
-                console.log("***", process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL);
                 signIn("google", {
                   redirect: true,
                   callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
