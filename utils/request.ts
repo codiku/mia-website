@@ -10,7 +10,7 @@ interface BodyParams {
 }
 
 // Just made is async so it has the same signature as
-export function getParams(req: NextRequest) {
+export function getQueryParams(req: NextRequest) {
   const queryParams = new URL(req.url).searchParams;
   const queryParamsObject: QueryParams = {};
   queryParams.forEach((value, key) => {

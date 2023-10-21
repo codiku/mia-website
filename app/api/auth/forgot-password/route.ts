@@ -1,14 +1,12 @@
 import { db } from "@/utils/db";
 import { sendEmail } from "@/utils/email";
-import { generateJwtToken } from "@/utils/jwt";
-import { getBodyAsync, errorResponse } from "@/utils/request";
+import { auth, generateJwtToken } from "@/utils/jwt";
 import { FORGOT_PASSWORD_MODEL } from "@/utils/models";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
-  try {
-    const { email } = FORGOT_PASSWORD_MODEL.parse(await getBodyAsync(req));
+export const POST = auth(
+  async (req: NextRequest, _, { email }) => {
     const token = generateJwtToken({ email });
     const existingUser = await db.user.findUnique({ where: { email: email } });
 
@@ -46,7 +44,5 @@ export async function POST(req: NextRequest) {
         { status: StatusCodes.BAD_REQUEST }
       );
     }
-  } catch (err) {
-    return errorResponse(err as Error);
-  }
-}
+
+  }, false, FORGOT_PASSWORD_MODEL)

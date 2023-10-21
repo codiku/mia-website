@@ -3,13 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { db } from "@/utils/db";
 import { StatusCodes } from "http-status-codes";
+import { auth } from "@/utils/jwt";
 
-export async function DELETE(req: NextRequest) {
-  try {
-    const jwtToken = await getToken({ req });
-    if (jwtToken?.email) {
+export const DELETE = auth(
+  async (req: NextRequest, _, __, token) => {
+    if (token?.email) {
       const userDeleted = await db.user.delete({
-        where: { email: jwtToken.email },
+        where: { email: token.email },
       });
       if (userDeleted) {
         return NextResponse.json({
@@ -25,7 +25,4 @@ export async function DELETE(req: NextRequest) {
       },
       { status: StatusCodes.BAD_REQUEST }
     );
-  } catch (err) {
-    return errorResponse(err as Error);
-  }
-}
+  }, true)

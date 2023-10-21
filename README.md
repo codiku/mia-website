@@ -26,7 +26,7 @@ GOOGLE_CLIENT_SECRET=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
 
 By default axios-config display alerts. Unless you send isToastDisabled:false in header
 
-## Route Protection
+## Routes Protection , and validations
 
 Pages :
 
@@ -34,7 +34,22 @@ See middleware.ts to protect a page
 
 Api routes :
 
-Just wrap your handler with auth() hoc, (you can send true or false as second param to enable/disabled)
+Just wrap your handler with auth() hoc,
+
+The signature is the following :
+
+```javascript
+export const GET = auth(
+  async (req: NextRequest, uriParams, bodyData, queryParams, authToken) => {},
+  isValidAuthTokenRequired,
+  ZodSchemaForBody,
+  ZodSchemaForQueryParams
+);
+```
+
+It handles validations for body and params with typing and return an error response if not valid
+
+You can toggle auth easily
 
 ## Session
 

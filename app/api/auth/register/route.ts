@@ -1,7 +1,7 @@
 import { db } from "@/utils/db";
 import { hash } from "bcrypt";
 import { sendEmail } from "@/utils/email";
-import { generateJwtToken } from "@/utils/jwt";
+import { auth, generateJwtToken } from "@/utils/jwt";
 import { REGISTER_MODEL } from "@/utils/models";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -12,14 +12,9 @@ import { User } from "@prisma/client";
 
 // Register can be call, with a resendEmail params , that will just resend an email link
 // to redirect the user to get verified
-export async function POST(req: NextRequest) {
-  try {
-    const { email, password, resendEmail } = REGISTER_MODEL.parse(
-      await getBodyAsync(req)
-    );
-
+export const POST = auth(
+  async (req: NextRequest, _, { email, password, resendEmail }) => {
     const existingUser = await db.user.findUnique({ where: { email: email } });
-
     if (existingUser) {
       if (resendEmail) {
         // If the user exist and just want another email
@@ -54,10 +49,9 @@ export async function POST(req: NextRequest) {
         user: unsensitiveUser(newUser),
       });
     }
-  } catch (err) {
-    return errorResponse(err as Error);
-  }
-}
+
+  }, false, REGISTER_MODEL)
+
 
 async function sendVerificationEmail(user: User) {
   const token = generateJwtToken(user);
@@ -69,8 +63,8 @@ async function sendVerificationEmail(user: User) {
       <body>
         <p>Click the following link to verify your account:</p>
         <a href="http://${headers().get(
-          "host"
-        )}/api/auth/verify-email?token=${token}">
+      "host"
+    )}/api/auth/verify-email?token=${token}">
           Verify account
         </a>
       </body>

@@ -1,16 +1,14 @@
 import { db } from "@/utils/db";
-import { decodeJwtToken } from "@/utils/jwt";
-import { getParams, errorResponse } from "@/utils/request";
+import { auth, decodeJwtToken } from "@/utils/jwt";
 import { VERIFY_EMAIL_MODEL } from "@/utils/models";
 import { User } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-  try {
-    const { token } = VERIFY_EMAIL_MODEL.parse(getParams(req));
-    const user = decodeJwtToken<User>(token as string);
+export const GET = auth(
+  async (req: NextRequest, _, __, { token }) => {
 
+    const user = decodeJwtToken<User>(token);
     if (user?.id) {
       const existingUser = await db.user.findUnique({
         where: { email: user.email },
@@ -32,7 +30,5 @@ export async function GET(req: NextRequest) {
         { status: StatusCodes.FORBIDDEN }
       );
     }
-  } catch (err) {
-    return errorResponse(err);
-  }
-}
+
+  }, false, undefined, VERIFY_EMAIL_MODEL)

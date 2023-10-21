@@ -1,23 +1,20 @@
 import { db } from "@/utils/db";
-import { decodeJwtToken } from "@/utils/jwt";
+import { auth, decodeJwtToken } from "@/utils/jwt";
 import { getBodyAsync, errorResponse } from "@/utils/request";
 import { RESET_PASSWORD_MODEL } from "@/utils/models";
 import { compare, hash } from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest, res: NextResponse) {
-  try {
-    const { password, token } = RESET_PASSWORD_MODEL.parse(
-      await getBodyAsync(req)
-    );
+export const PATCH = auth(
+  async (req: NextRequest, _, { password, token }) => {
     const data = decodeJwtToken<{ email: string }>(token);
     if (data?.email) {
       const user = await db.user.findUnique({ where: { email: data?.email } });
 
       if (user && user.isVerified) {
         // compare body password and hashed user password
-        const passwordMatch = await compare(password, user.password);
+        const passwordMatch = await compare(password, user.password!);
         if (passwordMatch) {
           return NextResponse.json(
             {
@@ -52,7 +49,5 @@ export async function POST(req: NextRequest, res: NextResponse) {
       { message: "Error during password reset", error: true },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
-  } catch (err) {
-    return errorResponse(err as Error);
-  }
-}
+
+  }, true, RESET_PASSWORD_MODEL)

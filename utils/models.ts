@@ -48,7 +48,7 @@ export const RESET_PASSWORD_MODEL = z.object({
 });
 
 export const VERIFY_EMAIL_MODEL = z.object({
-  token: JWT_TOKEN_MODEL,
+  token: JWT_TOKEN_MODEL
 });
 
 export const DELETE_ACCOUNT_MODEL = z.object({

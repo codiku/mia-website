@@ -6,18 +6,18 @@ import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
 export const PATCH = auth(
-  async (req: NextRequest, _, { newPassword, oldPassword }, token) => {
+  async (req: NextRequest, _, { newPassword, oldPassword }, __, token) => {
 
     const user = await db.user.findUnique({
       where: { email: token!.email! },
     });
 
     if (user) {
-      const oldPasswordMatch = await compare(oldPassword, user.password);
+      const oldPasswordMatch = await compare(oldPassword, user.password!);
       // Correctly type his own current password
       if (oldPasswordMatch) {
         // Prevent using same as before
-        const newPasswordMatch = await compare(newPassword, user.password);
+        const newPasswordMatch = await compare(newPassword, user.password!);
         if (newPasswordMatch) {
           return NextResponse.json({
             error: false,
@@ -51,6 +51,6 @@ export const PATCH = auth(
       }
     }
   },
-  true,
+  false,
   UPDATE_PASSWORD_MODEL
 );
