@@ -1,7 +1,7 @@
 import { db } from "@/utils/db";
 import { hash } from "bcrypt";
 import { sendEmail } from "@/utils/email";
-import { auth, generateJwtToken } from "@/utils/jwt";
+import { generateJwtToken, safeEndPoint } from "@/utils/jwt";
 import { REGISTER_MODEL } from "@/utils/models";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -12,7 +12,7 @@ import { User } from "@prisma/client";
 
 // Register can be call, with a resendEmail params , that will just resend an email link
 // to redirect the user to get verified
-export const POST = auth(
+export const POST = safeEndPoint(
   async (req: NextRequest, _, { email, password, resendEmail }) => {
     const existingUser = await db.user.findUnique({ where: { email: email } });
     if (existingUser) {

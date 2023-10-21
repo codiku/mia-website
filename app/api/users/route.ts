@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
 import { UserModel } from "@/prisma/zod";
 import { getToken } from "next-auth/jwt";
-import { auth } from "@/utils/jwt";
+import { safeEndPoint } from "@/utils/jwt";
 
-export const POST = auth(async (req: NextRequest) => {
+export const POST = safeEndPoint(async (req: NextRequest) => {
   try {
     if (await getToken({ req })) {
       const body = UserModel.omit({ id: true }).parse(await getBodyAsync(req));

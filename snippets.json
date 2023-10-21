@@ -2,7 +2,7 @@
     "Endpoint Function": {
         "prefix": "rendpoint",
         "body": [
-            "export const $1 = auth(async (req: NextRequest, route: { params: { id: string } }) => {",
+            "export const $1 = safeEndPoint(async (req: NextRequest, route: { params: { id: string } }) => {",
             "  try {",
             "    const body = $2.parse(await getBodyAsync(req));",
             "    const params = $2.parse(getParams(req));",

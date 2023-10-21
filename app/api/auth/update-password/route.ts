@@ -1,11 +1,11 @@
 import { db } from "@/utils/db";
-import { auth } from "@/utils/jwt";
+import { safeEndPoint } from "@/utils/jwt";
 import { UPDATE_PASSWORD_MODEL } from "@/utils/models";
 import { compare, hash } from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
-export const PATCH = auth(
+export const PATCH = safeEndPoint(
   async (req: NextRequest, _, { newPassword, oldPassword }, __, token) => {
 
     const user = await db.user.findUnique({

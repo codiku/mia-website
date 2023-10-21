@@ -4,9 +4,9 @@ import { StatusCodes } from "http-status-codes";
 import { db } from "@/utils/db";
 import { UserModel } from "@/prisma/zod";
 import { User } from "@prisma/client";
-import { auth } from "@/utils/jwt";
+import { safeEndPoint } from "@/utils/jwt";
 
-export const GET = auth(
+export const GET = safeEndPoint(
   async (req: NextRequest, route: { params: { id: string } }) => {
     try {
       let user: User | null = null;
@@ -26,7 +26,7 @@ export const GET = auth(
   true
 );
 
-export const PATCH = auth(
+export const PATCH = safeEndPoint(
   async (req: NextRequest, route: { params: { id: string } }) => {
     try {
       let user: User | null = null;
@@ -48,7 +48,7 @@ export const PATCH = auth(
   false
 );
 
-export const DELETE = auth(
+export const DELETE = safeEndPoint(
   async (req: NextRequest, route: { params: { id: string } }) => {
     try {
       let user: User | null = null;

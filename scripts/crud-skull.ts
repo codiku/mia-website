@@ -7,9 +7,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/utils/db";
 import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
 import { getToken } from "next-auth/jwt";
-import { auth } from "@/utils/jwt";
+import { safeEndPoint } from "@/utils/jwt";
 
-export const POST = auth(async (req: NextRequest) => {
+export const POST = safeEndPoint(async (req: NextRequest) => {
   try {
     if (await getToken({ req })) {
       const body = ${pascalCaseEndpoint}Model.omit({ id: true }).parse(await getBodyAsync(req));
@@ -32,9 +32,9 @@ import { StatusCodes } from "http-status-codes";
 import { db } from "@/utils/db";
 import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
 import { ${pascalCaseEndpoint} } from "@prisma/client";
-import { auth } from "@/utils/jwt";
+import { safeEndPoint } from "@/utils/jwt";
 
-export const GET = auth(
+export const GET = safeEndPoint(
   async (req: NextRequest, route: { params: { id: string } }) => {
     try {
       let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;
@@ -55,7 +55,7 @@ export const GET = auth(
 );`,
 
   patchSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
-export const PATCH = auth(
+export const PATCH = safeEndPoint(
   async (req: NextRequest, route: { params: { id: string } }) => {
     try {
       let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;
@@ -78,7 +78,7 @@ export const PATCH = auth(
 );`,
 
   deleteSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
-export const DELETE = auth(
+export const DELETE = safeEndPoint(
   async (req: NextRequest, route: { params: { id: string } }) => {
     try {
       let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;

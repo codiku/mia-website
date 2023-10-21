@@ -23,7 +23,7 @@ export function decodeJwtToken<T>(token: string) {
   }
 }
 // Create a function that wraps your route handler with the authentication logic.
-export function auth<B, P>(
+export function safeEndPoint<B, P>(
   routeHandler: (
     req: NextRequest,
     route: {

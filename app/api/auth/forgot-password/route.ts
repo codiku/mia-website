@@ -1,11 +1,11 @@
 import { db } from "@/utils/db";
 import { sendEmail } from "@/utils/email";
-import { auth, generateJwtToken } from "@/utils/jwt";
+import { generateJwtToken, safeEndPoint } from "@/utils/jwt";
 import { FORGOT_PASSWORD_MODEL } from "@/utils/models";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
-export const POST = auth(
+export const POST = safeEndPoint(
   async (req: NextRequest, _, { email }) => {
     const token = generateJwtToken({ email });
     const existingUser = await db.user.findUnique({ where: { email: email } });

@@ -1,11 +1,11 @@
 import { db } from "@/utils/db";
-import { auth, decodeJwtToken } from "@/utils/jwt";
+import { decodeJwtToken, safeEndPoint } from "@/utils/jwt";
 import { VERIFY_EMAIL_MODEL } from "@/utils/models";
 import { User } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = auth(
+export const GET = safeEndPoint(
   async (req: NextRequest, _, __, { token }) => {
 
     const user = decodeJwtToken<User>(token);

@@ -34,22 +34,26 @@ See middleware.ts to protect a page
 
 Api routes :
 
-Just wrap your handler with auth() hoc,
+Just wrap your handler with safeEndPoint() hoc,
 
 The signature is the following :
 
 ```javascript
-export const GET = auth(
-  async (req: NextRequest, uriParams, bodyData, queryParams, authToken) => {},
-  isValidAuthTokenRequired,
-  ZodSchemaForBody,
-  ZodSchemaForQueryParams
+export const GET = safeEndPoint(
+  async (req: NextRequest, uriParams, bodyData, queryParams, jwtToken) => {
+    // your code
+  },
+  isValidAuthTokenRequired, // boolean
+  ZodSchemaForBody, //Zod Schema
+  ZodSchemaForQueryParams // Zod Schema
 );
 ```
 
-It handles validations for body and params with typing and return an error response if not valid
+It handles validations for body and query params with typing
 
 You can toggle auth easily
+
+Handle auth error and validations error
 
 ## Session
 

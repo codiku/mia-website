@@ -1,12 +1,11 @@
-import { errorResponse } from "@/utils/request";
 import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 import { db } from "@/utils/db";
 import { StatusCodes } from "http-status-codes";
-import { auth } from "@/utils/jwt";
+import { safeEndPoint } from "@/utils/jwt";
+import { User } from "@prisma/client";
 
-export const DELETE = auth(
-  async (req: NextRequest, _, __, token) => {
+export const DELETE = safeEndPoint(
+  async (req: NextRequest, _, __, token: User) => {
     if (token?.email) {
       const userDeleted = await db.user.delete({
         where: { email: token.email },

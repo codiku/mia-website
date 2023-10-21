@@ -1,12 +1,11 @@
 import { db } from "@/utils/db";
-import { auth, decodeJwtToken } from "@/utils/jwt";
-import { getBodyAsync, errorResponse } from "@/utils/request";
+import { decodeJwtToken, safeEndPoint } from "@/utils/jwt";
 import { RESET_PASSWORD_MODEL } from "@/utils/models";
 import { compare, hash } from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
-export const PATCH = auth(
+export const PATCH = safeEndPoint(
   async (req: NextRequest, _, { password, token }) => {
     const data = decodeJwtToken<{ email: string }>(token);
     if (data?.email) {
