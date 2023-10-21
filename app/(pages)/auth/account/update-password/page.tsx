@@ -87,7 +87,7 @@ function UpdatePassword(p: {}) {
                     <FormControl>
                       <FieldPassword placeholder="Old password" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -102,7 +102,7 @@ function UpdatePassword(p: {}) {
                     <FormControl>
                       <FieldPassword placeholder="New password" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -120,7 +120,7 @@ function UpdatePassword(p: {}) {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />

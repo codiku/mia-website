@@ -1,7 +1,5 @@
 - refresh token
 
-- Google auth
-
 - i18n
 
 - handle deco si user delete en db

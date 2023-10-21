@@ -80,11 +80,11 @@ export default function Signin() {
                     <FormControl>
                       <Input placeholder="example@gmail.com" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </div>
             <div>
               <FormField
@@ -99,11 +99,11 @@ export default function Signin() {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </div>
             <Link href={"/auth/forgot-password"} className="inline-block pl-1">
               Forgot password ?

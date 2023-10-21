@@ -18,10 +18,11 @@ import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { ZodError, ZodIssue, z } from "zod";
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 import { Divider } from "@/components/ui/divider";
+import { FieldPassword } from "@/components/ui/field-password";
 
 const SIGNUP_MODEL = z
   .object({
@@ -36,11 +37,18 @@ const SIGNUP_MODEL = z
   });
 
 type Form = z.infer<typeof SIGNUP_MODEL>;
+let POSSIBLE_ERRORS: ZodIssue[] = [];
+try {
+  PASSWORD_MODEL.parse("");
+} catch (err) {
+  POSSIBLE_ERRORS = (err as ZodError).issues;
+}
 
 export default function Signup() {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const formDataRef = useRef<Form>();
   const [disabledEmailButton, setDisabledEmailButton] = useState(false);
+  const [currentZodIssues, setCurrentZodIssues] = useState<ZodIssue[]>([]);
 
   const { mutate: signup, isLoading } = useMutation(
     async (formData: Form) =>
@@ -87,6 +95,12 @@ export default function Signup() {
     } else {
       form.clearErrors("passwordConfirm");
     }
+    try {
+      PASSWORD_MODEL.parse(password);
+      setCurrentZodIssues([]);
+    } catch (err) {
+      setCurrentZodIssues((err as ZodError).issues);
+    }
   }, [form, password]);
 
   const renderEmailSent = () => {
@@ -115,6 +129,13 @@ export default function Signup() {
       </div>
     );
   };
+
+  const shoudCrossPasswordError = (possibleIssue: ZodIssue) => {
+    const element = currentZodIssues.find(
+      (currIssue) => currIssue.message === possibleIssue.message
+    );
+    return element == undefined;
+  };
   return (
     <div className="flex-center mt-20">
       <Form {...form}>
@@ -135,11 +156,11 @@ export default function Signup() {
                         <FormControl>
                           <Input placeholder="example@gmail.com" {...field} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-xs" />
                       </FormItem>
                     )}
                   />
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </div>
                 <div>
                   <FormField
@@ -149,22 +170,31 @@ export default function Signup() {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input
-                            type="password"
+                          <FieldPassword
                             placeholder="Enter your password"
                             {...field}
                           />
                         </FormControl>
                         <ul className="text-xs font-light">
-                          <li>At least 8 characters</li>
-                          <li>At least 1 lowercase, 1 uppercase,</li>
-                          <li>At least 1 number, 1 special character</li>
+                          {password &&
+                            currentZodIssues.length > 0 &&
+                            POSSIBLE_ERRORS.map((possibleError, i) => (
+                              <li
+                                key={i}
+                                className={`text-red-500 font-medium ${
+                                  shoudCrossPasswordError(possibleError)
+                                    ? "line-through"
+                                    : ""
+                                }`}
+                              >
+                                {possibleError.message}
+                              </li>
+                            ))}
                         </ul>
-                        <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </div>
                 <div>
                   <FormField
@@ -174,17 +204,16 @@ export default function Signup() {
                       <FormItem>
                         <FormLabel>Confirm password</FormLabel>
                         <FormControl>
-                          <Input
-                            type="password"
+                          <FieldPassword
                             placeholder="Type your password again"
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-xs" />
                       </FormItem>
                     )}
                   />
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </div>
               </div>
 

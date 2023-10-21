@@ -100,11 +100,11 @@ export default function ResetPassword() {
                     <li>At least 1 lowercase, 1 uppercase,</li>
                     <li>At least 1 number, 1 special character</li>
                   </ul>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
-            <FormMessage />
+            <FormMessage className="text-xs" />
           </div>
           <div>
             <FormField
@@ -119,11 +119,11 @@ export default function ResetPassword() {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
-            <FormMessage />
+            <FormMessage className="text-xs" />
           </div>
 
           <Button disabled={isLoading} type="submit" className="w-full mt-10">

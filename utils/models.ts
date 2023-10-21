@@ -11,13 +11,13 @@ export const JWT_TOKEN_MODEL = z
 
 export const PASSWORD_MODEL = z
   .string()
-  .min(8, "Must be at least 8 characters")
-  .regex(/[A-Z]+/, "Must contain at least 1 uppercase letter")
-  .regex(/[a-z]+/, "Must contain at least 1 lowercase letter")
-  .regex(/[0-9]+/, "Must contain at least 1 number")
+  .min(8, "At least 8 characters")
+  .regex(/[A-Z]+/, "At least 1 uppercase letter")
+  .regex(/[a-z]+/, "At least 1 lowercase letter")
+  .regex(/[0-9]+/, "At least 1 number")
   .regex(
     /[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/,
-    "Must contain at least 1 special character"
+    "At least 1 special character"
   );
 
 export const EMAIL_MODEL = z
