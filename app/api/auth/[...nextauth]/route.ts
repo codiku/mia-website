@@ -1,5 +1,6 @@
 import { db } from "@/utils/db";
 import { decodeJwtToken } from "@/utils/jwt";
+import { unsensitiveUser } from "@/utils/user";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { User } from "@prisma/client";
 import { compare } from "bcrypt";
@@ -75,10 +76,8 @@ export const authOptions: AuthOptions = {
           return null;
         }
 
-        return {
-          id: existingUser.id.toString(),
-          email: existingUser.email,
-        };
+        return unsensitiveUser(existingUser)
+
       },
     }),
   ],
@@ -88,13 +87,15 @@ export const authOptions: AuthOptions = {
       }
       return true // Do different verification for other providers that don't have `email_verified`
     },
-    async jwt({ token, user }) {
-      return { ...token, ...user };
+    async jwt({ token, user, account }) {
+      return { ...token, ...user, ...account };
     },
     async session({ session, token, user }) {
       return {
         ...session,
-        user: token,
+        ...user,
+        ...token
+
       };
     },
   },

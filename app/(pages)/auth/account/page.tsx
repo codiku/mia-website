@@ -42,6 +42,7 @@ type Form = z.infer<typeof ACCOUNT_FORM_MODEL>;
 function Account() {
   const router = useRouter();
   const { data: session } = useSession();
+
   console.log("***", session);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -122,7 +123,7 @@ function Account() {
             </div>
           </form>
         </Form>
-        {session?.user?.password === undefined && (
+        {session?.user?.type === "credentials" && (
           <Link
             href="/auth/account/update-password"
             className="ml-1 block mt-4"

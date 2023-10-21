@@ -19,3 +19,4 @@ declare namespace NodeJS {
         NEXT_PUBLIC_GOOGLE_CALLBACK_URL: string
     }
 }
+
