@@ -16,11 +16,12 @@ SMTP_HOST=smtp.sendgrid.net
 SMTP_PORT=587
 SMTP_FROM=robin.lebhar.chill.studio@gmail.com
 
-SIGNUP_CALLBACK_URL=http://localhost:3000/
+SIGNUP_CALLBACK_URL=http://localhost:3000
 FORGOT_PASSWORD_CALLBACK_URL=http://localhost:3000/auth/reset-password
 
 GOOGLE_CLIENT_ID=763622883304-h8or7a6lhhdpt68sdqludio341qkkamv.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=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
+GOOGLE_CALLBACK_URL=http://localhost:3000
 
 ## Toast and response
 

@@ -14,5 +14,8 @@ declare namespace NodeJS {
         SMTP_FROM: string
         SIGNUP_CALLBACK_URL: string
         FORGOT_PASSWORD_CALLBACK_URL: string
+        GOOGLE_CLIENT_ID: string
+        GOOGLE_CLIENT_SECRET: string
+        NEXT_PUBLIC_GOOGLE_CALLBACK_URL: string
     }
 }

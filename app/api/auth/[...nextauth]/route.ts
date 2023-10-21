@@ -31,7 +31,6 @@ export const authOptions: AuthOptions = {
         token: { label: "Token", type: "text" },
       },
       async authorize(credentials, req) {
-        console.log('*** AUTHORIZE', credentials, req.body, req.query)
         let email = credentials?.email;
         let token = credentials?.token;
         let password = credentials?.password;
@@ -70,7 +69,7 @@ export const authOptions: AuthOptions = {
           return null;
         }
 
-        const passwordMatch = await compare(password, existingUser.password);
+        const passwordMatch = await compare(password, existingUser.password!);
 
         if (!passwordMatch) {
           return null;
@@ -86,7 +85,6 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async signIn({ account, profile }) {
       if (account?.provider === "google") {
-        console.log('*** callback ', account, profile)
       }
       return true // Do different verification for other providers that don't have `email_verified`
     },
@@ -102,6 +100,6 @@ export const authOptions: AuthOptions = {
   },
 };
 
-const handler = NextsafeEndPoint(authOptions);
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

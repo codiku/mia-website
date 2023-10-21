@@ -118,11 +118,11 @@ export default function Signin() {
           <div className="flex-center mt-5">
             <div
               onClick={async () => {
-                const r = await signIn("google", {
+                console.log("***", process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL);
+                signIn("google", {
                   redirect: true,
-                  callbackUrl: "http://localhost:3000",
+                  callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
                 });
-                console.log("***", r);
               }}
               className="rounded-full border  cursor-pointer p-2 "
             >
