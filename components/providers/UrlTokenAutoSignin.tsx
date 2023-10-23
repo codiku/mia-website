@@ -11,6 +11,7 @@ export function UrlTokenAutoSignin(p: { children: ReactNode }) {
   const session = useSession();
   const router = useRouter();
   const [isRedirectionDone, setIsRedirectionDone] = useState(false);
+
   useEffect(() => {
     if (token && session.status != "authenticated") {
       (async () => {
@@ -32,5 +33,6 @@ export function UrlTokenAutoSignin(p: { children: ReactNode }) {
       setIsRedirectionDone(true);
     }
   }, [token]);
+
   return <>{isRedirectionDone && p.children}</>;
 }

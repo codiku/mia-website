@@ -1,13 +1,15 @@
 import { UrlTokenAutoSignin } from "@/components/providers/UrlTokenAutoSignin";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-
-export default async function Home() {
+import { useServerTranslation } from "@/i18n/server";
+export default async function Home(p: { params: { lng: string } }) {
   const serverSession = await getServerSession();
+  const { t } = await useServerTranslation(p.params.lng);
+
   return (
     <UrlTokenAutoSignin>
       <main className="">
-        <h1 className="text-4xl">Index</h1>
+        <h1 className="text-4xl">{t("title")}</h1>
         {serverSession?.user?.email ? (
           <>
             <div>Hello {serverSession.user.email}</div>

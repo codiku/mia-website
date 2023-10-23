@@ -43,7 +43,6 @@ function Account() {
   const router = useRouter();
   const { data: session } = useSession();
 
-  console.log("***", session);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const form = useForm<Form>({

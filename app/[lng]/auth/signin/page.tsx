@@ -17,17 +17,18 @@ import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Divider } from "@/components/ui/divider";
+import { useTranslation } from "@/i18n/client";
 
 type Form = z.infer<typeof SIGNIN_MODEL>;
 
 export default function Signin() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
+  const { t } = useTranslation("signin");
 
   const { mutate: signinMut, isLoading } = useMutation(
     async (form: Form) =>
@@ -69,7 +70,7 @@ export default function Signin() {
       <Form {...form}>
         <form className="card" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-4">
-            <h2>Signin</h2>
+            <h2>{t("title")}</h2>
             <div>
               <FormField
                 control={form.control}

@@ -28,8 +28,8 @@ export function safeEndPoint<B, P>(
     req: NextRequest,
     route: {
       params: {
-        [key: string]: string
-      }
+        [key: string]: string;
+      };
     },
     body: Awaited<B>,
     params: P,
@@ -44,9 +44,9 @@ export function safeEndPoint<B, P>(
       const token = await getToken({ req });
       if (token) {
         let body = modelBody ? await parseBody(req, modelBody) : undefined;
-        const params = getQueryParams(req)
+        const params = getQueryParams(req);
         if (modelParams) {
-          modelParams.parse(params)
+          modelParams.parse(params);
         }
         return routeHandler(req, route, body as never, params as P, token);
       } else {
@@ -55,15 +55,13 @@ export function safeEndPoint<B, P>(
     } else {
       try {
         let body = modelBody ? await parseBody(req, modelBody) : undefined;
-        const params = getQueryParams(req)
+        const params = getQueryParams(req);
         if (modelParams) {
-          modelParams.parse(params)
+          modelParams.parse(params);
         }
         return routeHandler(req, route, body as never, params as P, undefined);
       } catch (error) {
-        console.log('***', error)
         return errorResponse(error as Error);
-
       }
     }
   };
