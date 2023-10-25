@@ -39,7 +39,7 @@ export function useTranslation(
   options?: UseTranslationOptions<string>
 ) {
   // Extract the locale from the URL
-  const [lng, setLng] = useState(window.location.pathname.split("/")[1]);
+  const [lng, setLng] = useState(typeof window !== "undefined" ? window.location.pathname.split("/")[1] : "en");
   const [cookies, setCookie] = useCookies([cookieName]);
   const ret = useTranslationOrg(ns, options);
   const { i18n } = ret;
