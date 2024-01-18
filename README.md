@@ -48,7 +48,7 @@ Take your web development skills to the next level with this comprehensive boile
 
 By default axios-config display alerts. Unless you send isToastDisabled:false in header
 
-## Routes Protection , and validations
+## Routes Protection , and validations 100% TS support with Zod validation
 
 Pages : See middleware.ts to protect a page
 
