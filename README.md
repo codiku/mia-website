@@ -1,5 +1,6 @@
-# Next auth
-# Next Auth + Tailwind + Shadcnui Boilerplate
+# Next Boiler Plate 
+
+Next.JS + Typescript + Next Auth + Tailwind + Shadcnui + Prisma + Supabase 
 
 **🚀 Elevate your web development with our Next Auth + Tailwind + Shadcnui Boilerplate, the perfect foundation for building blazing fast, secure, and user-friendly web applications.**
 
