@@ -1,0 +1,57 @@
+{
+  "Index": {
+    "title": "Bonjour le monde !",
+    "linkAccount": "Compte",
+    "linkSignin": "Connexion",
+    "hello": "Bonjour",
+    "authAccount": "auth/compte"
+  },
+  "Auth": {
+    "account": {
+      "title": "Compte",
+      "logout": "Déconnexion",
+      "deleteAccount": "Supprimer le compte",
+      "email": "E-mail",
+      "updatePassword": "Mettre à jour le mot de passe",
+      "areYouSure": "Êtes-vous absolument sûr ?",
+      "actionCannotBeUndone": "Cette action est irréversible. Cela supprimera définitivement votre compte et retirera vos données de nos serveurs.",
+      "cancel": "Annuler"
+    },
+    "forgot-password": {
+      "title": "Mot de passe oublié",
+      "emailSent": "E-mail envoyé",
+      "checkInbox": "Vérifiez votre boîte de réception et cliquez sur le lien pour réinitialiser votre mot de passe.",
+      "closeWindow": "Vous pouvez fermer cette fenêtre.",
+      "didNotReceiveEmail": "Vous n'avez pas reçu l'e-mail ?",
+      "sendEmailAgain": "Envoyer l'e-mail à nouveau",
+      "loading": "Chargement...",
+      "waitBeforeSending": "Attendez 30 secondes avant de renvoyer"
+    },
+    "reset-password": {
+      "title": "Réinitialiser le mot de passe",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "enterYourPassword": "Entrez votre mot de passe",
+      "typeYourPasswordAgain": "Tapez à nouveau votre mot de passe",
+      "passwordConditions": {
+        "atLeastEightCharacters": "Au moins 8 caractères",
+        "atLeastOneLowercase": "Au moins 1 minuscule, 1 majuscule",
+        "atLeastOneNumber": "Au moins 1 chiffre, 1 caractère spécial"
+      }
+    },
+    "signin": {
+      "title": "Connexion",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "exampleEmail": "exemple@gmail.com",
+      "typeYourPassword": "Tapez votre mot de passe",
+      "forgotPassword": "Mot de passe oublié ?",
+      "orContinueWith": "Ou continuez avec",
+      "alreadyHaveAccount": "Vous avez déjà un compte, veuillez",
+      "signUp": "S'inscrire"
+    },
+    "signup": {
+      "title": "Inscription"
+    }
+  }
+}

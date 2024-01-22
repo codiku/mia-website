@@ -1,12 +1,10 @@
-import { db } from "@/utils/db";
+import { db, excludeField } from "@/utils/db";
 import { hash } from "bcrypt";
 import { sendEmail } from "@/utils/email";
 import { generateJwtToken, safeEndPoint } from "@/utils/jwt";
 import { REGISTER_MODEL } from "@/utils/models";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { unsensitiveUser } from "@/utils/user";
-import { getBodyAsync, errorResponse } from "@/utils/request";
 import { StatusCodes } from "http-status-codes";
 import { User } from "@prisma/client";
 
@@ -46,12 +44,13 @@ export const POST = safeEndPoint(
       sendVerificationEmail(newUser);
 
       return NextResponse.json({
-        user: unsensitiveUser(newUser),
+        user: excludeField(newUser, ["password"]),
       });
     }
-
-  }, false, REGISTER_MODEL)
-
+  },
+  false,
+  REGISTER_MODEL
+);
 
 async function sendVerificationEmail(user: User) {
   const token = generateJwtToken(user);
@@ -63,8 +62,8 @@ async function sendVerificationEmail(user: User) {
       <body>
         <p>Click the following link to verify your account:</p>
         <a href="http://${headers().get(
-      "host"
-    )}/api/auth/verify-email?token=${token}">
+          "host"
+        )}/api/auth/verify-email?token=${token}">
           Verify account
         </a>
       </body>

@@ -1,6 +1,5 @@
-import { db } from "@/utils/db";
+import { db, excludeField } from "@/utils/db";
 import { decodeJwtToken } from "@/utils/jwt";
-import { unsensitiveUser } from "@/utils/user";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { User } from "@prisma/client";
 import { compare } from "bcrypt";
@@ -22,7 +21,6 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -76,8 +74,7 @@ export const authOptions: AuthOptions = {
           return null;
         }
 
-        return unsensitiveUser(existingUser)
-
+        return excludeField(existingUser, ["password"]);
       },
     }),
   ],
@@ -85,7 +82,7 @@ export const authOptions: AuthOptions = {
     async signIn({ account, profile }) {
       if (account?.provider === "google") {
       }
-      return true // Do different verification for other providers that don't have `email_verified`
+      return true; // Do different verification for other providers that don't have `email_verified`
     },
     async jwt({ token, user, account }) {
       return { ...token, ...user, ...account };
@@ -94,8 +91,7 @@ export const authOptions: AuthOptions = {
       return {
         ...session,
         ...user,
-        ...token
-
+        ...token,
       };
     },
   },

@@ -9,7 +9,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { PASSWORD_MODEL } from "@/utils/models";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { FieldPassword } from "@/components/ui/field-password";
+import { useTranslations } from "next-intl";
 
 export const RESET_PASSWORD_MODEL = z
   .object({
@@ -36,6 +36,7 @@ type Form = z.infer<typeof RESET_PASSWORD_MODEL>;
 
 export default function ResetPassword() {
   const router = useRouter();
+  const t = useTranslations("Auth.reset-password");
   const { mutate: resetPassword, isLoading } = useMutation(
     async (data: { token: string; password: string }) =>
       api.post<Resp<{}>>(
@@ -53,7 +54,7 @@ export default function ResetPassword() {
         });
         if (!data.error) {
           router.push("/auth/signin");
-          toast.success("Password has been updated");
+          toast.success(t("passwordUpdated"));
         }
       },
     }
@@ -81,7 +82,7 @@ export default function ResetPassword() {
     <div className="flex-center mt-20">
       <Form {...form}>
         <form className="card" onSubmit={form.handleSubmit(onSubmit)}>
-          <h2>Request a password reset</h2>
+          <h2>{t("title")}</h2>
           <div>
             <FormField
               control={form.control}
@@ -96,9 +97,9 @@ export default function ResetPassword() {
                     />
                   </FormControl>
                   <ul className="text-xs font-light">
-                    <li>At least 8 characters</li>
-                    <li>At least 1 lowercase, 1 uppercase,</li>
-                    <li>At least 1 number, 1 special character</li>
+                    <li>{t("passwordConditions.atLeastEightCharacters")}</li>
+                    <li>{t("passwordConditions.atLeastOneLowercase")}</li>
+                    <li>{t("passwordConditions.atLeastOneNumber")}</li>
                   </ul>
                   <FormMessage className="text-xs" />
                 </FormItem>
@@ -112,7 +113,7 @@ export default function ResetPassword() {
               name="passwordConfirm"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm password</FormLabel>
+                  <FormLabel>{t("confirmPassword")}</FormLabel>
                   <FormControl>
                     <FieldPassword
                       placeholder="Type your password again"
@@ -127,7 +128,7 @@ export default function ResetPassword() {
           </div>
 
           <Button disabled={isLoading} type="submit" className="w-full mt-10">
-            Reset password
+            {t("resetPassword")}
           </Button>
         </form>
       </Form>

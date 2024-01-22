@@ -23,6 +23,7 @@ import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 import { Divider } from "@/components/ui/divider";
 import { FieldPassword } from "@/components/ui/field-password";
+import { useTranslations } from "use-intl";
 
 const SIGNUP_MODEL = z
   .object({
@@ -49,7 +50,7 @@ export default function Signup() {
   const formDataRef = useRef<Form>();
   const [disabledEmailButton, setDisabledEmailButton] = useState(false);
   const [currentZodIssues, setCurrentZodIssues] = useState<ZodIssue[]>([]);
-
+  const t = useTranslations("Auth.signup");
   const { mutate: signup, isLoading } = useMutation(
     async (formData: Form) =>
       api.post<Resp<UnsensitiveUser>>("/api/auth/register/", formData),
@@ -90,7 +91,7 @@ export default function Signup() {
     if (password !== form.getValues().passwordConfirm) {
       form.setError("passwordConfirm", {
         type: "manual",
-        message: "Passwords don't match",
+        message: t("passwordDontMatch"),
       });
     } else {
       form.clearErrors("passwordConfirm");
@@ -101,19 +102,19 @@ export default function Signup() {
     } catch (err) {
       setCurrentZodIssues((err as ZodError).issues);
     }
-  }, [form, password]);
+  }, [form, password, t]);
 
   const renderEmailSent = () => {
     return (
       <div>
-        <h2 className="mb-5">Email sent</h2>
-        <p>Check your inbox and click the link to activate your account.</p>
+        <h2 className="mb-5">{t("emailSent")}</h2>
+        <p>{t("checkInbox")}</p>
         <p>
           <br />
-          You can close this window.
+          {t("closeWindow")}
         </p>
 
-        <h2 className="mt-20">{"Didn't receive the email ?"}</h2>
+        <h2 className="mt-20">{t("didNotReceiveEmail")}</h2>
         <Button
           type="submit"
           variant={"outline"}
@@ -121,10 +122,10 @@ export default function Signup() {
           className="w-full mt-10"
         >
           {isLoading
-            ? "Loading..."
+            ? t("loading")
             : disabledEmailButton
-            ? "Wait 15 secondes before sending again"
-            : "Send email again"}
+            ? t("waitBeforeSending")
+            : t("sendEmailAgain")}
         </Button>
       </div>
     );
@@ -145,16 +146,16 @@ export default function Signup() {
           ) : (
             <>
               <div className="space-y-4">
-                <h2>Register</h2>
+                <h2>{t("register")}</h2>
                 <div>
                   <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>{t("email")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="example@gmail.com" {...field} />
+                          <Input placeholder={t("email")} {...field} />
                         </FormControl>
                         <FormMessage className="text-xs" />
                       </FormItem>
@@ -168,19 +169,19 @@ export default function Signup() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>{t("password")}</FormLabel>
                         <FormControl>
                           <FieldPassword
-                            placeholder="Enter your password"
+                            placeholder={t("enterYourPassword")}
                             {...field}
                           />
                         </FormControl>
                         <ul className="text-xs font-light">
                           {password &&
                             currentZodIssues.length > 0 &&
-                            POSSIBLE_ERRORS.map((possibleError, i) => (
+                            POSSIBLE_ERRORS.map((possibleError, index) => (
                               <li
-                                key={i}
+                                key={possibleError.message}
                                 className={`text-red-500 font-medium ${
                                   shoudCrossPasswordError(possibleError)
                                     ? "line-through"
@@ -202,10 +203,10 @@ export default function Signup() {
                     name="passwordConfirm"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Confirm password</FormLabel>
+                        <FormLabel>{t("confirmPassword")}</FormLabel>
                         <FormControl>
                           <FieldPassword
-                            placeholder="Type your password again"
+                            placeholder={t("typeYourPasswordAgain")}
                             {...field}
                           />
                         </FormControl>
@@ -222,9 +223,9 @@ export default function Signup() {
                 type="submit"
                 className="w-full mt-10"
               >
-                Sign up
+                {t("signUp")}
               </Button>
-              <Divider>Or continue with</Divider>
+              <Divider>{t("orContinueWith")}</Divider>
               <div className="flex-center mt-5">
                 <div
                   onClick={async () => {
@@ -233,16 +234,16 @@ export default function Signup() {
                       callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
                     });
                   }}
-                  className="rounded-full border  cursor-pointer p-2 "
+                  className="rounded-full border cursor-pointer p-2"
                 >
                   <FcGoogle size={25} />
                 </div>
               </div>
 
               <div className="mt-4 text-sm">
-                You already have an account, please
+                {t("alreadyHaveAccount")}
                 <Link href="/auth/signin" className="ml-1">
-                  Sign in
+                  {t("signIn")}
                 </Link>
               </div>
             </>

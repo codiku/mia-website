@@ -1,11 +1,10 @@
 import { UrlTokenAutoSignin } from "@/components/providers/UrlTokenAutoSignin";
 import { getServerSession } from "next-auth";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
-import { useServerTranslation } from "@/i18n/server";
 export default async function Home(p: { params: { lng: string } }) {
   const serverSession = await getServerSession();
-  const { t } = await useServerTranslation(p.params.lng);
-
+  const t = await getTranslations("Index");
   return (
     <UrlTokenAutoSignin>
       <main className="">
@@ -13,11 +12,11 @@ export default async function Home(p: { params: { lng: string } }) {
         {serverSession?.user?.email ? (
           <>
             <div>Hello {serverSession.user.email}</div>
-            <Link href="/auth/account">Account</Link>
+            <Link href="/auth/account">{t("linkAccount")}</Link>
           </>
         ) : (
           <div>
-            <Link href="/auth/signin">Signin</Link>
+            <Link href="/auth/signin">{t("linkSignin")}</Link>
           </div>
         )}
       </main>

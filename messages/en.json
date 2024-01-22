@@ -1,0 +1,80 @@
+{
+  "Index": {
+    "title": "Hello world!",
+    "linkAccount": "Account",
+    "linkSignin": "Signin",
+    "hello": "Hello",
+    "authAccount": "auth/account"
+  },
+  "Auth": {
+    "account": {
+      "title": "Account",
+      "logout": "Logout",
+      "deleteAccount": "Delete account",
+      "email": "Email",
+      "updatePassword": "Update password",
+      "areYouSure": "Are you absolutely sure?",
+      "actionCannotBeUndone": "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+      "cancel": "Cancel"
+    },
+    "forgot-password": {
+      "title": "Forgot password",
+      "email": "Email",
+      "emailSent": "Email sent",
+      "checkInbox": "Check your inbox and click the link to reset your password.",
+      "closeWindow": "You can close this window.",
+      "didNotReceiveEmail": "Didn't receive the email ?",
+      "sendEmailAgain": "Send email again",
+      "sendEmail": "Send email",
+      "loading": "Loading...",
+      "waitBeforeSending": "Wait 30 secondes before sending again"
+    },
+    "reset-password": {
+      "title": "Reset password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "enterYourPassword": "Enter your password",
+      "typeYourPasswordAgain": "Type your password again",
+      "passwordUpdated": "Password has been updated",
+      "resetPassword": "Reset password",
+      "passwordConditions": {
+        "atLeastEightCharacters": "At least 8 characters",
+        "atLeastOneLowercase": "At least 1 lowercase, 1 uppercase",
+        "atLeastOneNumber": "At least 1 number, 1 special character"
+      }
+    },
+    "signin": {
+      "title": "Signin",
+      "email": "Email",
+      "signIn": "Signin",
+      "password": "Password",
+      "exampleEmail": "example@gmail.com",
+      "typeYourPassword": "Type your password",
+      "forgotPassword": "Forgot password ?",
+      "orContinueWith": "Or continue with",
+      "alreadyHaveAccount": "You already have an account, please",
+      "signUp": "Sign up"
+    },
+    "signup": {
+      "password": "Password",
+      "title": "Sign up",
+      "passwordDontMatch": "The passwords you entered do not match. Please try again.",
+      "emailSent": "Email sent",
+      "checkInbox": "Check your inbox and click the link to activate your account.",
+      "closeWindow": "You can close this window.",
+      "didNotReceiveEmail": "Didn't receive the email?",
+      "sendEmailAgain": "Send email again",
+      "loading": "Loading...",
+      "waitBeforeSending": "Wait 15 seconds before sending again",
+      "register": "Register",
+      "email": "Email",
+      "enterYourPassword": "Enter your password",
+      "confirmPassword": "Confirm password",
+      "typeYourPasswordAgain": "Type your password again",
+      "signUp": "Sign up",
+      "orContinueWith": "Or continue with",
+      "alreadyHaveAccount": "You already have an account, please",
+      "signIn": "Sign in"
+    }
+  }
+}

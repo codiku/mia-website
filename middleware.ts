@@ -1,49 +1,55 @@
-import { NextRequestWithAuth } from "next-auth/middleware";
-import { default as nextAuthMiddleware } from "next-auth/middleware";
-import { NextRequest, NextResponse } from "next/server";
-import acceptLanguage from "accept-language";
-import { fallbackLng, languages, cookieName } from "./i18n/settings";
-acceptLanguage.languages(languages);
-// Defined all the routes that are protected (you can use regexp)
+import { withAuth } from "next-auth/middleware";
+import createIntlMiddleware from "next-intl/middleware";
+import { NextRequest } from "next/server";
 
-export default async function middlewares(req: NextRequest) {
-  const url = req.nextUrl.pathname;
+const locales = ["en", "fr"];
+const publicPages = [
+  "/",
+  "/auth/signin",
+  "/auth/signup",
+  "/auth/forgot-password",
+  "/auth/reset-password",
+];
 
-  // Auth
-  if (/^\/[a-z]{2}\/auth\/account$/.test(url)) {
-    return nextAuthMiddleware(req as NextRequestWithAuth);
+const intlMiddleware = createIntlMiddleware({
+  locales,
+  localePrefix: "as-needed",
+  defaultLocale: "en",
+});
+
+const authMiddleware = withAuth(
+  // Note that this callback is only invoked if
+  // the `authorized` callback has returned `true`
+  // and not for pages listed in `pages`.
+  function onSuccess(req) {
+    return intlMiddleware(req);
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => token != null,
+    },
+    pages: {
+      signIn: "/auth/signin",
+    },
   }
+);
 
-  // I18n
-  if (
-    /^(?!\/api\/|_next\/static|_next\/image|assets|favicon.ico|sw.js).*$/.test(
-      url
-    )
-  ) {
-    let lng;
-    if (req.cookies.has(cookieName))
-      lng = acceptLanguage.get(req.cookies.get(cookieName)?.value);
-    if (!lng) lng = acceptLanguage.get(req.headers.get("Accept-Language"));
-    if (!lng) lng = fallbackLng;
+export default function middleware(req: NextRequest) {
+  const publicPathnameRegex = RegExp(
+    `^(/(${locales.join("|")}))?(${publicPages
+      .flatMap((p) => (p === "/" ? ["", "/"] : p))
+      .join("|")})/?$`,
+    "i"
+  );
+  const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
 
-    // Redirect if lng in path is not supported
-    if (
-      !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
-      !req.nextUrl.pathname.startsWith("/_next")
-    ) {
-      return NextResponse.redirect(
-        new URL(`/${lng}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
-      );
-    }
-
-    if (req.headers.has("referer")) {
-      const refererUrl = new URL(req.headers.get("referer")!);
-      const lngInReferer = languages.find((l) =>
-        refererUrl.pathname.startsWith(`/${l}`)
-      );
-      const response = NextResponse.next();
-      if (lngInReferer) response.cookies.set(cookieName, lngInReferer);
-      return response;
-    }
+  if (isPublicPage) {
+    return intlMiddleware(req);
+  } else {
+    return (authMiddleware as any)(req);
   }
 }
+
+export const config = {
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
+};

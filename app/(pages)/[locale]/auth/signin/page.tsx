@@ -21,15 +21,14 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Divider } from "@/components/ui/divider";
-import { useTranslation } from "@/i18n/client";
+import { useTranslations } from "next-intl";
 
 type Form = z.infer<typeof SIGNIN_MODEL>;
 
 export default function Signin() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
-  const { t } = useTranslation("signin");
-
+  const t = useTranslations("Auth.signin");
   const { mutate: signinMut, isLoading } = useMutation(
     async (form: Form) =>
       signIn("credentials", {
@@ -77,7 +76,7 @@ export default function Signin() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("email")}</FormLabel>
                     <FormControl>
                       <Input placeholder="example@gmail.com" {...field} />
                     </FormControl>
@@ -93,10 +92,10 @@ export default function Signin() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("password")}</FormLabel>
                     <FormControl>
                       <FieldPassword
-                        placeholder="Type your password"
+                        placeholder={t("typeYourPassword")}
                         {...field}
                       />
                     </FormControl>
@@ -107,14 +106,14 @@ export default function Signin() {
               <FormMessage className="text-xs" />
             </div>
             <Link href={"/auth/forgot-password"} className="inline-block pl-1">
-              Forgot password ?
+              {t("forgotPassword")}
             </Link>
           </div>
 
           <Button disabled={isLoading} type="submit" className="w-full mt-10">
-            Sign in
+            {t("signIn")}
           </Button>
-          <Divider>Or continue with</Divider>
+          <Divider>{t("orContinueWith")}</Divider>
           <div className="flex-center mt-5">
             <div
               onClick={async () => {
@@ -129,9 +128,9 @@ export default function Signin() {
             </div>
           </div>
           <div className="mt-4 text-sm">
-            You already have an account, please
+            {t("alreadyHaveAccount")}
             <Link href={"/auth/signup"} className="ml-1">
-              Sign up
+              {t("signUp")}
             </Link>
           </div>
         </form>

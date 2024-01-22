@@ -32,6 +32,7 @@ import {
 import { Input } from "@/components/ui/input";
 import withSession from "@/components/hoc/with-session";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const ACCOUNT_FORM_MODEL = z.object({
   email: EMAIL_MODEL,
@@ -42,7 +43,7 @@ type Form = z.infer<typeof ACCOUNT_FORM_MODEL>;
 function Account() {
   const router = useRouter();
   const { data: session } = useSession();
-
+  const t = useTranslations("Auth.account");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const form = useForm<Form>({
@@ -75,8 +76,7 @@ function Account() {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            {t("actionCannotBeUndone")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -88,7 +88,7 @@ function Account() {
             onClick={() => deleteAccount()}
             variant={"destructive"}
           >
-            Delete account
+            {t("deleteAccount")}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -97,7 +97,7 @@ function Account() {
   return (
     <div className="flex-center">
       <div className="mt-20 card">
-        <h2>Account</h2>
+        <h2>{t("title")}</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div>
@@ -106,12 +106,12 @@ function Account() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("email")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled
                         type="email"
-                        placeholder="Email"
+                        placeholder={t("email")}
                         {...field}
                       />
                     </FormControl>
@@ -127,7 +127,7 @@ function Account() {
             href="/auth/account/update-password"
             className="ml-1 block mt-4"
           >
-            Update password
+            {t("updatePassword")}
           </Link>
         )}
         <Button
@@ -140,14 +140,14 @@ function Account() {
           }
           variant={"outline"}
         >
-          Logout
+          {t("logout")}
         </Button>
         <Button
           onClick={() => setIsDialogOpen(true)}
           variant={"destructive"}
           className="block mt-10"
         >
-          Delete account
+          {t("deleteAccount")}
         </Button>
         {confirmDialog}
       </div>
