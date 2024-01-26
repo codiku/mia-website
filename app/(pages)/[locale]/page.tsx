@@ -1,4 +1,5 @@
-import { UrlTokenAutoSignin } from "@/components/providers/UrlTokenAutoSignin";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { UrlTokenAutoSignin } from "@/providers/UrlTokenAutoSignin";
 import { getServerSession } from "next-auth";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
@@ -9,6 +10,7 @@ export default async function Home(p: { params: { lng: string } }) {
     <UrlTokenAutoSignin>
       <main className="">
         <h1 className="text-4xl">{t("title")}</h1>
+        <LanguageSwitcher />
         {serverSession?.user?.email ? (
           <>
             <div>Hello {serverSession.user.email}</div>

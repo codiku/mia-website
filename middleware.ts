@@ -1,8 +1,7 @@
 import { withAuth } from "next-auth/middleware";
 import createIntlMiddleware from "next-intl/middleware";
 import { NextRequest } from "next/server";
-
-const locales = ["en", "fr"];
+import { DEFAULT_LOCALE, LOCALES } from "@/i18n";
 const publicPages = [
   "/",
   "/auth/signin",
@@ -12,9 +11,8 @@ const publicPages = [
 ];
 
 const intlMiddleware = createIntlMiddleware({
-  locales,
-  localePrefix: "as-needed",
-  defaultLocale: "en",
+  locales: LOCALES,
+  defaultLocale: DEFAULT_LOCALE,
 });
 
 const authMiddleware = withAuth(
@@ -36,7 +34,7 @@ const authMiddleware = withAuth(
 
 export default function middleware(req: NextRequest) {
   const publicPathnameRegex = RegExp(
-    `^(/(${locales.join("|")}))?(${publicPages
+    `^(/(${LOCALES.join("|")}))?(${publicPages
       .flatMap((p) => (p === "/" ? ["", "/"] : p))
       .join("|")})/?$`,
     "i"

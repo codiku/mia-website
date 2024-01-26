@@ -19,11 +19,13 @@
     },
     "forgot-password": {
       "title": "Mot de passe oublié",
+      "email": "E-mail",
       "emailSent": "E-mail envoyé",
       "checkInbox": "Vérifiez votre boîte de réception et cliquez sur le lien pour réinitialiser votre mot de passe.",
       "closeWindow": "Vous pouvez fermer cette fenêtre.",
       "didNotReceiveEmail": "Vous n'avez pas reçu l'e-mail ?",
       "sendEmailAgain": "Envoyer l'e-mail à nouveau",
+      "sendEmail": "Envoyer l'e-mail",
       "loading": "Chargement...",
       "waitBeforeSending": "Attendez 30 secondes avant de renvoyer"
     },
@@ -33,6 +35,8 @@
       "confirmPassword": "Confirmer le mot de passe",
       "enterYourPassword": "Entrez votre mot de passe",
       "typeYourPasswordAgain": "Tapez à nouveau votre mot de passe",
+      "passwordUpdated": "Le mot de passe a été mis à jour",
+      "resetPassword": "Réinitialiser le mot de passe",
       "passwordConditions": {
         "atLeastEightCharacters": "Au moins 8 caractères",
         "atLeastOneLowercase": "Au moins 1 minuscule, 1 majuscule",
@@ -42,6 +46,7 @@
     "signin": {
       "title": "Connexion",
       "email": "E-mail",
+      "signIn": "Se connecter",
       "password": "Mot de passe",
       "exampleEmail": "exemple@gmail.com",
       "typeYourPassword": "Tapez votre mot de passe",
@@ -51,7 +56,25 @@
       "signUp": "S'inscrire"
     },
     "signup": {
-      "title": "Inscription"
+      "password": "Mot de passe",
+      "title": "Inscription",
+      "passwordDontMatch": "Les mots de passe que vous avez entrés ne correspondent pas. Veuillez réessayer.",
+      "emailSent": "E-mail envoyé",
+      "checkInbox": "Vérifiez votre boîte de réception et cliquez sur le lien pour activer votre compte.",
+      "closeWindow": "Vous pouvez fermer cette fenêtre.",
+      "didNotReceiveEmail": "Vous n'avez pas reçu l'e-mail ?",
+      "sendEmailAgain": "Envoyer l'e-mail à nouveau",
+      "loading": "Chargement...",
+      "waitBeforeSending": "Attendez 15 secondes avant de renvoyer",
+      "register": "S'inscrire",
+      "email": "E-mail",
+      "enterYourPassword": "Entrez votre mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "typeYourPasswordAgain": "Tapez à nouveau votre mot de passe",
+      "signUp": "S'inscrire",
+      "orContinueWith": "Ou continuez avec",
+      "alreadyHaveAccount": "Vous avez déjà un compte, veuillez",
+      "signIn": "Se connecter"
     }
   }
 }
