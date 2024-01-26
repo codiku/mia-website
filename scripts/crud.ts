@@ -3,8 +3,10 @@ const path = require("path");
 const readline = require("readline");
 const { exec, ExecException } = require("child_process");
 const {
+  importSkull,
   postSkull,
   getSkull,
+  getAllSkull,
   patchSkull,
   deleteSkull,
 } = require("./crud-skull");
@@ -22,12 +24,16 @@ async function generateCRUDFiles(endpoint: string) {
     const pascalCaseEndpoint = toPascalCase(endpoint);
     const camelCaseEndpoint = toCamelCase(endpoint);
     // Generate route.ts files for the main endpoint and [id] directory
-    await fs.writeFile(
+    fs.writeFile(
       path.join(apiDirectory, "route.ts"),
-      postSkull(camelCaseEndpoint, pascalCaseEndpoint)
+      importSkull(camelCaseEndpoint, pascalCaseEndpoint) +
+        "\n\n" +
+        getAllSkull(camelCaseEndpoint, pascalCaseEndpoint) +
+        "\n" +
+        postSkull(camelCaseEndpoint, pascalCaseEndpoint)
     );
 
-    await fs.writeFile(
+    fs.writeFile(
       path.join(idApiDirectory, "route.ts"),
       getSkull(camelCaseEndpoint, pascalCaseEndpoint) +
         "\n" +

@@ -1,5 +1,4 @@
-import * as z from "zod"
-import * as imports from "../null"
+import * as z from "zod";
 
 export const VerificationRequestModel = z.object({
   id: z.string(),
@@ -8,4 +7,4 @@ export const VerificationRequestModel = z.object({
   expires: z.date(),
   createdAt: z.date(),
   updatedAt: z.date(),
-})
+});

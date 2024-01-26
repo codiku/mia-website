@@ -1,10 +1,10 @@
 import "@/configs/axios-config";
 import "./globals.css";
-import { SessionProvider } from "@/components/providers/SessionProvider";
+import { SessionProvider } from "@/providers/SessionProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
-import { ReactQueryProvider } from "@/components/providers/ReactQueryProvider";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ReactNode } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
