@@ -76,5 +76,16 @@
       "alreadyHaveAccount": "You already have an account, please",
       "signIn": "Sign in"
     }
+  },
+  "Components": {
+    "LanguageSwitcher": {
+      "placeholder":"Select your language"
+    }
+  },
+  "Common": {
+    "SupportedLanguages": {
+      "en":"English",
+      "fr":"French"
+    }
   }
 }
