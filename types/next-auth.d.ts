@@ -1,4 +1,4 @@
-import { UnsensitiveUser } from "@/utils/user"
+import { UnsensitiveUser } from "@/types/user"
 import { User } from "@prisma/client"
 import NextAuth, { Account } from "next-auth"
 import { AdapterAccount } from "next-auth/adapters"

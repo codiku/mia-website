@@ -1,5 +1,5 @@
 "use client";
-import { UnsensitiveUser } from "@/utils/user";
+import { UnsensitiveUser } from "@/types/user";
 import { api } from "@/configs/axios-config";
 import { Button } from "@/components/ui/button";
 import {
