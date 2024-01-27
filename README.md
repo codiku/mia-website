@@ -1,6 +1,6 @@
-# Next Boiler Plate 
+# Next Boiler Plate
 
-Next.JS + Typescript + Next Auth + Tailwind + Shadcnui + Prisma + Supabase 
+Next.JS + Typescript + Next Auth + Tailwind + Shadcnui + Prisma + Supabase
 
 **🚀 Elevate your web development with our Next Auth + Tailwind + Shadcnui Boilerplate, the perfect foundation for building blazing fast, secure, and user-friendly web applications.**
 
@@ -38,11 +38,15 @@ This comprehensive boilerplate provides a solid foundation for building modern w
 
 * **Effortless Data Management:** Manage your data effectively with Prisma and Zod.
 
-**🎉 Embark on Your Web Development Journey with Confidence:**
+# Setup
 
-Take your web development skills to the next level with this comprehensive boilerplate. Build stunning and secure applications that your users will love.
+Install packages
+`npm i`
+Start the local db
+`npm run db:start`
+Display the db
+`npm run db:studio`
 
-**🚀 Get started today and unleash the power of Next Auth, Tailwind, and Shadcnui!**
 
 ## Toast and response
 
@@ -51,11 +55,13 @@ By default axios-config display alerts. Unless you send isToastDisabled:false in
 ## Routes Protection , and validations 100% TS support with Zod validation
 ### safeEndPoint
 
-Pages : See middleware.ts to protect a page
+#### Public an privates routes
+
+Add public routes to `middleware.ts
 
 Api routes :
 
-Just wrap your handler with safeEndPoint() hoc,
+Just wrap your handler with the `safeEndPoint()` hoc,
 
 The signature is the following :
 
@@ -64,9 +70,9 @@ export const GET = safeEndPoint(
   async (req: NextRequest, uriParams, bodyData, queryParams, jwtToken) => {
     // your code
   },
-  isValidAuthTokenRequired, // boolean
-  ZodSchemaForBody, //Zod Schema
-  ZodSchemaForQueryParams // Zod Schema
+  isValidAuthTokenRequired, // boolean (false if public, true is private )
+  ZodSchemaForBody, //Zod Schema for the body
+  ZodSchemaForQueryParams // Zod Schema for the query params
 );
 ```
 
