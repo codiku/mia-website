@@ -39,7 +39,7 @@ export default function ResetPassword() {
   const t = useTranslations("Auth.reset-password");
   const { mutate: resetPassword, isLoading } = useMutation(
     async (data: { token: string; password: string }) =>
-      api.post<Resp<{}>>(
+      api.patch<Resp<{}>>(
         "/api/auth/reset-password",
         {
           token: data.token,

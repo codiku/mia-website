@@ -4,6 +4,8 @@ import { LOCALES } from "@/i18n";
 import { usePathname, useRouter } from "@/utils/navigation";
 import { useLocale } from "next-intl";
 import { ChangeEvent } from "react";
+import { useTranslations } from "next-intl";
+
 import {
   Select,
   SelectContent,
@@ -11,22 +13,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+
 export  function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations("Components.LanguageSwitcher");
 
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    router.push(pathname, { locale: e.target.value });
+  const handleChange = (value : string) => {
+    router.push(pathname, { locale: value });
   };
 
   return (
-    <Select value={locale} onChange={handleChange}>
+    <Select value={locale} onValueChange={handleChange}>
     <SelectTrigger className="w-[180px]">
       <SelectValue placeholder="Select your language" />
     </SelectTrigger>
-     <SelectContent>
+     <SelectContent  >
       {LOCALES.map((locale) => (
         <SelectItem key={locale} value={locale}>{locale}</SelectItem>
       ))}
