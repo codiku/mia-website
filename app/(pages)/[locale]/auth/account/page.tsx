@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { EMAIL_MODEL, PASSWORD_MODEL } from "@/utils/models";
+import { EMAIL_MODEL, PASSWORD_MODEL } from "@/libs/models";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {

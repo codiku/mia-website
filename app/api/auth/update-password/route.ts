@@ -1,6 +1,6 @@
-import { db } from "@/utils/db";
-import { safeEndPoint } from "@/utils/jwt";
-import { UPDATE_PASSWORD_MODEL } from "@/utils/models";
+import { db } from "@/libs/db";
+import { safeEndPoint } from "@/libs/jwt";
+import { UPDATE_PASSWORD_MODEL } from "@/libs/models";
 import { compare, hash } from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";

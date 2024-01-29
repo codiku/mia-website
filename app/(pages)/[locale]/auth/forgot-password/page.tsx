@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FORGOT_PASSWORD_MODEL } from "@/utils/models";
+import { FORGOT_PASSWORD_MODEL } from "@/libs/models";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";

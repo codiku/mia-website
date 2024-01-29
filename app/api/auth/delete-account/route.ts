@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/utils/db";
+import { db } from "@/libs/db";
 import { StatusCodes } from "http-status-codes";
-import { safeEndPoint } from "@/utils/jwt";
+import { safeEndPoint } from "@/libs/jwt";
 import { User } from "@prisma/client";
 
 export const DELETE = safeEndPoint(

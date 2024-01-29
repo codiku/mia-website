@@ -1,7 +1,7 @@
-import { db } from "@/utils/db";
-import { sendEmail } from "@/utils/email";
-import { generateJwtToken, safeEndPoint } from "@/utils/jwt";
-import { FORGOT_PASSWORD_MODEL } from "@/utils/models";
+import { db } from "@/libs/db";
+import { sendEmail } from "@/libs/email";
+import { generateJwtToken, safeEndPoint } from "@/libs/jwt";
+import { FORGOT_PASSWORD_MODEL } from "@/libs/models";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 

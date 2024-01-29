@@ -9,6 +9,8 @@ const {
   getAllSkull,
   patchSkull,
   deleteSkull,
+  pageLevel1ImportsSkull,
+  pageLevel2ImportsSkull
 } = require("./crud-skull");
 
 async function generateCRUDFiles(endpoint: string) {
@@ -26,7 +28,7 @@ async function generateCRUDFiles(endpoint: string) {
     // Generate route.ts files for the main endpoint and [id] directory
     fs.writeFile(
       path.join(apiDirectory, "route.ts"),
-      importSkull(camelCaseEndpoint, pascalCaseEndpoint) +
+        pageLevel1ImportsSkull(camelCaseEndpoint, pascalCaseEndpoint) +
         "\n\n" +
         getAllSkull(camelCaseEndpoint, pascalCaseEndpoint) +
         "\n" +
@@ -35,6 +37,9 @@ async function generateCRUDFiles(endpoint: string) {
 
     fs.writeFile(
       path.join(idApiDirectory, "route.ts"),
+    
+      pageLevel2ImportsSkull(camelCaseEndpoint, pascalCaseEndpoint) +
+      "\n" +
       getSkull(camelCaseEndpoint, pascalCaseEndpoint) +
         "\n" +
         patchSkull(camelCaseEndpoint, pascalCaseEndpoint) +

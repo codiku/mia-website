@@ -1,5 +1,5 @@
-import { db, excludeField } from "@/utils/db";
-import { decodeJwtToken } from "@/utils/jwt";
+import { db, excludeField } from "@/libs/db";
+import { decodeJwtToken } from "@/libs/jwt";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { User } from "@prisma/client";
 import { compare } from "bcrypt";

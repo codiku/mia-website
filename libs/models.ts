@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { decodeJwtToken } from "@/utils/jwt";
+import { decodeJwtToken } from "@/libs/jwt";
+import { ProductModel } from "@/prisma/zod";
 
 
 export const JWT_TOKEN_MODEL = z
@@ -59,3 +60,6 @@ export const UPDATE_PASSWORD_MODEL = z.object({
   oldPassword: STRING_REQUIRED_MODEL,
   newPassword: PASSWORD_MODEL,
 });
+
+export const PostProductModelBody = ProductModel.omit({ id: true })
+export const PatchProductModelBody = ProductModel.partial()

@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import withSession from "@/components/hoc/with-session";
-import { PASSWORD_MODEL, STRING_REQUIRED_MODEL } from "@/utils/models";
+import { PASSWORD_MODEL, STRING_REQUIRED_MODEL } from "@/libs/models";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

@@ -1,8 +1,8 @@
-import { db, excludeField } from "@/utils/db";
+import { db, excludeField } from "@/libs/db";
 import { hash } from "bcrypt";
-import { sendEmail } from "@/utils/email";
-import { generateJwtToken, safeEndPoint } from "@/utils/jwt";
-import { REGISTER_MODEL } from "@/utils/models";
+import { sendEmail } from "@/libs/email";
+import { generateJwtToken, safeEndPoint } from "@/libs/jwt";
+import { REGISTER_MODEL } from "@/libs/models";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
