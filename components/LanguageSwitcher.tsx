@@ -3,7 +3,6 @@
 import { LOCALES } from "@/i18n";
 import { usePathname, useRouter } from "@/libs/navigation";
 import { useLocale } from "next-intl";
-import { ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
 
 import {

@@ -15,7 +15,9 @@ import { PostProductModelBody } from "@/libs/models";
   *         content:
   *           application/json:
   *             schema:
-  *               $ref: '#/components/schemas/Product'
+  *               type: array
+  *               items:
+  *                 $ref: '#/components/schemas/ProductModel'
   *       400:
   *         description: Bad request if the product data is invalid
   */

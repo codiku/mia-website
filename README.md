@@ -91,3 +91,35 @@ To make sure you have access to the session, use withSession
 `npm run crud`
 
 will create GET,POST,PATCH,DELETE, a prisma schema, a zod prisma schema.
+
+## Swagger
+
+All Prisma and Zod models are automatically added to Swagger and can be used as JS Doc above the endpoint. Here is an example from `route.ts`:
+
+```javascript
+/**
+  * @swagger
+  * /api/product:
+  *   get:
+  *     description: Get all products
+  *     responses:
+  *       200:
+  *         description: Returns a list of products
+  *         content:
+  *           application/json:
+  *             schema:
+  *               type: array
+  *               items:
+  *                 $ref: '#/components/schemas/ProductModel'
+  *       400:
+  *         description: Bad request if the product data is invalid
+  */
+  export const GET = safeEndPoint(async (req: NextRequest) => {
+  const product = await db.product.findMany({});
+  return NextResponse.json(product || { error: true, message: "Not found" }, {
+    status: StatusCodes.BAD_REQUEST,
+  });
+}, true);
+```
+
+In this example, the `Product` schema from Prisma and Zod is used in the Swagger documentation for the GET endpoint of the `/api/product` route. This provides a clear and accurate description of the data structure expected in the response.

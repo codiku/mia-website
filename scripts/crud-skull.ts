@@ -60,7 +60,9 @@ import { Patch${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
   *         content:
   *           application/json:
   *             schema:
-  *               $ref: '#/components/schemas/${pascalCaseEndpoint}Model'
+  *               type: array
+  *               items:
+  *                 $ref: '#/components/schemas/${pascalCaseEndpoint}ProductModel'
   *       400:
   *         description: Bad request if the ${camelCaseEndpoint} data is invalid
   */
