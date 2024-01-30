@@ -78,6 +78,7 @@ export default function Signup() {
       formDataRef.current = values;
       signup({ ...values });
     } else {
+      console.log("resend an email ?");
       signup({ ...values, resendEmail: true });
       setDisabledEmailButton(true);
       setTimeout(() => {
@@ -155,7 +156,11 @@ export default function Signup() {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="Email" {...field} />
+                          <Input
+                            id={field.name}
+                            placeholder="Email"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage className="text-xs" />
                       </FormItem>
@@ -173,6 +178,7 @@ export default function Signup() {
                         <FormControl>
                           <FieldPassword
                             placeholder="Enter your password"
+                            id={field.name}
                             {...field}
                           />
                         </FormControl>
@@ -206,6 +212,7 @@ export default function Signup() {
                         <FormLabel>Confirm password</FormLabel>
                         <FormControl>
                           <FieldPassword
+                            id={field.name}
                             placeholder="Type your password again"
                             {...field}
                           />

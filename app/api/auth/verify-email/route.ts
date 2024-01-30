@@ -6,8 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = safeEndPoint(
-  async (req: NextRequest, _, __, { token }) => {
-
+  async (req: NextRequest, _, __params, { token }) => {
     const user = decodeJwtToken<User>(token);
     if (user?.id) {
       const existingUser = await db.user.findUnique({
@@ -30,5 +29,8 @@ export const GET = safeEndPoint(
         { status: StatusCodes.FORBIDDEN }
       );
     }
-
-  }, false, undefined, VERIFY_EMAIL_MODEL)
+  },
+  false,
+  undefined,
+  VERIFY_EMAIL_MODEL
+);

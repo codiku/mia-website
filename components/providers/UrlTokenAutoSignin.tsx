@@ -13,7 +13,7 @@ export function UrlTokenAutoSignin(p: { children: ReactNode }) {
   const [isRedirectionDone, setIsRedirectionDone] = useState(false);
 
   useEffect(() => {
-    if (token && session.status != "authenticated") {
+    if (token && session.status != "authenticated" && !isRedirectionDone) {
       (async () => {
         const signinResp = await signIn("credentials", {
           email: null,
@@ -32,7 +32,7 @@ export function UrlTokenAutoSignin(p: { children: ReactNode }) {
     } else {
       setIsRedirectionDone(true);
     }
-  }, [router, session.status, token]);
+  }, [token]);
 
   return <>{isRedirectionDone && p.children}</>;
 }
