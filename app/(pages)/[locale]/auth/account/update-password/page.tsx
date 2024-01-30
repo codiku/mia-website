@@ -9,7 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import withSession from "@/components/hoc/with-session";
+import { withAuth } from "@/components/hoc/with-auth";
 import { PASSWORD_MODEL, STRING_REQUIRED_MODEL } from "@/libs/models";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -36,7 +36,7 @@ const UPDATE_PASSWORD_FORM_MODEL = z
 
 type Form = z.infer<typeof UPDATE_PASSWORD_FORM_MODEL>;
 
-function UpdatePassword(p: {}) {
+export default withAuth(function UpdatePassword(p: {}) {
   const { mutate: updatePassword, isLoading } = useMutation(
     async (formValues: Form) =>
       ky
@@ -135,6 +135,4 @@ function UpdatePassword(p: {}) {
       </Form>
     </div>
   );
-}
-
-export default withSession(UpdatePassword);
+});

@@ -2,17 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/libs/db";
 import { StatusCodes } from "http-status-codes";
 import { safeEndPoint } from "@/libs/jwt";
-import { User } from "@prisma/client";
 
 export const DELETE = safeEndPoint(
-  async (req: NextRequest, _, __, token: User) => {
+  async (req: NextRequest, _uriParams, _body, _queryParams, token) => {
     if (token?.email) {
       const userDeleted = await db.user.delete({
         where: { email: token.email },
       });
       if (userDeleted) {
         return NextResponse.json({
-          error: false,
           message: "Account deleted successfully",
         });
       }
@@ -24,4 +22,6 @@ export const DELETE = safeEndPoint(
       },
       { status: StatusCodes.BAD_REQUEST }
     );
-  }, true)
+  },
+  true
+);

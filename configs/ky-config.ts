@@ -9,6 +9,7 @@ export const api = ky.extend({
   hooks: {
     beforeError: [
       async (error) => {
+        console.log("BEFORE ERROR", error);
         const { response } = error;
         const resp: ApiResponse = await response.clone().json();
         if (resp.error && resp.message) {

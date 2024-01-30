@@ -1,5 +1,4 @@
 "use client";
-import ky from "ky";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -30,8 +29,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import withSession from "@/components/hoc/with-session";
+import { withAuth } from "@/components/hoc/with-auth";
 import Link from "next/link";
+import { api } from "@/configs/ky-config";
 import { useTranslations } from "next-intl";
 
 const ACCOUNT_FORM_MODEL = z.object({
@@ -40,12 +40,11 @@ const ACCOUNT_FORM_MODEL = z.object({
 });
 type Form = z.infer<typeof ACCOUNT_FORM_MODEL>;
 
-function Account() {
+export default withAuth(function Account() {
   const router = useRouter();
   const { data: session } = useSession();
-  const t = useTranslations("Auth.account");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  const t = useTranslations("Auth.account");
   const form = useForm<Form>({
     resolver: zodResolver(ACCOUNT_FORM_MODEL),
     defaultValues: {
@@ -54,18 +53,12 @@ function Account() {
     },
   });
   const { mutate: deleteAccount, isLoading } = useMutation(
-    async () =>
-      ky
-        .delete("/api/auth/delete-account", {
-          headers: { isToastDisabled: "true" },
-        })
-        .json<Resp<{}>>(),
+    async () => api.delete("/api/auth/delete-account").json<Resp<{}>>(),
     {
       onSuccess: async (response) => {
         await signOut({ redirect: false });
-        router.refresh();
         router.push("/");
-        toast.success(response.message);
+        router.refresh();
       },
     }
   );
@@ -155,6 +148,4 @@ function Account() {
       </div>
     </div>
   );
-}
-
-export default withSession(Account);
+});
