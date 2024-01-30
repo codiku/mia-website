@@ -74,7 +74,5 @@ async function sendVerificationEmail(user: User) {
       { message: "Email has been rejected", error: true },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
-  } else {
-    console.log("Email sent to ", user.email);
   }
 }

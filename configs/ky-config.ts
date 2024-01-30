@@ -22,8 +22,6 @@ export const api = ky.extend({
     afterResponse: [
       async (_request, _options, response) => {
         const resp: ApiResponse = await response.clone().json();
-        console.log("AFTER RESPONSE");
-        console.log(resp);
         // You could do something with the response, for example, logging.
         if (
           resp.message &&
