@@ -5,23 +5,23 @@ import { safeEndPoint } from "@/libs/jwt";
 import { PostProductModelBody } from "@/libs/models";
 
 /**
-  * @swagger
-  * /api/product:
-  *   get:
-  *     description: Get all products
-  *     responses:
-  *       200:
-  *         description: Returns a list of products
-  *         content:
-  *           application/json:
-  *             schema:
-  *               type: array
-  *               items:
-  *                 $ref: '#/components/schemas/ProductModel'
-  *       400:
-  *         description: Bad request if the product data is invalid
-  */
-  export const GET = safeEndPoint(async (req: NextRequest) => {
+ * @swagger
+ * /api/product:
+ *   get:
+ *     description: Get all products
+ *     responses:
+ *       200:
+ *         description: Returns a list of products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ProductModel'
+ *       400:
+ *         description: Bad request if the product data is invalid
+ */
+export const GET = safeEndPoint(async (req: NextRequest) => {
   const product = await db.product.findMany({});
   return NextResponse.json(product || { error: true, message: "Not found" }, {
     status: StatusCodes.BAD_REQUEST,
@@ -48,9 +48,13 @@ import { PostProductModelBody } from "@/libs/models";
  *       400:
  *         description: Bad request if the product data is invalid
  */
-    export const POST = safeEndPoint(async (req: NextRequest, route, body, _, token) => {
-  const created = await db.product.create({
-    data: body,
-  });
-  return NextResponse.json(created);
-}, true, PostProductModelBody);
+export const POST = safeEndPoint(
+  async (req: NextRequest, route, body, _, token) => {
+    const created = await db.product.create({
+      data: body,
+    });
+    return NextResponse.json(created);
+  },
+  true,
+  PostProductModelBody
+);

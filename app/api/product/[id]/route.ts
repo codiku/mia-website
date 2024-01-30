@@ -21,7 +21,7 @@ import { PatchProductModelBody } from "@/libs/models";
  *       400:
  *         description: Bad request if the product id is invalid or not found
  */
-  export const GET = safeEndPoint(async (req: NextRequest, route) => {
+export const GET = safeEndPoint(async (req: NextRequest, route) => {
   let product: Product | null = null;
   const id = Number(route.params.id);
   if (id) {
@@ -56,22 +56,28 @@ import { PatchProductModelBody } from "@/libs/models";
  *       400:
  *         description: Bad request if the product id is invalid or not found
  */
-export const PATCH = safeEndPoint(async (req: NextRequest, route, body) => {
-  
-  let product: Product | null = null;
-  const id = Number(route.params.id);
-  if (id) {
-    product = await db.product.update({
-      where: { id },
-      data: body
-    });
-    return NextResponse.json(product || { error: true, message: "Not found" }, {
-      status: StatusCodes.BAD_REQUEST,
-    });
-  }
-}, true, PatchProductModelBody);
+export const PATCH = safeEndPoint(
+  async (req: NextRequest, route, body) => {
+    let product: Product | null = null;
+    const id = Number(route.params.id);
+    if (id) {
+      product = await db.product.update({
+        where: { id },
+        data: body,
+      });
+      return NextResponse.json(
+        product || { error: true, message: "Not found" },
+        {
+          status: StatusCodes.BAD_REQUEST,
+        }
+      );
+    }
+  },
+  true,
+  PatchProductModelBody
+);
 
-  /**
+/**
  * @swagger
  * /api/product/{id}:
  *   delete:
@@ -93,7 +99,7 @@ export const DELETE = safeEndPoint(async (req: NextRequest, route) => {
   const id = Number(route.params.id);
   if (id) {
     product = await db.product.delete({
-      where: { id }
+      where: { id },
     });
     return NextResponse.json(product || { error: true, message: "Not found" }, {
       status: StatusCodes.BAD_REQUEST,

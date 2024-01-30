@@ -1,6 +1,8 @@
 module.exports = {
-  pageLevel1ImportsSkull : (camelCaseEndpoint: string,
-    pascalCaseEndpoint: string)=>`import { NextRequest, NextResponse } from "next/server";
+  pageLevel1ImportsSkull: (
+    camelCaseEndpoint: string,
+    pascalCaseEndpoint: string
+  ) => `import { NextRequest, NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
 import { db } from "@/libs/db";
 import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
@@ -8,15 +10,17 @@ import { ${pascalCaseEndpoint} } from "@prisma/client";
 import { safeEndPoint } from "@/libs/jwt";
 import { Post${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
 
-  pageLevel2ImportsSkull: (camelCaseEndpoint: string,
-    pascalCaseEndpoint: string)=>`import { NextRequest, NextResponse } from "next/server";
+  pageLevel2ImportsSkull: (
+    camelCaseEndpoint: string,
+    pascalCaseEndpoint: string
+  ) => `import { NextRequest, NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
 import { db } from "@/libs/db";
 import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
 import { ${pascalCaseEndpoint} } from "@prisma/client";
 import { safeEndPoint } from "@/libs/jwt";
 import { Patch${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
-  
+
   postSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) =>
     `/**
  * @swagger
@@ -39,17 +43,17 @@ import { Patch${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
  *       400:
  *         description: Bad request if the ${camelCaseEndpoint} data is invalid
  */
-    export const POST = safeEndPoint(async (req: NextRequest, route, body, _, token) => {
-  const created = await db.${camelCaseEndpoint}.create({
-    data: body,
-  });
-  return NextResponse.json(created);
-}, true, Post${pascalCaseEndpoint}ModelBody);`,
-
-  getAllSkull: (
-    camelCaseEndpoint: string,
-    pascalCaseEndpoint: string
-  ) => `/**
+export const POST = safeEndPoint(
+  async (req: NextRequest, route, body, _, token) => {
+    const created = await db.${camelCaseEndpoint}.create({
+      data: body,
+    });
+    return NextResponse.json(created);
+  },
+  true,
+  Post${pascalCaseEndpoint}ModelBody
+);`,
+  getAllSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `/**
   * @swagger
   * /api/${camelCaseEndpoint}:
   *   get:
@@ -66,17 +70,15 @@ import { Patch${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
   *       400:
   *         description: Bad request if the ${camelCaseEndpoint} data is invalid
   */
-  export const GET = safeEndPoint(async (req: NextRequest) => {
+export const GET = safeEndPoint(async (req: NextRequest) => {
   const ${camelCaseEndpoint} = await db.${camelCaseEndpoint}.findMany({});
   return NextResponse.json(${camelCaseEndpoint} || { error: true, message: "Not found" }, {
     status: StatusCodes.BAD_REQUEST,
   });
 }, true);`,
 
-  getSkull: (
-    camelCaseEndpoint: string,
-    pascalCaseEndpoint: string
-  ) => `/**
+  getSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
+/**
  * @swagger
  * /api/${camelCaseEndpoint}/{id}:
  *   get:
@@ -93,7 +95,7 @@ import { Patch${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
  *       400:
  *         description: Bad request if the ${camelCaseEndpoint} id is invalid or not found
  */
-  export const GET = safeEndPoint(async (req: NextRequest, route) => {
+export const GET = safeEndPoint(async (req: NextRequest, route) => {
   let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;
   const id = Number(route.params.id);
   if (id) {
@@ -106,7 +108,8 @@ import { Patch${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
   });
 }, true);`,
 
-  patchSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `/**
+  patchSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
+/**
  * @swagger
  * /api/${camelCaseEndpoint}/{id}:
  *   patch:
@@ -144,7 +147,7 @@ export const PATCH = safeEndPoint(async (req: NextRequest, route, body) => {
 }, true, Patch${pascalCaseEndpoint}ModelBody);`,
 
   deleteSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
-  /**
+/**
  * @swagger
  * /api/${camelCaseEndpoint}/{id}:
  *   delete:
