@@ -43,6 +43,7 @@ export function safeEndPoint<B, P>(
     if (enabled) {
       const token = await getToken({ req });
       if (token) {
+        console.log("*** 3");
         let body = modelBody ? await parseBody(req, modelBody) : undefined;
         const params = getQueryParams(req);
         if (modelParams) {
@@ -50,17 +51,21 @@ export function safeEndPoint<B, P>(
         }
         return routeHandler(req, route, body as never, params as P, token);
       } else {
+        console.log("***2");
         return handleUnauthorized();
       }
     } else {
+      console.log("***1");
       try {
         let body = modelBody ? await parseBody(req, modelBody) : undefined;
         const params = getQueryParams(req);
         if (modelParams) {
           modelParams.parse(params);
         }
+        console.log("***4");
         return routeHandler(req, route, body as never, params as P, undefined);
       } catch (error) {
+        console.log("***5");
         return errorResponse(error as Error);
       }
     }

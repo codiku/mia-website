@@ -22,7 +22,7 @@ import { FieldPassword } from "@/components/ui/field-password";
 import { useTranslations } from "next-intl";
 import ky from "ky";
 
-export const RESET_PASSWORD_MODEL = z
+const RESET_PASSWORD_MODEL = z
   .object({
     password: PASSWORD_MODEL,
     passwordConfirm: z.string().min(1),

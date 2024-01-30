@@ -72,9 +72,7 @@ export const POST = safeEndPoint(
   */
 export const GET = safeEndPoint(async (req: NextRequest) => {
   const ${camelCaseEndpoint} = await db.${camelCaseEndpoint}.findMany({});
-  return NextResponse.json(${camelCaseEndpoint} || { error: true, message: "Not found" }, {
-    status: StatusCodes.BAD_REQUEST,
-  });
+  return NextResponse.json(${camelCaseEndpoint});
 }, true);`,
 
   getSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `

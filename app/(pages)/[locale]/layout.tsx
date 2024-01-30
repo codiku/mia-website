@@ -1,4 +1,3 @@
-import "@/configs/ky-config";
 import "./globals.css";
 import { SessionProvider } from "@/components/providers/SessionProvider";
 import type { Metadata } from "next";

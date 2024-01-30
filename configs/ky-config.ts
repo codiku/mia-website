@@ -1,33 +1,38 @@
 import { toast } from "sonner";
 import ky from "ky";
+import { ApiResponse, Resp } from "@/types/api-type";
 
-ky.extend({
+export const api = ky.extend({
+  headers: {
+    Accept: "application/json",
+  },
   hooks: {
     beforeError: [
       async (error) => {
-        const msg = error?.response?.data?.message;
-        if (msg) {
-          toast.error(msg);
+        const { response } = error;
+        const resp: ApiResponse = await response.clone().json();
+        if (resp.error && resp.message) {
+          toast.error(resp.message);
         }
+
         return Promise.reject(error);
       },
     ],
-  },
-});
 
-ky.extend({
-  hooks: {
     afterResponse: [
-      (_request, _options, response) => {
+      async (_request, _options, response) => {
+        const resp: ApiResponse = await response.clone().json();
+        console.log("AFTER RESPONSE");
+        console.log(resp);
         // You could do something with the response, for example, logging.
         if (
-          !response.headers.isToastDisabled &&
-          !response.headers.isToastDisabled &&
-          response?.data.message &&
-          !response.data.error
+          resp.message &&
+          !resp.error &&
+          _request.headers.get("isToastDisabled") !== "true"
         ) {
-          toast.success(response.data.message);
+          toast.success(resp.message);
         }
+
         // Or return a `Response` instance to overwrite the response.
         return response;
       },

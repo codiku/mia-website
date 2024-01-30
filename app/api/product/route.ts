@@ -23,10 +23,8 @@ import { PostProductModelBody } from "@/libs/models";
  */
 export const GET = safeEndPoint(async (req: NextRequest) => {
   const product = await db.product.findMany({});
-  return NextResponse.json(product || { error: true, message: "Not found" }, {
-    status: StatusCodes.BAD_REQUEST,
-  });
-}, true);
+  return NextResponse.json(product);
+}, false);
 /**
  * @swagger
  * /api/product:

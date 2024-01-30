@@ -32,7 +32,7 @@ export function UrlTokenAutoSignin(p: { children: ReactNode }) {
     } else {
       setIsRedirectionDone(true);
     }
-  }, [token]);
+  }, [router, session.status, token]);
 
   return <>{isRedirectionDone && p.children}</>;
 }
