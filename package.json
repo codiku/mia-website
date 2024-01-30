@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test": "npx playwright test",
     "start": "next start",
     "lint": "next lint",
     "crud": "ts-node ./scripts/crud.ts",
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "@anatine/zod-openapi": "^2.2.3",
+    "@playwright/test": "^1.41.1",
     "@storybook/addon-essentials": "^7.6.10",
     "@storybook/addon-interactions": "^7.6.10",
     "@storybook/addon-links": "^7.6.10",

@@ -1,6 +1,6 @@
 # Next Boiler Plate
 
-Next.JS + Typescript + Next Auth + Tailwind + Shadcnui + Prisma + Supabase
+Next.JS + Typescript + Next Auth + Tailwind + Shadcnui + Prisma + Supabase + Playwright + Storybook
 
 **🚀 Elevate your web development with our Next Auth + Tailwind + Shadcnui Boilerplate, the perfect foundation for building blazing fast, secure, and user-friendly web applications.**
 
@@ -10,49 +10,49 @@ This comprehensive boilerplate provides a solid foundation for building modern w
 
 **🔥 Key Features:**
 
-* **Next Auth for Seamless Authentication:** Seamlessly manage user authentication, including login, registration, password resets, and email verification.
+- **Next Auth for Seamless Authentication:** Seamlessly manage user authentication, including login, registration, password resets, and email verification.
 
-* **Tailwind CSS for Blazing Speed and Consistency:** Leverage Tailwind CSS's utility-first approach for rapid and consistent styling across all devices.
+- **Tailwind CSS for Blazing Speed and Consistency:** Leverage Tailwind CSS's utility-first approach for rapid and consistent styling across all devices.
 
-* **Data Validation with Zod:** Ensure data integrity and prevent errors with Zod, a powerful JSON schema validator.
+- **Data Validation with Zod:** Ensure data integrity and prevent errors with Zod, a powerful JSON schema validator.
 
-* **Toast and Response Management with Axios-config:** Easily display alerts and manage responses with axios-config.
+- **Toast and Response Management with Axios-config:** Easily display alerts and manage responses with axios-config.
 
-* **Routes Protection and Validations with safeEndPoint() hoc:** Protect your routes and enforce data validations with the safeEndPoint() hoc.
+- **Routes Protection and Validations with safeEndPoint() hoc:** Protect your routes and enforce data validations with the safeEndPoint() hoc.
 
-* **CRUD Generation Shortcut with npm run crud:** Quickly generate GET, POST, PATCH, and DELETE API routes.
+- **CRUD Generation Shortcut with npm run crud:** Quickly generate GET, POST, PATCH, and DELETE API routes.
 
-* **Database Management with Prisma:** Efficiently interact with your Supabase database with Prisma, an open-source ORM.
+- **Database Management with Prisma:** Efficiently interact with your Supabase database with Prisma, an open-source ORM.
 
-* **User Interface Enhancements with Shadcnui:** Enhance the user experience with Shadcnui, a react component library for building user interfaces.
+- **User Interface Enhancements with Shadcnui:** Enhance the user experience with Shadcnui, a react component library for building user interfaces.
 
 **✨ Why Choose This Boilerplate?**
 
-* **Blazing Performance:** Enjoy blazing fast performance with server-side rendering and code splitting optimizations.
+- **Blazing Performance:** Enjoy blazing fast performance with server-side rendering and code splitting optimizations.
 
-* **Enhanced Security:** Implement robust security measures with strong password hashing, CSRF protection, and rate limiting.
+- **Enhanced Security:** Implement robust security measures with strong password hashing, CSRF protection, and rate limiting.
 
-* **Streamlined Development:** Simplify your development process with pre-configured tools and libraries.
+- **Streamlined Development:** Simplify your development process with pre-configured tools and libraries.
 
-* **Seamless User Experience:** Deliver a seamless and intuitive user experience with Tailwind CSS and Shadcnui.
+- **Seamless User Experience:** Deliver a seamless and intuitive user experience with Tailwind CSS and Shadcnui.
 
-* **Effortless Data Management:** Manage your data effectively with Prisma and Zod.
+- **Effortless Data Management:** Manage your data effectively with Prisma and Zod.
 
 # Setup
 
 Install packages
-`npm i`
+`npm i --force` (issue with prisma-zod version conflict that forces use to do that)
 Start the local db
 `npm run db:start`
 Display the db
 `npm run db:studio`
-
 
 ## Toast and response
 
 By default axios-config display alerts. Unless you send isToastDisabled:false in header
 
 ## Routes Protection , and validations 100% TS support with Zod validation
+
 ### safeEndPoint
 
 #### Public an privates routes
@@ -98,23 +98,23 @@ All Prisma and Zod models are automatically added to Swagger and can be used as 
 
 ```javascript
 /**
-  * @swagger
-  * /api/product:
-  *   get:
-  *     description: Get all products
-  *     responses:
-  *       200:
-  *         description: Returns a list of products
-  *         content:
-  *           application/json:
-  *             schema:
-  *               type: array
-  *               items:
-  *                 $ref: '#/components/schemas/ProductModel'
-  *       400:
-  *         description: Bad request if the product data is invalid
-  */
-  export const GET = safeEndPoint(async (req: NextRequest) => {
+ * @swagger
+ * /api/product:
+ *   get:
+ *     description: Get all products
+ *     responses:
+ *       200:
+ *         description: Returns a list of products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ProductModel'
+ *       400:
+ *         description: Bad request if the product data is invalid
+ */
+export const GET = safeEndPoint(async (req: NextRequest) => {
   const product = await db.product.findMany({});
   return NextResponse.json(product || { error: true, message: "Not found" }, {
     status: StatusCodes.BAD_REQUEST,
@@ -123,3 +123,27 @@ All Prisma and Zod models are automatically added to Swagger and can be used as 
 ```
 
 In this example, the `Product` schema from Prisma and Zod is used in the Swagger documentation for the GET endpoint of the `/api/product` route. This provides a clear and accurate description of the data structure expected in the response.
+
+## Storybook
+
+Storybook is a tool for developing UI components in isolation. It makes building stunning UIs organized and efficient.
+
+To run Storybook, use the following command:
+
+```bash
+npm run storybook
+```
+
+This command starts Storybook locally and outputs the address. Depending on your system configuration, it will automatically open the address in your default browser.
+
+## Playwright
+
+Playwright is a Node.js library to automate Chromium, Firefox, and WebKit with a single API. It enables cross-browser web automation that is ever-green, capable, reliable, and fast.
+
+To run Playwright tests, use the following command:
+
+```bash
+npm run test
+```
+
+This command runs the Playwright tests in your project. Ensure that all your tests are located in the appropriate directory as per your configuration.
