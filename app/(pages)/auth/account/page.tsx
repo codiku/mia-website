@@ -29,7 +29,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import withSession from "@/components/hoc/with-session";
+import { withAuth } from "@/components/hoc/with-auth";
 import Link from "next/link";
 import { api } from "@/configs/ky-config";
 
@@ -39,7 +39,7 @@ const ACCOUNT_FORM_MODEL = z.object({
 });
 type Form = z.infer<typeof ACCOUNT_FORM_MODEL>;
 
-function Account() {
+export default withAuth(function Account() {
   const router = useRouter();
   const { data: session } = useSession();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -149,6 +149,4 @@ function Account() {
       </div>
     </div>
   );
-}
-
-export default withSession(Account);
+});

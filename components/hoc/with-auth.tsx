@@ -1,17 +1,17 @@
 import { useSession } from "next-auth/react";
 
-const withSession = (WrappedComponent: React.ComponentType) => {
+export const withAuth = (
+  WrappedComponent: React.ComponentType,
+  isPublic: boolean = false
+) => {
   const AuthProtectedPage: React.FC = (props) => {
     const { status } = useSession();
-
-    if (status === "authenticated") {
+    if (isPublic || status === "authenticated") {
       return <WrappedComponent {...props} />;
     } else {
-      return null;
+      window.location.replace("/auth/signin");
     }
   };
 
   return AuthProtectedPage;
 };
-
-export default withSession;
