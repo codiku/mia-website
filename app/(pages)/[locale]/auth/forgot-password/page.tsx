@@ -1,5 +1,4 @@
 "use client";
-import { api } from "@/configs/axios-config";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,10 +13,11 @@ import { FORGOT_PASSWORD_MODEL } from "@/libs/models";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
+import ky from "ky";
 
 type Form = z.infer<typeof FORGOT_PASSWORD_MODEL>;
 
@@ -26,8 +26,10 @@ export default function ForgotPassword() {
   const [disabledEmailButton, setDisabledEmailButton] = useState(false);
   const t = useTranslations("Auth.forgot-password");
   const { mutate: forgotPassword, isLoading } = useMutation(
-    async (formData: Form) => {
-      return api.post<Resp<{}>>("/api/auth/forgot-password", formData);
+    async (formValues: Form) => {
+      return ky
+        .post("/api/auth/forgot-password", { json: formValues })
+        .json<Resp<{}>>();
     },
     {
       onSuccess: () => {
@@ -102,7 +104,6 @@ export default function ForgotPassword() {
                 />
                 <FormMessage className="text-xs" />
               </div>
-
               <Button
                 disabled={isLoading}
                 type="submit"

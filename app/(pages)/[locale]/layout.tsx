@@ -1,4 +1,4 @@
-import "@/configs/axios-config";
+import "@/configs/ky-config";
 import "./globals.css";
 import { SessionProvider } from "@/components/providers/SessionProvider";
 import type { Metadata } from "next";
@@ -21,16 +21,16 @@ export default function RootLayout(p: {
   const messages = useMessages() as IntlMessages;
   return (
     <ReactQueryProvider>
-     <NextIntlClientProvider messages={messages}>
-      <SessionProvider>
-        <html lang={p.params.locale}>
-          <body className={`${inter.className} p-16 h-screen`}>
-            <Toaster richColors position="top-right" />
-            {p.children}
-            <ReactQueryDevtools />
-          </body>
-        </html>
-      </SessionProvider>
+      <NextIntlClientProvider messages={messages}>
+        <SessionProvider>
+          <html lang={p.params.locale}>
+            <body className={`${inter.className} p-16 h-screen`}>
+              <Toaster richColors position="top-right" />
+              {p.children}
+              <ReactQueryDevtools />
+            </body>
+          </html>
+        </SessionProvider>
       </NextIntlClientProvider>
     </ReactQueryProvider>
   );

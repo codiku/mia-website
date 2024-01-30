@@ -1,6 +1,5 @@
 "use client";
-import { UnsensitiveUser } from "@/types/user";
-import { api } from "@/configs/axios-config";
+import { Resp } from "@/types/api-type";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,7 +11,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { EMAIL_MODEL, PASSWORD_MODEL } from "@/libs/models";
-import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -24,6 +22,8 @@ import { signIn } from "next-auth/react";
 import { Divider } from "@/components/ui/divider";
 import { FieldPassword } from "@/components/ui/field-password";
 import { useTranslations } from "use-intl";
+import ky from "ky";
+import { UnsensitiveUser } from "@/types/user";
 
 const SIGNUP_MODEL = z
   .object({
@@ -52,8 +52,10 @@ export default function Signup() {
   const [currentZodIssues, setCurrentZodIssues] = useState<ZodIssue[]>([]);
   const t = useTranslations("Auth.signup");
   const { mutate: signup, isLoading } = useMutation(
-    async (formData: Form) =>
-      api.post<Resp<UnsensitiveUser>>("/api/auth/register/", formData),
+    async (formValues: Form) =>
+      ky
+        .post("/api/auth/register/", { json: formValues })
+        .json<Resp<UnsensitiveUser>>(),
     {
       onSuccess: () => {
         setIsEmailSent(true);

@@ -16,8 +16,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Resp } from "@/types/api-type";
-import { api } from "@/configs/axios-config";
 import { useMutation } from "@tanstack/react-query";
+import ky from "ky";
 
 const UPDATE_PASSWORD_FORM_MODEL = z
   .object({
@@ -38,8 +38,10 @@ type Form = z.infer<typeof UPDATE_PASSWORD_FORM_MODEL>;
 
 function UpdatePassword(p: {}) {
   const { mutate: updatePassword, isLoading } = useMutation(
-    async (formData: Form) =>
-      api.patch<Resp<{}>>("/api/auth/update-password", formData)
+    async (formValues: Form) =>
+      ky
+        .patch("/api/auth/update-password", { json: formValues })
+        .json<Resp<{}>>()
   );
 
   const form = useForm<Form>({

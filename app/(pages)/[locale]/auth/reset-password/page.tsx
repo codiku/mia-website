@@ -1,5 +1,4 @@
 "use client";
-import { api } from "@/configs/axios-config";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,6 +20,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { FieldPassword } from "@/components/ui/field-password";
 import { useTranslations } from "next-intl";
+import ky from "ky";
 
 export const RESET_PASSWORD_MODEL = z
   .object({
@@ -39,20 +39,18 @@ export default function ResetPassword() {
   const t = useTranslations("Auth.reset-password");
   const { mutate: resetPassword, isLoading } = useMutation(
     async (data: { token: string; password: string }) =>
-      api.patch<Resp<{}>>(
-        "/api/auth/reset-password",
-        {
-          token: data.token,
-          password: data.password,
-        },
-        { headers: { isToastDisabled: true } }
-      ),
+      ky
+        .patch("/api/auth/reset-password", {
+          headers: { isToastDisabled: "true" },
+          json: { token: data.token, password: data.password },
+        })
+        .json<Resp<{}>>(),
     {
-      onSuccess: async ({ data }) => {
+      onSuccess: async (response) => {
         await signOut({
           redirect: false,
         });
-        if (!data.error) {
+        if (!response.error) {
           router.push("/auth/signin");
           toast.success(t("passwordUpdated"));
         }
@@ -70,7 +68,7 @@ export default function ResetPassword() {
     },
   });
 
-  async function onSubmit({ password, passwordConfirm }: Form) {
+  async function onSubmit({ password }: Form) {
     if (token) {
       resetPassword({ token, password });
     } else {

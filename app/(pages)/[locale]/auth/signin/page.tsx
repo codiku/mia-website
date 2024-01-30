@@ -38,8 +38,7 @@ export default function Signin() {
       }),
     {
       onSuccess: (signinResp) => {
-        // signin comes from next-auth and probably does not use axios behind the scene
-        // So the error is not catch by the axios interceptor in axios-config.ts
+        // signin comes from next-auth
         // We have to manually catch it here.
         if (signinResp?.error) {
           toast.error("Signin failed");

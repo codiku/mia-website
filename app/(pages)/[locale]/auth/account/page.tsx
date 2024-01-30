@@ -1,5 +1,5 @@
 "use client";
-import { api } from "@/configs/axios-config";
+import ky from "ky";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -55,15 +55,17 @@ function Account() {
   });
   const { mutate: deleteAccount, isLoading } = useMutation(
     async () =>
-      api.delete<Resp<{}>>("/api/auth/delete-account", {
-        headers: { isToastDisabled: true },
-      }),
+      ky
+        .delete("/api/auth/delete-account", {
+          headers: { isToastDisabled: "true" },
+        })
+        .json<Resp<{}>>(),
     {
-      onSuccess: async ({ data }) => {
+      onSuccess: async (response) => {
         await signOut({ redirect: false });
         router.refresh();
         router.push("/");
-        toast.success(data.message);
+        toast.success(response.message);
       },
     }
   );
