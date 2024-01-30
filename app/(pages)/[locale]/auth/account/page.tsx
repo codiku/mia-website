@@ -32,6 +32,7 @@ import { Input } from "@/components/ui/input";
 import { withAuth } from "@/components/hoc/with-auth";
 import Link from "next/link";
 import { api } from "@/configs/ky-config";
+import { useTranslations } from "next-intl";
 
 const ACCOUNT_FORM_MODEL = z.object({
   email: EMAIL_MODEL,
@@ -43,7 +44,7 @@ export default withAuth(function Account() {
   const router = useRouter();
   const { data: session } = useSession();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  const t = useTranslations("Auth.account");
   const form = useForm<Form>({
     resolver: zodResolver(ACCOUNT_FORM_MODEL),
     defaultValues: {
