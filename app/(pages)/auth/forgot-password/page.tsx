@@ -16,7 +16,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useTranslations } from "next-intl";
 import ky from "ky";
 
 type Form = z.infer<typeof FORGOT_PASSWORD_MODEL>;
@@ -24,7 +23,6 @@ type Form = z.infer<typeof FORGOT_PASSWORD_MODEL>;
 export default function ForgotPassword() {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [disabledEmailButton, setDisabledEmailButton] = useState(false);
-  const t = useTranslations("Auth.forgot-password");
   const { mutate: forgotPassword, isLoading } = useMutation(
     async (formValues: Form) => {
       return ky
@@ -53,17 +51,16 @@ export default function ForgotPassword() {
       }, 30000);
     }
   }
-
   const renderEmailSent = () => {
     return (
       <div>
-        <h2 className="mb-5">{t("emailSent")}</h2>
-        <p>{t("checkInbox")}</p>
+        <h2 className="mb-5">Email sent</h2>
+        <p>Check your inbox and click the link to reset your password.</p>
         <p>
           <br />
-          {t("closeWindow")}
+          You can close this window.
         </p>
-        <h2 className="mt-20">{t("didNotReceiveEmail")}</h2>
+        <h2 className="mt-20">Did{"n't"} receive the email ?</h2>
         <Button
           type="submit"
           variant={"outline"}
@@ -71,10 +68,10 @@ export default function ForgotPassword() {
           className="w-full mt-10"
         >
           {isLoading
-            ? t("loading")
+            ? "Loading..."
             : disabledEmailButton
-            ? t("waitBeforeSending")
-            : t("sendEmailAgain")}
+            ? "Wait 30 secondes before sending again"
+            : "Send email again"}
         </Button>
       </div>
     );
@@ -87,16 +84,16 @@ export default function ForgotPassword() {
             renderEmailSent()
           ) : (
             <>
-              <h2>{t("title")}</h2>
+              <h2>Forgot password</h2>
               <div>
                 <FormField
                   control={form.control}
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t("email")}</FormLabel>
+                      <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder={t("email")} {...field} />
+                        <Input placeholder="Email" {...field} />
                       </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>
@@ -109,7 +106,7 @@ export default function ForgotPassword() {
                 type="submit"
                 className="w-full mt-10"
               >
-                {t("sendEmail")}
+                Send email
               </Button>
             </>
           )}

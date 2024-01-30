@@ -21,7 +21,6 @@ import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 import { Divider } from "@/components/ui/divider";
 import { FieldPassword } from "@/components/ui/field-password";
-import { useTranslations } from "use-intl";
 import ky from "ky";
 import { UnsensitiveUser } from "@/types/user";
 
@@ -50,7 +49,6 @@ export default function Signup() {
   const formDataRef = useRef<Form>();
   const [disabledEmailButton, setDisabledEmailButton] = useState(false);
   const [currentZodIssues, setCurrentZodIssues] = useState<ZodIssue[]>([]);
-  const t = useTranslations("Auth.signup");
   const { mutate: signup, isLoading } = useMutation(
     async (formValues: Form) =>
       ky
@@ -93,7 +91,7 @@ export default function Signup() {
     if (password !== form.getValues().passwordConfirm) {
       form.setError("passwordConfirm", {
         type: "manual",
-        message: t("passwordDontMatch"),
+        message: "The passwords you entered do not match. Please try again.",
       });
     } else {
       form.clearErrors("passwordConfirm");
@@ -104,19 +102,19 @@ export default function Signup() {
     } catch (err) {
       setCurrentZodIssues((err as ZodError).issues);
     }
-  }, [form, password, t]);
+  }, [form, password]);
 
   const renderEmailSent = () => {
     return (
       <div>
-        <h2 className="mb-5">{t("emailSent")}</h2>
-        <p>{t("checkInbox")}</p>
+        <h2 className="mb-5">Email sent</h2>
+        <p>Check your inbox and click the link to activate your account.</p>
         <p>
           <br />
-          {t("closeWindow")}
+          You can close this window.
         </p>
 
-        <h2 className="mt-20">{t("didNotReceiveEmail")}</h2>
+        <h2 className="mt-20">Didn{"'t"} receive the email?</h2>
         <Button
           type="submit"
           variant={"outline"}
@@ -124,10 +122,10 @@ export default function Signup() {
           className="w-full mt-10"
         >
           {isLoading
-            ? t("loading")
+            ? "Loading..."
             : disabledEmailButton
-            ? t("waitBeforeSending")
-            : t("sendEmailAgain")}
+            ? "Wait 15 seconds before sending again"
+            : "Send email again"}
         </Button>
       </div>
     );
@@ -148,16 +146,16 @@ export default function Signup() {
           ) : (
             <>
               <div className="space-y-4">
-                <h2>{t("register")}</h2>
+                <h2>Register</h2>
                 <div>
                   <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("email")}</FormLabel>
+                        <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder={t("email")} {...field} />
+                          <Input placeholder="Email" {...field} />
                         </FormControl>
                         <FormMessage className="text-xs" />
                       </FormItem>
@@ -171,10 +169,10 @@ export default function Signup() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("password")}</FormLabel>
+                        <FormLabel>Password</FormLabel>
                         <FormControl>
                           <FieldPassword
-                            placeholder={t("enterYourPassword")}
+                            placeholder="Enter your password"
                             {...field}
                           />
                         </FormControl>
@@ -205,10 +203,10 @@ export default function Signup() {
                     name="passwordConfirm"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("confirmPassword")}</FormLabel>
+                        <FormLabel>Confirm password</FormLabel>
                         <FormControl>
                           <FieldPassword
-                            placeholder={t("typeYourPasswordAgain")}
+                            placeholder="Type your password again"
                             {...field}
                           />
                         </FormControl>
@@ -225,9 +223,9 @@ export default function Signup() {
                 type="submit"
                 className="w-full mt-10"
               >
-                {t("signUp")}
+                Sign up
               </Button>
-              <Divider>{t("orContinueWith")}</Divider>
+              <Divider>Or continue with</Divider>
               <div className="flex-center mt-5">
                 <div
                   onClick={async () => {
@@ -243,9 +241,9 @@ export default function Signup() {
               </div>
 
               <div className="mt-4 text-sm">
-                {t("alreadyHaveAccount")}
+                You already have an account, please
                 <Link href="/auth/signin" className="ml-1">
-                  {t("signIn")}
+                  Sign in
                 </Link>
               </div>
             </>

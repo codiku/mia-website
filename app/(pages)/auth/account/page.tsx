@@ -78,19 +78,21 @@ function Account() {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            {t("actionCannotBeUndone")}
+            {
+              "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
+            }
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>
-            Cancel
+            {"Cancel"}
           </AlertDialogCancel>
           <Button
             disabled={isLoading}
             onClick={() => deleteAccount()}
             variant={"destructive"}
           >
-            {t("deleteAccount")}
+            {"Delete account"}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -99,7 +101,7 @@ function Account() {
   return (
     <div className="flex-center">
       <div className="mt-20 card">
-        <h2>{t("title")}</h2>
+        <h2>{"Account"}</h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div>
@@ -108,12 +110,12 @@ function Account() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("email")}</FormLabel>
+                    <FormLabel>{"Email"}</FormLabel>
                     <FormControl>
                       <Input
                         disabled
                         type="email"
-                        placeholder={t("email")}
+                        placeholder={"Email"}
                         {...field}
                       />
                     </FormControl>
@@ -129,7 +131,7 @@ function Account() {
             href="/auth/account/update-password"
             className="ml-1 block mt-4"
           >
-            {t("updatePassword")}
+            {"Update password"}
           </Link>
         )}
         <Button
@@ -142,14 +144,14 @@ function Account() {
           }
           variant={"outline"}
         >
-          {t("logout")}
+          {"Logout"}
         </Button>
         <Button
           onClick={() => setIsDialogOpen(true)}
           variant={"destructive"}
           className="block mt-10"
         >
-          {t("deleteAccount")}
+          {"Delete account"}
         </Button>
         {confirmDialog}
       </div>

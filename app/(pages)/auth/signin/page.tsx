@@ -21,14 +21,12 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Divider } from "@/components/ui/divider";
-import { useTranslations } from "next-intl";
 
 type Form = z.infer<typeof SIGNIN_MODEL>;
 
 export default function Signin() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
-  const t = useTranslations("Auth.signin");
   const { mutate: signinMut, isLoading } = useMutation(
     async (form: Form) =>
       signIn("credentials", {
@@ -45,7 +43,7 @@ export default function Signin() {
         } else {
           router.refresh();
           router.push(callbackUrl || "/");
-          toast.success("You are know signed in");
+          toast.success("You are now signed in");
         }
       },
     }
@@ -68,14 +66,14 @@ export default function Signin() {
       <Form {...form}>
         <form className="card" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-4">
-            <h2>{t("title")}</h2>
+            <h2>Signin</h2>
             <div>
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("email")}</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="example@gmail.com" {...field} />
                     </FormControl>
@@ -91,10 +89,10 @@ export default function Signin() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("password")}</FormLabel>
+                    <FormLabel>Password</FormLabel>
                     <FormControl>
                       <FieldPassword
-                        placeholder={t("typeYourPassword")}
+                        placeholder="Type your password"
                         {...field}
                       />
                     </FormControl>
@@ -105,14 +103,14 @@ export default function Signin() {
               <FormMessage className="text-xs" />
             </div>
             <Link href={"/auth/forgot-password"} className="inline-block pl-1">
-              {t("forgotPassword")}
+              Forgot password?
             </Link>
           </div>
 
           <Button disabled={isLoading} type="submit" className="w-full mt-10">
-            {t("signIn")}
+            Signin
           </Button>
-          <Divider>{t("orContinueWith")}</Divider>
+          <Divider>Or continue with</Divider>
           <div className="flex-center mt-5">
             <div
               onClick={async () => {
@@ -121,15 +119,15 @@ export default function Signin() {
                   callbackUrl: process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL,
                 });
               }}
-              className="rounded-full border  cursor-pointer p-2 "
+              className="rounded-full border cursor-pointer p-2 "
             >
               <FcGoogle size={25} />
             </div>
           </div>
           <div className="mt-4 text-sm">
-            {t("alreadyHaveAccount")}
+            You already have an account, please
             <Link href={"/auth/signup"} className="ml-1">
-              {t("signUp")}
+              Sign up
             </Link>
           </div>
         </form>
