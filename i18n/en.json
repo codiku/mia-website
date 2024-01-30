@@ -3,6 +3,7 @@
     "title": "Hello world!",
     "linkAccount": "Account",
     "linkSignin": "Signin",
+    "linkSignup": "Signup",
     "hello": "Hello",
     "authAccount": "auth/account"
   },
@@ -79,13 +80,13 @@
   },
   "Components": {
     "LanguageSwitcher": {
-      "placeholder":"Select your language"
+      "placeholder": "Select your language"
     }
   },
   "Common": {
     "SupportedLanguages": {
-      "en":"English",
-      "fr":"French"
+      "en": "English",
+      "fr": "French"
     }
   }
 }

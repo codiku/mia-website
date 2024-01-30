@@ -3,6 +3,7 @@
     "title": "Bonjour le monde !",
     "linkAccount": "Compte",
     "linkSignin": "Connexion",
+    "linkSignup": "Inscription",
     "hello": "Bonjour",
     "authAccount": "auth/compte"
   },
@@ -79,13 +80,13 @@
   },
   "Components": {
     "LanguageSwitcher": {
-      "placeholder":"Choisissez votre langue"
+      "placeholder": "Choisissez votre langue"
     }
   },
   "Common": {
     "SupportedLanguages": {
-      "en":"Anglais",
-      "fr":"Francais"
+      "en": "Anglais",
+      "fr": "Francais"
     }
   }
 }
