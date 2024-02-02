@@ -2,9 +2,9 @@ import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
 import { JWT, getToken } from "next-auth/jwt";
 
-import { NextResponse, NextRequest } from "next/server";
-import { errorResponse, getBodyAsync, getQueryParams } from "./request";
+import { NextRequest, NextResponse } from "next/server";
 import { ZodSchema } from "zod";
+import { errorResponse, getBodyAsync, getQueryParams } from "./request";
 // Generate a JWT token with user information
 export function generateJwtToken(data: string | object | Buffer) {
   return jwt.sign(data, process.env.NEXTAUTH_SECRET as string, {
@@ -23,32 +23,36 @@ export function decodeJwtToken<T>(token: string) {
   }
 }
 // Create a function that wraps your route handler with the authentication logic.
-export function safeEndPoint<B, P>(
+export function safeEndPoint<B, P, UriP>(
   routeHandler: (
     req: NextRequest,
     route: {
-      params: {
-        [key: string]: string;
-      };
+      params: UriP;
     },
     body: Awaited<B>,
-    params: P,
+    queryParams: P,
     token?: JWT
   ) => void,
   enabled = true,
+  modelUriParams?: ZodSchema<UriP>,
   modelBody?: ZodSchema<B>,
-  modelParams?: ZodSchema<P>
+  modelQueryParams?: ZodSchema<P>
 ) {
-  return async (req: NextRequest, route: { params: any }) => {
+  return async (req: NextRequest, route: { params: UriP }) => {
     if (enabled) {
       const token = await getToken({ req });
       if (token) {
         let body = modelBody ? await parseBody(req, modelBody) : undefined;
-        const params = getQueryParams(req);
-        if (modelParams) {
-          modelParams.parse(params);
+        const qParams = getQueryParams(req);
+
+        if (modelUriParams) {
+          modelUriParams.parse(route.params);
         }
-        return routeHandler(req, route, body as never, params as P, token);
+        if (modelQueryParams) {
+          modelQueryParams.parse(qParams);
+        }
+
+        return routeHandler(req, route, body as never, qParams as P, token);
       } else {
         return handleUnauthorized();
       }
@@ -56,8 +60,12 @@ export function safeEndPoint<B, P>(
       try {
         let body = modelBody ? await parseBody(req, modelBody) : undefined;
         const params = getQueryParams(req);
-        if (modelParams) {
-          modelParams.parse(params);
+
+        if (modelUriParams) {
+          modelUriParams.parse(route.params);
+        }
+        if (modelQueryParams) {
+          modelQueryParams.parse(params);
         }
         return routeHandler(req, route, body as never, params as P, undefined);
       } catch (error) {

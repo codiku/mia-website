@@ -1,9 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-import { StatusCodes } from "http-status-codes";
+import { readProduct } from "@/app/actions/products/product";
+import { PatchProductModelBody } from "@/app/api/product/product-model-api";
 import { db } from "@/libs/db";
-import { Product } from "@prisma/client";
 import { safeEndPoint } from "@/libs/jwt";
-import { PatchProductModelBody } from "@/libs/models";
+import { ID_URI_PARAMS_MODEL } from "@/libs/models";
+import { Product } from "@prisma/client";
+import { StatusCodes } from "http-status-codes";
+import { NextRequest, NextResponse } from "next/server";
 /**
  * @swagger
  * /api/product/{id}:
@@ -21,18 +23,14 @@ import { PatchProductModelBody } from "@/libs/models";
  *       400:
  *         description: Bad request if the product id is invalid or not found
  */
-export const GET = safeEndPoint(async (req: NextRequest, route) => {
-  let product: Product | null = null;
-  const id = Number(route.params.id);
-  if (id) {
-    product = await db.product.findUnique({
-      where: { id },
-    });
-  }
-  return NextResponse.json(product || { error: true, message: "Not found" }, {
-    status: StatusCodes.BAD_REQUEST,
-  });
-}, true);
+export const GET = safeEndPoint(
+  async (_req: NextRequest, route) => {
+    const response = await readProduct(Number(route.params.id));
+    return NextResponse.json(response);
+  },
+  true,
+  ID_URI_PARAMS_MODEL
+);
 /**
  * @swagger
  * /api/product/{id}:
@@ -74,6 +72,7 @@ export const PATCH = safeEndPoint(
     }
   },
   true,
+  ID_URI_PARAMS_MODEL,
   PatchProductModelBody
 );
 
@@ -94,15 +93,22 @@ export const PATCH = safeEndPoint(
  *       400:
  *         description: Bad request if the product id is invalid or not found
  */
-export const DELETE = safeEndPoint(async (req: NextRequest, route) => {
-  let product: Product | null = null;
-  const id = Number(route.params.id);
-  if (id) {
-    product = await db.product.delete({
-      where: { id },
-    });
-    return NextResponse.json(product || { error: true, message: "Not found" }, {
-      status: StatusCodes.BAD_REQUEST,
-    });
-  }
-}, true);
+export const DELETE = safeEndPoint(
+  async (req: NextRequest, route) => {
+    let product: Product | null = null;
+    const id = Number(route.params.id);
+    if (id) {
+      product = await db.product.delete({
+        where: { id },
+      });
+      return NextResponse.json(
+        product || { error: true, message: "Not found" },
+        {
+          status: StatusCodes.BAD_REQUEST,
+        }
+      );
+    }
+  },
+  true,
+  ID_URI_PARAMS_MODEL
+);

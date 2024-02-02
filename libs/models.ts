@@ -1,7 +1,5 @@
-import { z } from "zod";
 import { decodeJwtToken } from "@/libs/jwt";
-import { ProductModel } from "@/prisma/zod";
-
+import { z } from "zod";
 
 export const JWT_TOKEN_MODEL = z
   .string()
@@ -16,10 +14,7 @@ export const PASSWORD_MODEL = z
   .regex(/[A-Z]+/, "At least 1 uppercase letter")
   .regex(/[a-z]+/, "At least 1 lowercase letter")
   .regex(/[0-9]+/, "At least 1 number")
-  .regex(
-    /[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/,
-    "At least 1 special character"
-  );
+  .regex(/[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/, "At least 1 special character");
 
 export const EMAIL_MODEL = z
   .string()
@@ -49,7 +44,7 @@ export const RESET_PASSWORD_MODEL = z.object({
 });
 
 export const VERIFY_EMAIL_MODEL = z.object({
-  token: JWT_TOKEN_MODEL
+  token: JWT_TOKEN_MODEL,
 });
 
 export const DELETE_ACCOUNT_MODEL = z.object({
@@ -61,5 +56,10 @@ export const UPDATE_PASSWORD_MODEL = z.object({
   newPassword: PASSWORD_MODEL,
 });
 
-export const PostProductModelBody = ProductModel.omit({ id: true })
-export const PatchProductModelBody = ProductModel.partial()
+export const ID_OBJECT_MODEL = z.object({
+  id: z.number(),
+});
+
+export const ID_URI_PARAMS_MODEL = z.object({
+  id: z.string(),
+});

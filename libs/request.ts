@@ -1,6 +1,7 @@
+import { ApiResponse } from "@/types/api-type";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
-import { ZodError } from "zod";
+import { ZodError, ZodSchema } from "zod";
 
 interface QueryParams {
   [key: string]: string;
@@ -42,3 +43,41 @@ export const errorResponse = (error: unknown) => {
     { status: statusCode }
   );
 };
+
+export const errorResponseAction = (error: unknown): ApiResponse => {
+  let errorMessage = "";
+  if (error instanceof ZodError) {
+    errorMessage = "";
+    error.issues.forEach((issue) => {
+      const field = issue.path.join(".");
+      errorMessage += `${field} - ${issue.message}\n`;
+    });
+  } else {
+    errorMessage = `Error occurred: ${(error as Error).message}`;
+  }
+  return { message: errorMessage, error: true };
+};
+
+export function safeAction<D, R>(
+  serverAction: ((data: Awaited<D>) => Promise<R>) | (() => Promise<R>),
+  modelData?: ZodSchema<D>
+): ((data?: Awaited<D>) => Promise<R>) | (() => ApiResponse) {
+  try {
+    if (modelData !== undefined) {
+      return async (d?: Awaited<D>) => {
+        if (d) {
+          await modelData.parse(d);
+          return (serverAction as (data: Awaited<D>) => Promise<R>)(d);
+        } else {
+          return (serverAction as () => Promise<R>)();
+        }
+      };
+    } else {
+      return async () => {
+        return (serverAction as () => Promise<R>)();
+      };
+    }
+  } catch (error) {
+    return () => errorResponseAction(error as Error);
+  }
+}

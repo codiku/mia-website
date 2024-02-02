@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { StatusCodes } from "http-status-codes";
-import { db } from "@/libs/db";
+import { createProduct, readAllProducts } from "@/app/actions/products/product";
 import { safeEndPoint } from "@/libs/jwt";
-import { PostProductModelBody } from "@/libs/models";
+import { NextRequest, NextResponse } from "next/server";
+import { PostProductModelBody } from "./product-model-api";
 
 /**
  * @swagger
@@ -21,8 +20,8 @@ import { PostProductModelBody } from "@/libs/models";
  *       400:
  *         description: Bad request if the product data is invalid
  */
-export const GET = safeEndPoint(async (req: NextRequest) => {
-  const product = await db.product.findMany({});
+export const GET = safeEndPoint(async (_req: NextRequest) => {
+  const product = await readAllProducts();
   return NextResponse.json(product);
 }, false);
 /**
@@ -47,12 +46,11 @@ export const GET = safeEndPoint(async (req: NextRequest) => {
  *         description: Bad request if the product data is invalid
  */
 export const POST = safeEndPoint(
-  async (req: NextRequest, route, body, _, token) => {
-    const created = await db.product.create({
-      data: body,
-    });
+  async (_req: NextRequest, _, body) => {
+    const created = await createProduct(body);
     return NextResponse.json(created);
   },
   true,
+  undefined,
   PostProductModelBody
 );
