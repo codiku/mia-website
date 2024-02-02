@@ -24,6 +24,7 @@ export const GET = safeEndPoint(async (_req: NextRequest) => {
   const product = await readAllProducts();
   return NextResponse.json(product);
 }, false);
+
 /**
  * @swagger
  * /api/product:

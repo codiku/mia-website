@@ -1,10 +1,7 @@
-import { readProduct } from "@/app/actions/products/product";
+import { deleteProduct, readProduct, updateProduct } from "@/app/actions/products/product";
 import { PatchProductModelBody } from "@/app/api/product/product-model-api";
-import { db } from "@/libs/db";
 import { safeEndPoint } from "@/libs/jwt";
 import { ID_URI_PARAMS_MODEL } from "@/libs/models";
-import { Product } from "@prisma/client";
-import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 /**
  * @swagger
@@ -31,6 +28,7 @@ export const GET = safeEndPoint(
   true,
   ID_URI_PARAMS_MODEL
 );
+
 /**
  * @swagger
  * /api/product/{id}:
@@ -55,21 +53,9 @@ export const GET = safeEndPoint(
  *         description: Bad request if the product id is invalid or not found
  */
 export const PATCH = safeEndPoint(
-  async (req: NextRequest, route, body) => {
-    let product: Product | null = null;
-    const id = Number(route.params.id);
-    if (id) {
-      product = await db.product.update({
-        where: { id },
-        data: body,
-      });
-      return NextResponse.json(
-        product || { error: true, message: "Not found" },
-        {
-          status: StatusCodes.BAD_REQUEST,
-        }
-      );
-    }
+  async (_req: NextRequest, route, body) => {
+    const updatedProduct = await updateProduct({ id: Number(route.params.id), ...body });
+    return NextResponse.json(updatedProduct);
   },
   true,
   ID_URI_PARAMS_MODEL,
@@ -94,20 +80,9 @@ export const PATCH = safeEndPoint(
  *         description: Bad request if the product id is invalid or not found
  */
 export const DELETE = safeEndPoint(
-  async (req: NextRequest, route) => {
-    let product: Product | null = null;
-    const id = Number(route.params.id);
-    if (id) {
-      product = await db.product.delete({
-        where: { id },
-      });
-      return NextResponse.json(
-        product || { error: true, message: "Not found" },
-        {
-          status: StatusCodes.BAD_REQUEST,
-        }
-      );
-    }
+  async (_req: NextRequest, route) => {
+    const deletedProduct = deleteProduct(Number(route.params.id));
+    return NextResponse.json(deletedProduct);
   },
   true,
   ID_URI_PARAMS_MODEL

@@ -38,10 +38,7 @@ export const errorResponse = (error: unknown) => {
   } else {
     errorMessage = `Error occurred: ${(error as Error).message}`;
   }
-  return NextResponse.json(
-    { message: errorMessage, error: true },
-    { status: statusCode }
-  );
+  return NextResponse.json({ message: errorMessage, error: true }, { status: statusCode });
 };
 
 export const errorResponseAction = (error: unknown): ApiResponse => {
@@ -58,19 +55,23 @@ export const errorResponseAction = (error: unknown): ApiResponse => {
   return { message: errorMessage, error: true };
 };
 
+// Define a generic error response action type
+type ErrorResponseAction = (error: Error) => Promise<unknown>;
+
+// Overload definitions
+export function safeAction<R>(serverAction: () => Promise<R>): () => Promise<R | ErrorResponseAction>;
+
 export function safeAction<D, R>(
-  serverAction: ((data: Awaited<D>) => Promise<R>) | (() => Promise<R>),
-  modelData?: ZodSchema<D>
-): ((data?: Awaited<D>) => Promise<R>) | (() => ApiResponse) {
+  serverAction: (data: D) => Promise<R>,
+  modelData: ZodSchema<D>
+): (data: D) => Promise<R | ErrorResponseAction>;
+
+export function safeAction<D, R>(serverAction: (data: D) => Promise<R>, modelData?: ZodSchema<D>) {
   try {
     if (modelData !== undefined) {
-      return async (d?: Awaited<D>) => {
-        if (d) {
-          await modelData.parse(d);
-          return (serverAction as (data: Awaited<D>) => Promise<R>)(d);
-        } else {
-          return (serverAction as () => Promise<R>)();
-        }
+      return async (d: D) => {
+        await modelData.parse(d);
+        return (serverAction as (data: D) => Promise<R>)(d);
       };
     } else {
       return async () => {
