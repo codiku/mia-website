@@ -20,9 +20,9 @@ This comprehensive boilerplate provides a solid foundation for building modern w
 
 - **Routes Protection and Validations with safeEndPoint() hoc:** Protect your routes and enforce data validations with the safeEndPoint() hoc.
 
-- **CRUD Generation Shortcut with npm run crud:** Quickly generate GET, POST, PATCH, and DELETE API routes.
+- **CRUD Generation Shortcut with npm run crud:** Quickly generate GET, POST, PATCH, and DELETE API routes and server action , based on Prisma schema.
 
-- **Database Management with Prisma:** Efficiently interact with your Supabase database with Prisma, an open-source ORM.
+- **Database Management with Prisma:** Efficiently interact with your Postgres database with Prisma, an open-source ORM.
 
 - **User Interface Enhancements with Shadcnui:** Enhance the user experience with Shadcnui, a react component library for building user interfaces.
 
@@ -41,11 +41,22 @@ This comprehensive boilerplate provides a solid foundation for building modern w
 # Setup
 
 Install packages
-`npm i --force` (issue with prisma-zod version conflict that forces use to do that)
+
+````shell
+npm i --force // (issue with prisma-zod version conflict that forces use to do that)
+```
+
 Start the local db
-`npm run db:start`
+
+```shell
+npm run db:start
+````
+
 Display the db
-`npm run db:studio`
+
+```shell
+npm run db:studio
+```
 
 ## Toast and response
 
@@ -55,7 +66,7 @@ By default axios-config display alerts. Unless you send isToastDisabled:false in
 
 ### safeEndPoint
 
-#### Public an privates routes
+#### Strongly typed and zod protected API routes
 
 Add public routes to `middleware.ts
 
@@ -66,21 +77,35 @@ Just wrap your handler with the `safeEndPoint()` hoc,
 The signature is the following :
 
 ```javascript
-export const GET = safeEndPoint(
-  async (req: NextRequest, uriParams, bodyData, queryParams, jwtToken) => {
-    // your code
+export const PATCH = safeEndPoint(
+  async (_req: NextRequest, route, body) => {
+    const updatedProduct = await updateProduct({ id: Number(route.params.id), ...body });
+    return NextResponse.json(updatedProduct);
   },
-  isValidAuthTokenRequired, // boolean (false if public, true is private )
-  ZodSchemaForBody, //Zod Schema for the body
-  ZodSchemaForQueryParams // Zod Schema for the query params
+  true, // Is this end point public or private ?
+  PatchProductModelUriParams, // URI Params zod model
+  PatchProductModelBody // Body params zod model,
+  // Query aprams params zod model
+  // JWT Token (if private endpoint)
 );
 ```
 
+It Handles auth error and validations error
+
+#### Strongly typed server actions
+
+````javascript
+export const updateProduct = safeAction(async ({ id, ...data }): Promise<Product> => {
+  return db.product.update({
+    where: { id },
+    data,
+  });
+}, UpdateProductModelArgs);// Pass here the zod schema for the server action
+
 It handles validations for body and query params with typing
 
-You can toggle auth easily
 
-Handle auth error and validations error
+It Handles auth error and validations error
 
 ## Session
 
@@ -120,7 +145,7 @@ export const GET = safeEndPoint(async (req: NextRequest) => {
     status: StatusCodes.BAD_REQUEST,
   });
 }, true);
-```
+````
 
 In this example, the `Product` schema from Prisma and Zod is used in the Swagger documentation for the GET endpoint of the `/api/product` route. This provides a clear and accurate description of the data structure expected in the response.
 
