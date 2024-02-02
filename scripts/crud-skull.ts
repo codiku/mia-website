@@ -1,76 +1,87 @@
 module.exports = {
-  modelActionSkull: (
+  apiModelSkull: (
     camelCaseEndpoint: string,
     pascalCaseEndpoint: string
   ) => `import { IdParamsModel } from "@/libs/models";
-  import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
-  
-  export const Post${pascalCaseEndpoint}ModelBody = ${pascalCaseEndpoint}Model.omit({ id: true });
-  export const Patch${pascalCaseEndpoint}ModelBody = ${pascalCaseEndpoint}Model.partial().omit({ id: true });
-  export const Patch${pascalCaseEndpoint}ModelUriParams = IdParamsModel;
-  export const Get${pascalCaseEndpoint}ModelUriParams = IdParamsModel;
-  export const Delete${pascalCaseEndpoint}ModelUriParams = IdParamsModel;`,
+import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
+
+export const Post${pascalCaseEndpoint}ModelBody = ${pascalCaseEndpoint}Model.omit({ id: true });
+export const Patch${pascalCaseEndpoint}ModelBody = ${pascalCaseEndpoint}Model.partial().omit({ id: true });
+export const Patch${pascalCaseEndpoint}ModelUriParams = IdParamsModel;
+export const Get${pascalCaseEndpoint}ModelUriParams = IdParamsModel;
+export const Delete${pascalCaseEndpoint}ModelUriParams = IdParamsModel;`,
+  modelActionSkull: (
+    camelCaseEndpoint: string,
+    pascalCaseEndpoint: string
+  ) => `import { IdArgModels } from "@/libs/models";
+import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
+import { z } from "zod";
+
+export const Create${pascalCaseEndpoint}ModelArgs = ${pascalCaseEndpoint}Model.omit({ id: true });
+export const Read${pascalCaseEndpoint}ModelArgs = z.number();
+export const Update${pascalCaseEndpoint}ModelArgs = ${pascalCaseEndpoint}Model.partial().merge(IdArgModels);
+export const Delete${pascalCaseEndpoint}ModelArgs = z.number();`,
 
   actionSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `"use server";
-  import { db } from "@/libs/db";
-  import { safeAction } from "@/libs/request";
-  import { ${pascalCaseEndpoint} } from "@prisma/client";
-  import {
-    Create${pascalCaseEndpoint}ModelArgs,
-    Delete${pascalCaseEndpoint}ModelArgs,
-    Read${pascalCaseEndpoint}ModelArgs,
-    Update${pascalCaseEndpoint}ModelArgs,
-  } from "./models";
-  
-  export const create${pascalCaseEndpoint} = safeAction(async (data): Promise<${pascalCaseEndpoint}> => {
-    return db.${camelCaseEndpoint}.create({
-      data,
-    });
-  }, Create${pascalCaseEndpoint}ModelArgs);
-  
-  export const readAll${pascalCaseEndpoint} = safeAction(async (): Promise<${pascalCaseEndpoint}[]> => {
-    return db.${camelCaseEndpoint}.findMany();
+import { db } from "@/libs/db";
+import { safeAction } from "@/libs/request";
+import { ${pascalCaseEndpoint} } from "@prisma/client";
+import {
+  Create${pascalCaseEndpoint}ModelArgs,
+  Delete${pascalCaseEndpoint}ModelArgs,
+  Read${pascalCaseEndpoint}ModelArgs,
+  Update${pascalCaseEndpoint}ModelArgs,
+} from "./models";
+
+export const create${pascalCaseEndpoint} = safeAction(async (data): Promise<${pascalCaseEndpoint}> => {
+  return db.${camelCaseEndpoint}.create({
+    data,
   });
-  
-  export const update${pascalCaseEndpoint} = safeAction(async ({ id, ...data }): Promise<${pascalCaseEndpoint}> => {
-    return db.${camelCaseEndpoint}.update({
-      where: { id },
-      data,
-    });
-  }, Update${pascalCaseEndpoint}ModelArgs);
-  
-  export const read${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint} | null> => {
-    return db.${camelCaseEndpoint}.findUnique({
-      where: { id },
-    });
-  }, Read${pascalCaseEndpoint}ModelArgs);
-  
-  export const delete${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint}> => {
-    return db.${camelCaseEndpoint}.delete({
-      where: { id },
-    });
-  }, Delete${pascalCaseEndpoint}ModelArgs);
-  `,
+}, Create${pascalCaseEndpoint}ModelArgs);
+
+export const readAll${pascalCaseEndpoint} = safeAction(async (): Promise<${pascalCaseEndpoint}[]> => {
+  return db.${camelCaseEndpoint}.findMany();
+});
+
+export const update${pascalCaseEndpoint} = safeAction(async ({ id, ...data }): Promise<${pascalCaseEndpoint}> => {
+  return db.${camelCaseEndpoint}.update({
+    where: { id },
+    data,
+  });
+}, Update${pascalCaseEndpoint}ModelArgs);
+
+export const read${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint} | null> => {
+  return db.${camelCaseEndpoint}.findUnique({
+    where: { id },
+  });
+}, Read${pascalCaseEndpoint}ModelArgs);
+
+export const delete${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint}> => {
+  return db.${camelCaseEndpoint}.delete({
+    where: { id },
+  });
+}, Delete${pascalCaseEndpoint}ModelArgs);`,
+
   pageLevel1ImportsSkull: (
     camelCaseEndpoint: string,
     pascalCaseEndpoint: string
   ) => `import { create${pascalCaseEndpoint}, readAll${pascalCaseEndpoint} } from "@/app/actions/${camelCaseEndpoint}/actions";
-  import { safeEndPoint } from "@/libs/jwt";
-  import { NextRequest, NextResponse } from "next/server";
-  import { Post${pascalCaseEndpoint}ModelBody } from "./models";`,
+import { safeEndPoint } from "@/libs/jwt";
+import { NextRequest, NextResponse } from "next/server";
+import { Post${pascalCaseEndpoint}ModelBody } from "./models";`,
 
   pageLevel2ImportsSkull: (
     camelCaseEndpoint: string,
     pascalCaseEndpoint: string
   ) => `import { delete${pascalCaseEndpoint}, read${pascalCaseEndpoint}, update${pascalCaseEndpoint} } from "@/app/actions/${camelCaseEndpoint}/actions";
-  import {
-    Delete${pascalCaseEndpoint}ModelUriParams,
-    Get${pascalCaseEndpoint}ModelUriParams,
-    Patch${pascalCaseEndpoint}ModelBody,
-    Patch${pascalCaseEndpoint}ModelUriParams,
-  } from "@/app/api/${camelCaseEndpoint}/models";
-  import { safeEndPoint } from "@/libs/jwt";
-  import { NextRequest, NextResponse } from "next/server";`,
+import {
+  Delete${pascalCaseEndpoint}ModelUriParams,
+  Get${pascalCaseEndpoint}ModelUriParams,
+  Patch${pascalCaseEndpoint}ModelBody,
+  Patch${pascalCaseEndpoint}ModelUriParams,
+} from "@/app/api/${camelCaseEndpoint}/models";
+import { safeEndPoint } from "@/libs/jwt";
+import { NextRequest, NextResponse } from "next/server";`,
 
   postSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) =>
     `/**

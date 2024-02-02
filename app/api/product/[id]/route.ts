@@ -7,6 +7,7 @@ import {
 } from "@/app/api/product/models";
 import { safeEndPoint } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
+
 /**
  * @swagger
  * /api/product/{id}:

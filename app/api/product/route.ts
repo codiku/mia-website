@@ -1,30 +1,29 @@
 import { createProduct, readAllProduct } from "@/app/actions/product/actions";
-import { safeEndPoint } from "@/libs/jwt";
-import { NextRequest, NextResponse } from "next/server";
-import { PostProductModelBody } from "./models";
+  import { safeEndPoint } from "@/libs/jwt";
+  import { NextRequest, NextResponse } from "next/server";
+  import { PostProductModelBody } from "./models";
 
 /**
- * @swagger
- * /api/product:
- *   get:
- *     description: Get all products
- *     responses:
- *       200:
- *         description: Returns a list of products
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/ProductModel'
- *       400:
- *         description: Bad request if the product data is invalid
- */
-export const GET = safeEndPoint(async (_req: NextRequest) => {
-  const product = await readAllProduct();
-  return NextResponse.json(product);
-}, true);
-
+  * @swagger
+  * /api/product:
+  *   get:
+  *     description: Get all products
+  *     responses:
+  *       200:
+  *         description: Returns a list of products
+  *         content:
+  *           application/json:
+  *             schema:
+  *               type: array
+  *               items:
+  *                 $ref: '#/components/schemas/ProductProductModel'
+  *       400:
+  *         description: Bad request if the product data is invalid
+  */
+  export const GET = safeEndPoint(async (_req: NextRequest) => {
+    const product = await readAllProduct();
+    return NextResponse.json(product);
+  }, true);
 /**
  * @swagger
  * /api/product:

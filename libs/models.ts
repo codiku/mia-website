@@ -53,7 +53,7 @@ export const UPDATE_PASSWORD_MODEL = z.object({
   newPassword: PASSWORD_MODEL,
 });
 
-export const ID_OBJECT_MODEL = z.object({
+export const IdArgModels = z.object({
   id: z.number(),
 });
 

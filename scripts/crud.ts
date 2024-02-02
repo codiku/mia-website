@@ -13,6 +13,7 @@ const {
   pageLevel2ImportsSkull,
   modelActionSkull,
   actionSkull,
+  apiModelSkull,
 } = require("./crud-skull");
 
 async function generateCRUDFiles(endpoint: string) {
@@ -49,6 +50,8 @@ async function generateCRUDFiles(endpoint: string) {
         "\n" +
         deleteSkull(camelCaseEndpoint, pascalCaseEndpoint)
     );
+    //Api models
+    fs.writeFile(path.join(apiDirectory, `models.ts`), apiModelSkull(camelCaseEndpoint, pascalCaseEndpoint));
     //Actions and model
     fs.writeFile(path.join(actionDirectory, `models.ts`), modelActionSkull(camelCaseEndpoint, pascalCaseEndpoint));
     fs.writeFile(path.join(actionDirectory, `actions.ts`), actionSkull(camelCaseEndpoint, pascalCaseEndpoint));
@@ -90,6 +93,7 @@ async function addEmptyModelToPrisma(endpoint: string) {
   try {
     const modelDefinition = `model ${toPascalCase(endpoint)} {
   id        Int       @id @default(autoincrement())
+  name      String
   createdAt DateTime? @default(now())
 }`;
 
