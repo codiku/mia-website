@@ -10,25 +10,28 @@ const {
   patchSkull,
   deleteSkull,
   pageLevel1ImportsSkull,
-  pageLevel2ImportsSkull
+  pageLevel2ImportsSkull,
+  modelActionSkull,
+  actionSkull,
 } = require("./crud-skull");
 
 async function generateCRUDFiles(endpoint: string) {
   const apiDirectory = path.join(process.cwd(), "app/api", endpoint);
   const idApiDirectory = path.join(apiDirectory, "[id]");
-
+  const actionDirectory = path.join(process.cwd(), "app/actions", endpoint);
   try {
-    // Create the main endpoint directory
-    await fs.mkdir(apiDirectory, { recursive: true });
-
-    // Create the [id] directory
-    await fs.mkdir(idApiDirectory, { recursive: true });
+    // Create directories concurrently
+    await Promise.all([
+      fs.mkdir(apiDirectory, { recursive: true }),
+      fs.mkdir(actionDirectory, { recursive: true }),
+      fs.mkdir(idApiDirectory, { recursive: true }),
+    ]);
     const pascalCaseEndpoint = toPascalCase(endpoint);
     const camelCaseEndpoint = toCamelCase(endpoint);
     // Generate route.ts files for the main endpoint and [id] directory
     fs.writeFile(
       path.join(apiDirectory, "route.ts"),
-        pageLevel1ImportsSkull(camelCaseEndpoint, pascalCaseEndpoint) +
+      pageLevel1ImportsSkull(camelCaseEndpoint, pascalCaseEndpoint) +
         "\n\n" +
         getAllSkull(camelCaseEndpoint, pascalCaseEndpoint) +
         "\n" +
@@ -37,43 +40,37 @@ async function generateCRUDFiles(endpoint: string) {
 
     fs.writeFile(
       path.join(idApiDirectory, "route.ts"),
-    
+
       pageLevel2ImportsSkull(camelCaseEndpoint, pascalCaseEndpoint) +
-      "\n" +
-      getSkull(camelCaseEndpoint, pascalCaseEndpoint) +
+        "\n" +
+        getSkull(camelCaseEndpoint, pascalCaseEndpoint) +
         "\n" +
         patchSkull(camelCaseEndpoint, pascalCaseEndpoint) +
         "\n" +
         deleteSkull(camelCaseEndpoint, pascalCaseEndpoint)
     );
+    //Actions and model
+    fs.writeFile(path.join(actionDirectory, `models.ts`), modelActionSkull(camelCaseEndpoint, pascalCaseEndpoint));
+    fs.writeFile(path.join(actionDirectory, `actions.ts`), actionSkull(camelCaseEndpoint, pascalCaseEndpoint));
 
-    console.log(
-      `CRUD files and folders for '${endpoint}' created successfully.`
-    );
+    console.log(`CRUD files and folders for '${endpoint}' created successfully.`);
 
     // Add an empty model to Prisma schema
     await addEmptyModelToPrisma(endpoint);
 
     // Execute the Prisma generate command
-    exec(
-      "npx prisma generate",
-      (error: typeof ExecException | null, stdout: string, stderr: string) => {
-        if (error) {
-          console.error(
-            `Error running 'npx prisma generate': ${error.message}`
-          );
-          return;
-        }
-        console.log(`Prisma generate completed:\n${stdout}`);
-
-        // After generating Prisma, run migration
-        console.log("Please run : npx prisma migrate dev");
+    exec("npx prisma generate", (error: typeof ExecException | null, stdout: string, stderr: string) => {
+      if (error) {
+        console.error(`Error running 'npx prisma generate': ${error.message}`);
+        return;
       }
-    );
+      console.log(`Prisma generate completed:\n${stdout}`);
+
+      // After generating Prisma, run migration
+      console.log("Please run : npx prisma migrate dev");
+    });
   } catch (err) {
-    console.error(
-      `Error creating CRUD files and folders: ${(err as Error).message}`
-    );
+    console.error(`Error creating CRUD files and folders: ${(err as Error).message}`);
   }
 }
 
@@ -97,17 +94,11 @@ async function addEmptyModelToPrisma(endpoint: string) {
 }`;
 
     // Append the model definition to the Prisma schema
-    const prismaSchemaPath = path.join(
-      process.cwd(),
-      "prisma",
-      "schema.prisma"
-    );
+    const prismaSchemaPath = path.join(process.cwd(), "prisma", "schema.prisma");
     await fs.appendFile(prismaSchemaPath, `\n${modelDefinition}`);
     console.log(`Empty model added to Prisma schema for '${endpoint}'.`);
   } catch (err) {
-    console.error(
-      `Error adding an empty model to Prisma schema: ${(err as Error).message}`
-    );
+    console.error(`Error adding an empty model to Prisma schema: ${(err as Error).message}`);
   }
 }
 

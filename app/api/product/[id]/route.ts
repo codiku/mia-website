@@ -1,7 +1,11 @@
-import { deleteProduct, readProduct, updateProduct } from "@/app/actions/products/product";
-import { PatchProductModelBody } from "@/app/api/product/product-model-api";
+import { deleteProduct, readProduct, updateProduct } from "@/app/actions/product/actions";
+import {
+  DeleteProductModelUriParams,
+  GetProductModelUriParams,
+  PatchProductModelBody,
+  PatchProductModelUriParams,
+} from "@/app/api/product/models";
 import { safeEndPoint } from "@/libs/jwt";
-import { ID_URI_PARAMS_MODEL } from "@/libs/models";
 import { NextRequest, NextResponse } from "next/server";
 /**
  * @swagger
@@ -26,7 +30,7 @@ export const GET = safeEndPoint(
     return NextResponse.json(response);
   },
   true,
-  ID_URI_PARAMS_MODEL
+  GetProductModelUriParams
 );
 
 /**
@@ -58,7 +62,7 @@ export const PATCH = safeEndPoint(
     return NextResponse.json(updatedProduct);
   },
   true,
-  ID_URI_PARAMS_MODEL,
+  PatchProductModelUriParams,
   PatchProductModelBody
 );
 
@@ -85,5 +89,5 @@ export const DELETE = safeEndPoint(
     return NextResponse.json(deletedProduct);
   },
   true,
-  ID_URI_PARAMS_MODEL
+  DeleteProductModelUriParams
 );

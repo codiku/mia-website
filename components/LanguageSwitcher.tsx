@@ -2,16 +2,10 @@
 
 import { LOCALES } from "@/i18n";
 import { usePathname, useRouter } from "@/libs/navigation";
-import { useLocale } from "next-intl";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { readAllProduct } from "@/app/actions/product/actions";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { api } from "@/configs/ky-config";
 import { useEffect } from "react";
 
@@ -22,7 +16,12 @@ export function LanguageSwitcher() {
   const t = useTranslations("Components.LanguageSwitcher");
 
   useEffect(function dostuff() {
-    api.get("/api/product").json();
+    (async () => {
+      const data = await readAllProduct();
+      console.log("Response", data);
+      const resp = await api.get("/api/product").json();
+      console.log("*** via api", resp);
+    })();
   }, []);
 
   const handleChange = async (value: string) => {

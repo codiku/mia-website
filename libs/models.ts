@@ -16,10 +16,7 @@ export const PASSWORD_MODEL = z
   .regex(/[0-9]+/, "At least 1 number")
   .regex(/[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/, "At least 1 special character");
 
-export const EMAIL_MODEL = z
-  .string()
-  .email("Invalid email")
-  .min(1, "Email is required");
+export const EMAIL_MODEL = z.string().email("Invalid email").min(1, "Email is required");
 
 export const STRING_REQUIRED_MODEL = z.string().min(1, "Required");
 
@@ -60,6 +57,6 @@ export const ID_OBJECT_MODEL = z.object({
   id: z.number(),
 });
 
-export const ID_URI_PARAMS_MODEL = z.object({
+export const IdParamsModel = z.object({
   id: z.string(),
 });

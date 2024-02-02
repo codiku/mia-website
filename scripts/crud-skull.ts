@@ -1,25 +1,76 @@
 module.exports = {
+  modelActionSkull: (
+    camelCaseEndpoint: string,
+    pascalCaseEndpoint: string
+  ) => `import { IdParamsModel } from "@/libs/models";
+  import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
+  
+  export const Post${pascalCaseEndpoint}ModelBody = ${pascalCaseEndpoint}Model.omit({ id: true });
+  export const Patch${pascalCaseEndpoint}ModelBody = ${pascalCaseEndpoint}Model.partial().omit({ id: true });
+  export const Patch${pascalCaseEndpoint}ModelUriParams = IdParamsModel;
+  export const Get${pascalCaseEndpoint}ModelUriParams = IdParamsModel;
+  export const Delete${pascalCaseEndpoint}ModelUriParams = IdParamsModel;`,
+
+  actionSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `"use server";
+  import { db } from "@/libs/db";
+  import { safeAction } from "@/libs/request";
+  import { ${pascalCaseEndpoint} } from "@prisma/client";
+  import {
+    Create${pascalCaseEndpoint}ModelArgs,
+    Delete${pascalCaseEndpoint}ModelArgs,
+    Read${pascalCaseEndpoint}ModelArgs,
+    Update${pascalCaseEndpoint}ModelArgs,
+  } from "./models";
+  
+  export const create${pascalCaseEndpoint} = safeAction(async (data): Promise<${pascalCaseEndpoint}> => {
+    return db.${camelCaseEndpoint}.create({
+      data,
+    });
+  }, Create${pascalCaseEndpoint}ModelArgs);
+  
+  export const readAll${pascalCaseEndpoint} = safeAction(async (): Promise<${pascalCaseEndpoint}[]> => {
+    return db.${camelCaseEndpoint}.findMany();
+  });
+  
+  export const update${pascalCaseEndpoint} = safeAction(async ({ id, ...data }): Promise<${pascalCaseEndpoint}> => {
+    return db.${camelCaseEndpoint}.update({
+      where: { id },
+      data,
+    });
+  }, Update${pascalCaseEndpoint}ModelArgs);
+  
+  export const read${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint} | null> => {
+    return db.${camelCaseEndpoint}.findUnique({
+      where: { id },
+    });
+  }, Read${pascalCaseEndpoint}ModelArgs);
+  
+  export const delete${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint}> => {
+    return db.${camelCaseEndpoint}.delete({
+      where: { id },
+    });
+  }, Delete${pascalCaseEndpoint}ModelArgs);
+  `,
   pageLevel1ImportsSkull: (
     camelCaseEndpoint: string,
     pascalCaseEndpoint: string
-  ) => `import { NextRequest, NextResponse } from "next/server";
-import { StatusCodes } from "http-status-codes";
-import { db } from "@/libs/db";
-import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
-import { ${pascalCaseEndpoint} } from "@prisma/client";
-import { safeEndPoint } from "@/libs/jwt";
-import { Post${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
+  ) => `import { create${pascalCaseEndpoint}, readAll${pascalCaseEndpoint} } from "@/app/actions/${camelCaseEndpoint}/actions";
+  import { safeEndPoint } from "@/libs/jwt";
+  import { NextRequest, NextResponse } from "next/server";
+  import { Post${pascalCaseEndpoint}ModelBody } from "./models";`,
 
   pageLevel2ImportsSkull: (
     camelCaseEndpoint: string,
     pascalCaseEndpoint: string
-  ) => `import { NextRequest, NextResponse } from "next/server";
-import { StatusCodes } from "http-status-codes";
-import { db } from "@/libs/db";
-import { ${pascalCaseEndpoint}Model } from "@/prisma/zod";
-import { ${pascalCaseEndpoint} } from "@prisma/client";
-import { safeEndPoint } from "@/libs/jwt";
-import { Patch${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
+  ) => `import { delete${pascalCaseEndpoint}, read${pascalCaseEndpoint}, update${pascalCaseEndpoint} } from "@/app/actions/${camelCaseEndpoint}/actions";
+  import {
+    Delete${pascalCaseEndpoint}ModelUriParams,
+    Get${pascalCaseEndpoint}ModelUriParams,
+    Patch${pascalCaseEndpoint}ModelBody,
+    Patch${pascalCaseEndpoint}ModelUriParams,
+  } from "@/app/api/${camelCaseEndpoint}/models";
+  import { safeEndPoint } from "@/libs/jwt";
+  import { NextRequest, NextResponse } from "next/server";`,
 
   postSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) =>
     `/**
@@ -44,13 +95,12 @@ import { Patch${pascalCaseEndpoint}ModelBody } from "@/libs/models";`,
  *         description: Bad request if the ${camelCaseEndpoint} data is invalid
  */
 export const POST = safeEndPoint(
-  async (req: NextRequest, route, body, _, token) => {
-    const created = await db.${camelCaseEndpoint}.create({
-      data: body,
-    });
+  async (_req: NextRequest, _, body) => {
+    const created = await create${pascalCaseEndpoint}(body);
     return NextResponse.json(created);
   },
   true,
+  undefined,
   Post${pascalCaseEndpoint}ModelBody
 );`,
   getAllSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `/**
@@ -70,10 +120,10 @@ export const POST = safeEndPoint(
   *       400:
   *         description: Bad request if the ${camelCaseEndpoint} data is invalid
   */
-export const GET = safeEndPoint(async (req: NextRequest) => {
-  const ${camelCaseEndpoint} = await db.${camelCaseEndpoint}.findMany({});
-  return NextResponse.json(${camelCaseEndpoint});
-}, true);`,
+  export const GET = safeEndPoint(async (_req: NextRequest) => {
+    const ${camelCaseEndpoint} = await readAll${pascalCaseEndpoint}();
+    return NextResponse.json(${camelCaseEndpoint});
+  }, true);`,
 
   getSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 /**
@@ -93,18 +143,14 @@ export const GET = safeEndPoint(async (req: NextRequest) => {
  *       400:
  *         description: Bad request if the ${camelCaseEndpoint} id is invalid or not found
  */
-export const GET = safeEndPoint(async (req: NextRequest, route) => {
-  let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;
-  const id = Number(route.params.id);
-  if (id) {
-    ${camelCaseEndpoint} = await db.${camelCaseEndpoint}.findUnique({
-      where: { id },
-    });
-  }
-  return NextResponse.json(${camelCaseEndpoint} || { error: true, message: "Not found" }, {
-    status: StatusCodes.BAD_REQUEST,
-  });
-}, true);`,
+export const GET = safeEndPoint(
+  async (_req: NextRequest, route) => {
+    const response = await read${pascalCaseEndpoint}(Number(route.params.id));
+    return NextResponse.json(response);
+  },
+  true,
+  Get${pascalCaseEndpoint}ModelUriParams
+);`,
 
   patchSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 /**
@@ -130,19 +176,15 @@ export const GET = safeEndPoint(async (req: NextRequest, route) => {
  *       400:
  *         description: Bad request if the ${camelCaseEndpoint} id is invalid or not found
  */
-export const PATCH = safeEndPoint(async (req: NextRequest, route, body) => {
-  let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;
-  const id = Number(route.params.id);
-  if (id) {
-    ${camelCaseEndpoint} = await db.${camelCaseEndpoint}.update({
-      where: { id },
-      data: body
-    });
-    return NextResponse.json(${camelCaseEndpoint} || { error: true, message: "Not found" }, {
-      status: StatusCodes.BAD_REQUEST,
-    });
-  }
-}, true, Patch${pascalCaseEndpoint}ModelBody);`,
+export const PATCH = safeEndPoint(
+  async (_req: NextRequest, route, body) => {
+    const updated${pascalCaseEndpoint} = await update${pascalCaseEndpoint}({ id: Number(route.params.id), ...body });
+    return NextResponse.json(updated${pascalCaseEndpoint});
+  },
+  true,
+  Patch${pascalCaseEndpoint}ModelUriParams,
+  Patch${pascalCaseEndpoint}ModelBody
+);`,
 
   deleteSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 /**
@@ -162,16 +204,12 @@ export const PATCH = safeEndPoint(async (req: NextRequest, route, body) => {
  *       400:
  *         description: Bad request if the ${camelCaseEndpoint} id is invalid or not found
  */
-export const DELETE = safeEndPoint(async (req: NextRequest, route) => {
-  let ${camelCaseEndpoint}: ${pascalCaseEndpoint} | null = null;
-  const id = Number(route.params.id);
-  if (id) {
-    ${camelCaseEndpoint} = await db.${camelCaseEndpoint}.delete({
-      where: { id }
-    });
-    return NextResponse.json(${camelCaseEndpoint} || { error: true, message: "Not found" }, {
-      status: StatusCodes.BAD_REQUEST,
-    });
-  }
-}, true);`,
+export const DELETE = safeEndPoint(
+  async (_req: NextRequest, route) => {
+    const deleted${pascalCaseEndpoint} = delete${pascalCaseEndpoint}(Number(route.params.id));
+    return NextResponse.json(deleted${pascalCaseEndpoint});
+  },
+  true,
+  Delete${pascalCaseEndpoint}ModelUriParams
+);`,
 };

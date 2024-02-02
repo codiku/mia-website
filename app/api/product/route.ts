@@ -1,7 +1,7 @@
-import { createProduct, readAllProducts } from "@/app/actions/products/product";
+import { createProduct, readAllProduct } from "@/app/actions/product/actions";
 import { safeEndPoint } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { PostProductModelBody } from "./product-model-api";
+import { PostProductModelBody } from "./models";
 
 /**
  * @swagger
@@ -21,9 +21,9 @@ import { PostProductModelBody } from "./product-model-api";
  *         description: Bad request if the product data is invalid
  */
 export const GET = safeEndPoint(async (_req: NextRequest) => {
-  const product = await readAllProducts();
+  const product = await readAllProduct();
   return NextResponse.json(product);
-}, false);
+}, true);
 
 /**
  * @swagger
