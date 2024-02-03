@@ -104,7 +104,7 @@
   resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.23.5.tgz"
   integrity sha512-uU27kfDRlhfKl+w1U6vp16IuvSLtjAxdArVXPa9BvLkrr7CYIsxH5adpHObeAGY/41+syctUWOZ140a2Rvkgjw==
 
-"@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.11.6", "@babel/core@^7.12.0", "@babel/core@^7.12.3", "@babel/core@^7.13.0", "@babel/core@^7.18.9", "@babel/core@^7.22.0", "@babel/core@^7.23.0", "@babel/core@^7.23.2", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0":
+"@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.11.6", "@babel/core@^7.12.0", "@babel/core@^7.12.3", "@babel/core@^7.13.0", "@babel/core@^7.18.9", "@babel/core@^7.22.0", "@babel/core@^7.23.0", "@babel/core@^7.23.2", "@babel/core@^7.23.7", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0":
   version "7.23.9"
   resolved "https://registry.npmjs.org/@babel/core/-/core-7.23.9.tgz"
   integrity sha512-5q0175NOjddqpvvzU+kDiSOAk4PfdO6FvwCWoQ6RO7rTzEe8vlo+4HVfcnAREhD4npMs0e9uZypjTwzZPCf/cw==
@@ -1190,10 +1190,10 @@
   resolved "https://registry.npmjs.org/@emotion/use-insertion-effect-with-fallbacks/-/use-insertion-effect-with-fallbacks-1.0.1.tgz"
   integrity sha512-jT/qyKZ9rzLErtrjGgdkMBn2OP8wl0G3sQlBb3YPryvKHsjvINUhVaPFfP+fpBcOkmrVOVEEHQFJ7nbj2TH2gw==
 
-"@esbuild/darwin-x64@0.18.20":
+"@esbuild/win32-x64@0.18.20":
   version "0.18.20"
-  resolved "https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-0.18.20.tgz"
-  integrity sha512-pc5gxlMDxzm513qPGbCbDukOdsGtKhfxD1zJKXjCCcU7ju50O7MeAZ8c4krSJcOIJGFR+qx21yMMVYwiQvyTyQ==
+  resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.18.20.tgz"
+  integrity sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ==
 
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
@@ -1522,10 +1522,10 @@
   dependencies:
     glob "7.1.7"
 
-"@next/swc-darwin-x64@14.1.0":
+"@next/swc-win32-x64-msvc@14.1.0":
   version "14.1.0"
-  resolved "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-14.1.0.tgz"
-  integrity sha512-1jgudN5haWxiAl3O1ljUS2GfupPmcftu2RYJqZiMJmmbBT5M1XDffjUtRUzP4W3cBHsrvkfOFdQ71hAreNQP6g==
+  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-14.1.0.tgz"
+  integrity sha512-9WEbVRRAqJ3YFVqEZIxUqkiO8l1nool1LmNxygr5HWF8AcSYsEpneUDhmjUVJEzO2A04+oPtZdombzzPPkTtgg==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -2070,6 +2070,15 @@
   integrity sha512-fyrgCaedtvMg9NK3en0pnOYJdtfwxUcNolezkNPUsoX57X8oQk+NkqcvzHXD2uKNij6GXmWU9NDru2IWjrO4BQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
+
+"@rollup/pluginutils@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/@rollup/pluginutils/-/pluginutils-5.1.0.tgz"
+  integrity sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==
+  dependencies:
+    "@types/estree" "^1.0.0"
+    estree-walker "^2.0.2"
+    picomatch "^2.3.1"
 
 "@rushstack/eslint-patch@^1.3.3":
   version "1.5.0"
@@ -2877,33 +2886,6 @@
     ramda "~0.29.1"
     ramda-adjunct "^4.0.0"
 
-"@swagger-api/apidom-ns-api-design-systems@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-ns-api-design-systems/-/apidom-ns-api-design-systems-0.93.0.tgz"
-  integrity sha512-f3RcUBmZjqmADubnV+yslvtbOJGV3jeMpQuzM9ByS3ASVg+XU1YxKkH5em8BcW3SDj0lqDiQ2ggA9kfPLSuV8A==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-error" "^0.93.0"
-    "@swagger-api/apidom-ns-openapi-3-1" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.1.1"
-    ts-mixer "^6.0.3"
-
-"@swagger-api/apidom-ns-asyncapi-2@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-ns-asyncapi-2/-/apidom-ns-asyncapi-2-0.93.0.tgz"
-  integrity sha512-cEAFsVo/CiPFlw9FAeu/9WR6WixQKxH50SHNvmy8OsCOgYcl5VHF06majZTFCrgZlpCNXPJh9m5A2pUoHtxxUw==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-json-schema-draft-7" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.1.1"
-    stampit "^4.3.2"
-
 "@swagger-api/apidom-ns-json-schema-draft-4@^0.93.0":
   version "0.93.0"
   resolved "https://registry.npmjs.org/@swagger-api/apidom-ns-json-schema-draft-4/-/apidom-ns-json-schema-draft-4-0.93.0.tgz"
@@ -2912,48 +2894,6 @@
     "@babel/runtime-corejs3" "^7.20.7"
     "@swagger-api/apidom-ast" "^0.93.0"
     "@swagger-api/apidom-core" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.1.1"
-    stampit "^4.3.2"
-
-"@swagger-api/apidom-ns-json-schema-draft-6@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-ns-json-schema-draft-6/-/apidom-ns-json-schema-draft-6-0.93.0.tgz"
-  integrity sha512-u0e0Nq9nuuZyGoOCEjVQJKe5NdsIWezH+q8ev3dABlUNEiWMbtFLS9TvHFBeU11plCsyxjJyYRg8TjnI2Q8xzQ==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-error" "^0.93.0"
-    "@swagger-api/apidom-ns-json-schema-draft-4" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.1.1"
-    stampit "^4.3.2"
-
-"@swagger-api/apidom-ns-json-schema-draft-7@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-ns-json-schema-draft-7/-/apidom-ns-json-schema-draft-7-0.93.0.tgz"
-  integrity sha512-NkHhyezG5ghx5FhclbIzCwo1wH4gmI8KwMnEuorsXJhanmnkl+JXzDSrpCM3Orvezl+4DEnBeMLyLfbnQMMknw==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-error" "^0.93.0"
-    "@swagger-api/apidom-ns-json-schema-draft-6" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.1.1"
-    stampit "^4.3.2"
-
-"@swagger-api/apidom-ns-openapi-2@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-ns-openapi-2/-/apidom-ns-openapi-2-0.93.0.tgz"
-  integrity sha512-sUZgGyuraLP7rarBp8CISdDLuO8n8L9Q+G8XMiYgl53HGRUY5a7HSGnybcQPpyNPQSNTFKigytSjvsSu8h33ZQ==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-error" "^0.93.0"
-    "@swagger-api/apidom-ns-json-schema-draft-4" "^0.93.0"
     "@types/ramda" "~0.29.6"
     ramda "~0.29.1"
     ramda-adjunct "^4.1.1"
@@ -2986,207 +2926,6 @@
     ramda "~0.29.1"
     ramda-adjunct "^4.1.1"
     stampit "^4.3.2"
-
-"@swagger-api/apidom-ns-workflows-1@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-ns-workflows-1/-/apidom-ns-workflows-1-0.93.0.tgz"
-  integrity sha512-dL92YBMULuI6HiuOVnB24ozOp4P02xN6Zw8tWzTm/H/W5EWVdso8krq5utjuSTFcurj4rODkPQxY8WRKuIuMDw==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-openapi-3-1" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.1.1"
-    stampit "^4.3.2"
-
-"@swagger-api/apidom-parser-adapter-api-design-systems-json@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-api-design-systems-json/-/apidom-parser-adapter-api-design-systems-json-0.93.0.tgz"
-  integrity sha512-lKaSt9YOXbhiBMTJcSCIF0C1fjyWLxKrTWkvbFwwqCcjeMt5vg8N/0nKqQeQm4mcZ946mqnssRVpPbJfWEoIWA==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-api-design-systems" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-json" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-api-design-systems-yaml@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-api-design-systems-yaml/-/apidom-parser-adapter-api-design-systems-yaml-0.93.0.tgz"
-  integrity sha512-fjIQs0vRP/46M8kwQ3UGpq8piMboIXvrJqu1lDTylS5PYzE9qXpx1BhESZPtBwuoR9kvVYbumlD+BgjCuyzc8g==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-api-design-systems" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-yaml-1-2" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-asyncapi-json-2@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-asyncapi-json-2/-/apidom-parser-adapter-asyncapi-json-2-0.93.0.tgz"
-  integrity sha512-65Io5+Zy5LBJTvRt3yKBXXfk5M/DCq3mDUSiVcZuyRPHGNi9ViMTdEFCH3rzF0x2v0omG+6OqryndIBVAXEo/g==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-asyncapi-2" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-json" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-asyncapi-yaml-2@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-asyncapi-yaml-2/-/apidom-parser-adapter-asyncapi-yaml-2-0.93.0.tgz"
-  integrity sha512-WwGH6StA7kplkTAaV43MziJeJonnJCW6pBOp1bwoEhGaeYO/Yd/dpoFZVDfxAnXJYmDnzk7pqjJm3U6A9BCPcw==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-asyncapi-2" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-yaml-1-2" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-json@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-json/-/apidom-parser-adapter-json-0.93.0.tgz"
-  integrity sha512-FNA36GAqG1EMErkRhMFb4GeW8fuYdzRkOwQmTLWZfKIUzLYOvVMbki8R2dE8ruNs/Gf5VhiQH85mLaCyLwp3xw==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-ast" "^0.93.0"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-error" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.1.1"
-    tree-sitter "=0.20.4"
-    tree-sitter-json "=0.20.1"
-    web-tree-sitter "=0.20.3"
-
-"@swagger-api/apidom-parser-adapter-openapi-json-2@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-openapi-json-2/-/apidom-parser-adapter-openapi-json-2-0.93.0.tgz"
-  integrity sha512-bBEYiZdiYQQoubZVdkHw3I/qwgI3nvCcrbFAlqELvpFgRZywJzXssxqHqFOR8clvoX8+JVYx5E/MgSC6Rn77uQ==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-openapi-2" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-json" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-openapi-json-3-0@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-openapi-json-3-0/-/apidom-parser-adapter-openapi-json-3-0-0.93.0.tgz"
-  integrity sha512-UlM924syGaSa5c35OuDC614xBsjIm5DaWUqshFf6DmmP5iDZFQUh0cyIfLDD5/n1wZvAtiIL040zwfTBrK0Udw==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-openapi-3-0" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-json" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-openapi-json-3-1@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-openapi-json-3-1/-/apidom-parser-adapter-openapi-json-3-1-0.93.0.tgz"
-  integrity sha512-9rqOLv0ip7knvbdmk8hNa1aN/kaeIIoUKdwO6GaMW9eFh2cvIDyriLxp+FwTatnwhlJjWMwp7Mfyv62WT0cfKQ==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-openapi-3-1" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-json" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-openapi-yaml-2@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-openapi-yaml-2/-/apidom-parser-adapter-openapi-yaml-2-0.93.0.tgz"
-  integrity sha512-8laGpR9MrFBsBDmGNSexKdvLvGnr5QnjhqOSqFIViK/WFG+zEpE5SsWyJkCQJE4EJ5IvxVA8BfBrjjUqe0Z5uA==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-openapi-2" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-yaml-1-2" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-openapi-yaml-3-0@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-openapi-yaml-3-0/-/apidom-parser-adapter-openapi-yaml-3-0-0.93.0.tgz"
-  integrity sha512-Tf8eX+MzTsCijXbE5lkfF0/wG5VkvCPGg7hZV7ZGYrzQ584R/Z0xkgHEu3Atqu3Ji9XPGP0u6LqWM/wATuWK0A==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-openapi-3-0" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-yaml-1-2" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-openapi-yaml-3-1@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-openapi-yaml-3-1/-/apidom-parser-adapter-openapi-yaml-3-1-0.93.0.tgz"
-  integrity sha512-1Yt3SmgV2x5PAV8NeXIztuRWbIMhAU3cs3SIDJlObzFxXitnsf3cVIRrFTNrK28mqhHU3XNVTat5GrGtlJeD8Q==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-openapi-3-1" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-yaml-1-2" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-workflows-json-1@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-workflows-json-1/-/apidom-parser-adapter-workflows-json-1-0.93.0.tgz"
-  integrity sha512-tUm049GrXtBHoP8rcLTp+yz5EbJkq/stSgHb4nUNyFH00MKtMkP3j3KnXSCQz2w6br5gzv54DDCKwqPAh7IjuA==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-workflows-1" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-json" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-workflows-yaml-1@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-workflows-yaml-1/-/apidom-parser-adapter-workflows-yaml-1-0.93.0.tgz"
-  integrity sha512-8knwzutGHH+69061yHY0xUwmMW/wWUP5jjn4CVDctxYS7BYXb9iaH84VuKJRuDm5M5L/C6yJHgdoWo4IHnpVBw==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-ns-workflows-1" "^0.93.0"
-    "@swagger-api/apidom-parser-adapter-yaml-1-2" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.0.0"
-
-"@swagger-api/apidom-parser-adapter-yaml-1-2@^0.93.0":
-  version "0.93.0"
-  resolved "https://registry.npmjs.org/@swagger-api/apidom-parser-adapter-yaml-1-2/-/apidom-parser-adapter-yaml-1-2-0.93.0.tgz"
-  integrity sha512-0z/d/t19f78o4CTxtpMMLdi+7js+JNz7s4/WSJXZ0Q0k5O4pEhlARMMEqJXE4qUXxTGnoXbi4sQY9FV/yA5V0Q==
-  dependencies:
-    "@babel/runtime-corejs3" "^7.20.7"
-    "@swagger-api/apidom-ast" "^0.93.0"
-    "@swagger-api/apidom-core" "^0.93.0"
-    "@swagger-api/apidom-error" "^0.93.0"
-    "@types/ramda" "~0.29.6"
-    ramda "~0.29.1"
-    ramda-adjunct "^4.1.1"
-    tree-sitter "=0.20.4"
-    tree-sitter-yaml "=0.5.0"
-    web-tree-sitter "=0.20.3"
 
 "@swagger-api/apidom-reference@>=0.90.0 <1.0.0":
   version "0.93.0"
@@ -3225,10 +2964,10 @@
     "@swagger-api/apidom-parser-adapter-workflows-yaml-1" "^0.93.0"
     "@swagger-api/apidom-parser-adapter-yaml-1-2" "^0.93.0"
 
-"@swc/core-darwin-x64@1.3.107":
+"@swc/core-win32-x64-msvc@1.3.107":
   version "1.3.107"
-  resolved "https://registry.npmjs.org/@swc/core-darwin-x64/-/core-darwin-x64-1.3.107.tgz"
-  integrity sha512-hwiLJ2ulNkBGAh1m1eTfeY1417OAYbRGcb/iGsJ+LuVLvKAhU/itzsl535CvcwAlt2LayeCFfcI8gdeOLeZa9A==
+  resolved "https://registry.npmjs.org/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.3.107.tgz"
+  integrity sha512-Eyzo2XRqWOxqhE1gk9h7LWmUf4Bp4Xn2Ttb0ayAXFp6YSTxQIThXcT9kipXZqcpxcmDwoq8iWbbf2P8XL743EA==
 
 "@swc/core@^1.2.147", "@swc/core@^1.3.82":
   version "1.3.107"
@@ -3477,6 +3216,11 @@
   version "0.0.51"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-0.0.51.tgz"
   integrity sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==
+
+"@types/estree@^1.0.0":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.5.tgz"
+  integrity sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==
 
 "@types/estree@^1.0.5":
   version "1.0.5"
@@ -4448,7 +4192,7 @@ axe-core@^4.6.2:
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.8.2.tgz"
   integrity sha512-/dlp0fxyM3R8YW7MFzaHWXrf4zzbr0vaYb23VBFCl83R7nWNPg/yaQw2Dc8jzCMmDVLhSdzH8MjrsuIUuvX+6g==
 
-axios@^1.4.0, axios@^1.6.5:
+axios@^1.4.0:
   version "1.6.5"
   resolved "https://registry.npmjs.org/axios/-/axios-1.6.5.tgz"
   integrity sha512-Ii012v05KEVuUoFWmMW/UQv9aRIc3ZwkWDcM+h5Il8izZCtRVpDUfwpoFf7eOtajT3QiGR4yDUx7lPqHJULgbg==
@@ -6271,6 +6015,11 @@ estraverse@^5.1.0, estraverse@^5.2.0, estraverse@^5.3.0:
   resolved "https://registry.npmjs.org/estraverse/-/estraverse-5.3.0.tgz"
   integrity sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==
 
+estree-walker@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/estree-walker/-/estree-walker-2.0.2.tgz"
+  integrity sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
+
 esutils@^2.0.2:
   version "2.0.3"
   resolved "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz"
@@ -6723,16 +6472,6 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
-
-fsevents@^2.3.2, fsevents@~2.3.2:
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
-  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
-
-fsevents@2.3.2:
-  version "2.3.2"
-  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
 function-bind@^1.1.1, function-bind@^1.1.2:
   version "1.1.2"
@@ -7940,6 +7679,11 @@ kleur@^3.0.3:
   resolved "https://registry.npmjs.org/kleur/-/kleur-3.0.3.tgz"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
+kleur@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.npmjs.org/kleur/-/kleur-4.1.5.tgz"
+  integrity sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==
+
 klona@^2.0.4:
   version "2.0.6"
   resolved "https://registry.npmjs.org/klona/-/klona-2.0.6.tgz"
@@ -8297,6 +8041,18 @@ miller-rabin@^4.0.0:
     bn.js "^4.0.0"
     brorand "^1.0.1"
 
+million@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/million/-/million-3.0.2.tgz"
+  integrity sha512-qOYPx2M+zxDn3oq4oVubiRtD9KL9cMad/f6Vs8V03FfocKfV6AV8fIYzD8I2vvNc2h9jIbVnUIU7QspbYrzTsw==
+  dependencies:
+    "@babel/core" "^7.23.7"
+    "@babel/types" "^7.23.6"
+    "@rollup/pluginutils" "^5.1.0"
+    kleur "^4.1.5"
+    undici "^6.3.0"
+    unplugin "^1.6.0"
+
 "mime-db@>= 1.43.0 < 2", mime-db@1.52.0:
   version "1.52.0"
   resolved "https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz"
@@ -8449,11 +8205,6 @@ mz@^2.7.0:
     any-promise "^1.0.0"
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
-
-nan@^2.14.0, nan@^2.17.0, nan@^2.18.0:
-  version "2.18.0"
-  resolved "https://registry.npmjs.org/nan/-/nan-2.18.0.tgz"
-  integrity sha512-W7tfG7vMOGtD30sHoZSSc/JVYiyDPEyQVso/Zz+/uQd0B0L46gtC+pHha5FFMRpil6fm/AoEcRWyOVi4+E/f8w==
 
 nanoid@^3.3.6, nanoid@^3.3.7:
   version "3.3.7"
@@ -8890,7 +8641,7 @@ openapi-types@>=7:
   resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-12.1.3.tgz"
   integrity sha512-N4YtSYJqghVu4iek2ZUvcN/0aqH1kRDuNqzcycDxhOUpg7GdvLa2F3DgS6yBNhInhv2r/6I0Flkn7CqL8+nIcw==
 
-openapi3-ts@^4.1.2, openapi3-ts@^4.2.1:
+openapi3-ts@^4.1.2:
   version "4.2.1"
   resolved "https://registry.npmjs.org/openapi3-ts/-/openapi3-ts-4.2.1.tgz"
   integrity sha512-KL1mKwkZii5ce+tb24KCUmQHyWB/oanG5fzUY35UB+wenWJv4Kr/IWBntpn5R8ODiJcxx13ZDophcpHnLGeIOw==
@@ -11254,28 +11005,6 @@ traverse@~0.6.6:
   resolved "https://registry.npmjs.org/traverse/-/traverse-0.6.8.tgz"
   integrity sha512-aXJDbk6SnumuaZSANd21XAo15ucCDE38H4fkqiGsc3MhCK+wOlZvLP9cB/TvpHT0mOyWgC4Z8EwRlzqYSUzdsA==
 
-tree-sitter-json@=0.20.1:
-  version "0.20.1"
-  resolved "https://registry.npmjs.org/tree-sitter-json/-/tree-sitter-json-0.20.1.tgz"
-  integrity sha512-482hf7J+aBwhksSw8yWaqI8nyP1DrSwnS4IMBShsnkFWD3SE8oalHnsEik59fEVi3orcTCUtMzSjZx+0Tpa6Vw==
-  dependencies:
-    nan "^2.18.0"
-
-tree-sitter-yaml@=0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npmjs.org/tree-sitter-yaml/-/tree-sitter-yaml-0.5.0.tgz"
-  integrity sha512-POJ4ZNXXSWIG/W4Rjuyg36MkUD4d769YRUGKRqN+sVaj/VCo6Dh6Pkssn1Rtewd5kybx+jT1BWMyWN0CijXnMA==
-  dependencies:
-    nan "^2.14.0"
-
-tree-sitter@=0.20.4:
-  version "0.20.4"
-  resolved "https://registry.npmjs.org/tree-sitter/-/tree-sitter-0.20.4.tgz"
-  integrity sha512-rjfR5dc4knG3jnJNN/giJ9WOoN1zL/kZyrS0ILh+eqq8RNcIbiXA63JsMEgluug0aNvfQvK4BfCErN1vIzvKog==
-  dependencies:
-    nan "^2.17.0"
-    prebuild-install "^7.1.1"
-
 ts-api-utils@^1.0.1:
   version "1.0.3"
   resolved "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-1.0.3.tgz"
@@ -11295,11 +11024,6 @@ ts-interface-checker@^0.1.9:
   version "0.1.13"
   resolved "https://registry.npmjs.org/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz"
   integrity sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==
-
-ts-mixer@^6.0.3:
-  version "6.0.3"
-  resolved "https://registry.npmjs.org/ts-mixer/-/ts-mixer-6.0.3.tgz"
-  integrity sha512-k43M7uCG1AkTyxgnmI5MPwKoUvS/bRvLvUb7+Pgpdlmok8AoqmUaZxUUw8zKM5B1lqZrt41GjYgnvAi0fppqgQ==
 
 ts-morph@^13.0.2:
   version "13.0.3"
@@ -11543,6 +11267,13 @@ undici@^5.24.0:
   dependencies:
     "@fastify/busboy" "^2.0.0"
 
+undici@^6.3.0:
+  version "6.6.0"
+  resolved "https://registry.npmjs.org/undici/-/undici-6.6.0.tgz"
+  integrity sha512-p8VvLAgnx6g9pydV0GG/kciSx3ZCq5PLeEU4yefjoZCc1HSeiMxbrFzYIZlgSMrX3l0CoTJ37C6edu13acE40A==
+  dependencies:
+    "@fastify/busboy" "^2.0.0"
+
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-2.0.0.tgz"
@@ -11605,7 +11336,7 @@ unpipe@~1.0.0, unpipe@1.0.0:
   resolved "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz"
   integrity sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==
 
-unplugin@^1.3.1:
+unplugin@^1.3.1, unplugin@^1.6.0:
   version "1.6.0"
   resolved "https://registry.npmjs.org/unplugin/-/unplugin-1.6.0.tgz"
   integrity sha512-BfJEpWBu3aE/AyHx8VaNE/WgouoQxgH9baAiH82JjX8cqVyi3uJQstqwD5J+SZxIK326SZIhsSZlALXVBCknTQ==
@@ -11776,11 +11507,6 @@ web-streams-polyfill@^3.0.3:
   version "3.3.2"
   resolved "https://registry.npmjs.org/web-streams-polyfill/-/web-streams-polyfill-3.3.2.tgz"
   integrity sha512-3pRGuxRF5gpuZc0W+EpwQRmCD7gRqcDOMt688KmdlDAgAyaB1XlN0zq2njfDNm44XVdIouE7pZ6GzbdyH47uIQ==
-
-web-tree-sitter@=0.20.3:
-  version "0.20.3"
-  resolved "https://registry.npmjs.org/web-tree-sitter/-/web-tree-sitter-0.20.3.tgz"
-  integrity sha512-zKGJW9r23y3BcJusbgvnOH2OYAW40MXAOi9bi3Gcc7T4Gms9WWgXF8m6adsJWpGJEhgOzCrfiz1IzKowJWrtYw==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

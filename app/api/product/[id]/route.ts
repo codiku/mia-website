@@ -1,4 +1,8 @@
-import { deleteProduct, readProduct, updateProduct } from "@/app/actions/product/actions";
+import {
+  deleteProduct,
+  readProduct,
+  updateProduct,
+} from "@/app/actions/product/actions";
 import {
   DeleteProductModelUriParams,
   GetProductModelUriParams,
@@ -27,8 +31,12 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export const GET = safeEndPoint(
   async (_req: NextRequest, route) => {
-    const response = await readProduct(Number(route.params.id));
-    return NextResponse.json(response);
+    try {
+      const response = await readProduct(Number(route.params.id));
+      return NextResponse.json(response);
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
   },
   true,
   GetProductModelUriParams
@@ -59,8 +67,15 @@ export const GET = safeEndPoint(
  */
 export const PATCH = safeEndPoint(
   async (_req: NextRequest, route, body) => {
-    const updatedProduct = await updateProduct({ id: Number(route.params.id), ...body });
-    return NextResponse.json(updatedProduct);
+    try {
+      const updatedProduct = await updateProduct({
+        id: Number(route.params.id),
+        ...body,
+      });
+      return NextResponse.json(updatedProduct);
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
   },
   true,
   PatchProductModelUriParams,
@@ -86,8 +101,12 @@ export const PATCH = safeEndPoint(
  */
 export const DELETE = safeEndPoint(
   async (_req: NextRequest, route) => {
-    const deletedProduct = deleteProduct(Number(route.params.id));
-    return NextResponse.json(deletedProduct);
+    try {
+      const deletedProduct = deleteProduct(Number(route.params.id));
+      return NextResponse.json(deletedProduct);
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
   },
   true,
   DeleteProductModelUriParams

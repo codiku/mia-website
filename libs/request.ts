@@ -38,7 +38,10 @@ export const errorResponse = (error: unknown) => {
   } else {
     errorMessage = `Error occurred: ${(error as Error).message}`;
   }
-  return NextResponse.json({ message: errorMessage, error: true }, { status: statusCode });
+  return NextResponse.json(
+    { message: errorMessage, error: true },
+    { status: statusCode }
+  );
 };
 
 export const errorResponseAction = (error: unknown): ApiResponse => {
@@ -46,7 +49,10 @@ export const errorResponseAction = (error: unknown): ApiResponse => {
   if (error instanceof ZodError) {
     errorMessage = "";
     error.issues.forEach((issue) => {
-      const field = issue.path.join(".");
+      let field = issue.path.join(".");
+      if (issue.path.length === 0) {
+        field = (issue as any).expected;
+      }
       errorMessage += `${field} - ${issue.message}\n`;
     });
   } else {
@@ -56,29 +62,34 @@ export const errorResponseAction = (error: unknown): ApiResponse => {
 };
 
 // Define a generic error response action type
-type ErrorResponseAction = (error: Error) => Promise<unknown>;
+export type ErrorResponseAction = (error: Error) => Promise<unknown>;
 
 // Overload definitions
-export function safeAction<R>(serverAction: () => Promise<R>): () => Promise<R | ErrorResponseAction>;
+export function safeAction<R>(
+  serverAction: () => Promise<R>
+): () => Promise<R | ErrorResponseAction>;
 
 export function safeAction<D, R>(
   serverAction: (data: D) => Promise<R>,
   modelData: ZodSchema<D>
 ): (data: D) => Promise<R | ErrorResponseAction>;
 
-export function safeAction<D, R>(serverAction: (data: D) => Promise<R>, modelData?: ZodSchema<D>) {
-  try {
-    if (modelData !== undefined) {
-      return async (d: D) => {
+export function safeAction<D, R>(
+  serverAction: (data: D) => Promise<R>,
+  modelData?: ZodSchema<D>
+) {
+  if (modelData !== undefined) {
+    return async (d: D) => {
+      try {
         await modelData.parse(d);
-        return (serverAction as (data: D) => Promise<R>)(d);
-      };
-    } else {
-      return async () => {
-        return (serverAction as () => Promise<R>)();
-      };
-    }
-  } catch (error) {
-    return () => errorResponseAction(error as Error);
+        return await (serverAction as (data: D) => Promise<R>)(d);
+      } catch (error) {
+        throw new Error(errorResponseAction(error as Error).message);
+      }
+    };
+  } else {
+    return async () => {
+      return await (serverAction as () => Promise<R>)();
+    };
   }
 }
