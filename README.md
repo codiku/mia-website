@@ -167,3 +167,10 @@ npm run test
 ```
 
 This command runs the Playwright tests in your project. Ensure that all your tests are located in the appropriate directory as per your configuration.
+
+
+
+
+
+
+
