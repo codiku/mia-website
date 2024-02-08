@@ -156,18 +156,25 @@ npm run storybook
 
 This command starts Storybook locally and outputs the address. Depending on your system configuration, it will automatically open the address in your default browser.
 
-## Playwright
+## End to end testing with Playwright 
 
 Playwright is a Node.js library to automate Chromium, Firefox, and WebKit with a single API. It enables cross-browser web automation that is ever-green, capable, reliable, and fast.
 
 To run Playwright tests, use the following command:
 
 ```bash
-npm run test
+npm run test:e2e
 ```
 
-This command runs the Playwright tests in your project. Ensure that all your tests are located in the appropriate directory as per your configuration.
+## Unit and Integration testing with testing-library
 
+```bash
+npm run test:unit
+```
+or
+```bash
+npm run test:integration
+```
 
 
 
