@@ -9,6 +9,16 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testEnvironment: "jsdom",
+  transform: {
+    "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+  },
+  moduleNameMapper: {
+    "^.+\\.(css|less|scss)$": "identity-obj-proxy",
+    uuid: require.resolve("uuid"),
+  },
+  testEnvironmentOptions: {
+    customExportConditions: [], // don't load "browser" field
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

@@ -38,10 +38,6 @@ export const errorResponse = (error: unknown) => {
   } else {
     errorMessage = `Error occurred: ${(error as Error).message}`;
   }
-  return NextResponse.json(
-    { message: errorMessage, error: true },
-    { status: statusCode }
-  );
 };
 
 export const errorResponseAction = (error: unknown): ApiResponse => {
