@@ -3244,10 +3244,10 @@
   dependencies:
     remove-accents "0.4.2"
 
-"@tanstack/query-core@4.36.1":
-  version "4.36.1"
-  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-4.36.1.tgz"
-  integrity sha512-DJSilV5+ytBP1FbFcEJovv4rnnm/CokuVvrBEtW/Va9DvuJ3HksbXUJEpI0aV1KtuL4ZoO9AVE6PyNLzF7tLeA==
+"@tanstack/query-core@5.18.1":
+  version "5.18.1"
+  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.18.1.tgz"
+  integrity sha512-fYhrG7bHgSNbnkIJF2R4VUXb4lF7EBiQjKkDc5wOlB7usdQOIN4LxxHpDxyE3qjqIst1WBGvDtL48T0sHJGKCw==
 
 "@tanstack/react-query-devtools@^4.36.1":
   version "4.36.1"
@@ -3258,13 +3258,12 @@
     superjson "^1.10.0"
     use-sync-external-store "^1.2.0"
 
-"@tanstack/react-query@^4.36.1":
-  version "4.36.1"
-  resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-4.36.1.tgz"
-  integrity sha512-y7ySVHFyyQblPl3J3eQBWpXZkliroki3ARnBKsdJchlgt7yJLRDUcf4B8soufgiYt3pEQIkBWBx1N9/ZPIeUWw==
+"@tanstack/react-query@^4.36.1", "@tanstack/react-query@^5.18.1":
+  version "5.18.1"
+  resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.18.1.tgz"
+  integrity sha512-PdI07BbsahZ+04PxSuDQsQvBWe008eWFk/YYWzt8fvzt2sALUM0TpAJa/DFpqa7+SSo7j1EQR6Jx6znXNHyaXw==
   dependencies:
-    "@tanstack/query-core" "4.36.1"
-    use-sync-external-store "^1.2.0"
+    "@tanstack/query-core" "5.18.1"
 
 "@testing-library/dom@^9.0.0", "@testing-library/dom@^9.3.1", "@testing-library/dom@>=7.21.4":
   version "9.3.4"

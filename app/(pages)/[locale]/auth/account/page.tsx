@@ -52,16 +52,15 @@ export default withAuth(function Account() {
       password: "",
     },
   });
-  const { mutate: deleteAccount, isLoading } = useMutation(
-    async () => api.delete("/api/auth/delete-account").json<Resp<{}>>(),
-    {
-      onSuccess: async (response) => {
-        await signOut({ redirect: false });
-        router.push("/");
-        router.refresh();
-      },
-    }
-  );
+  const { mutate: deleteAccount, isPending } = useMutation({
+    mutationFn: async () =>
+      api.delete("/api/auth/delete-account").json<Resp<{}>>(),
+    onSuccess: async () => {
+      await signOut({ redirect: false });
+      router.push("/");
+      router.refresh();
+    },
+  });
 
   async function onSubmit(values: Form) {}
 
@@ -79,7 +78,7 @@ export default withAuth(function Account() {
             Cancel
           </AlertDialogCancel>
           <Button
-            disabled={isLoading}
+            disabled={isPending}
             onClick={() => deleteAccount()}
             variant={"destructive"}
           >

@@ -21,13 +21,11 @@ export function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations("Components.LanguageSwitcher");
-  const { data, error } = useQuery(
-    ["products"],
-    async () => api("/api/product").json(),
-    {
-      //  meta: { isToastDisabled: "false" },
-    }
-  );
+  const { data, error } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => api("/api/product").json(),
+    //  meta: { isToastDisabled: "false" },
+  });
 
   const handleChange = async (value: string) => {
     router.push(pathname, { locale: value });

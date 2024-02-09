@@ -18,6 +18,7 @@ import { z } from "zod";
 import { Resp } from "@/types/api-type";
 import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
+import { api } from "@/configs/ky-config";
 
 const UPDATE_PASSWORD_FORM_MODEL = z
   .object({
@@ -37,12 +38,12 @@ const UPDATE_PASSWORD_FORM_MODEL = z
 type Form = z.infer<typeof UPDATE_PASSWORD_FORM_MODEL>;
 
 export default withAuth(function UpdatePassword(p: {}) {
-  const { mutate: updatePassword, isLoading } = useMutation(
-    async (formValues: Form) =>
-      ky
+  const { mutate: updatePassword, isPending } = useMutation({
+    mutationFn: async (formValues: Form) =>
+      api
         .patch("/api/auth/update-password", { json: formValues })
-        .json<Resp<{}>>()
-  );
+        .json<Resp<{}>>(),
+  });
 
   const form = useForm<Form>({
     mode: "onChange",
@@ -128,7 +129,7 @@ export default withAuth(function UpdatePassword(p: {}) {
               />
             </div>
           </div>
-          <Button disabled={isLoading} className="mt-10 w-full">
+          <Button disabled={isPending} className="mt-10 w-full">
             Update password
           </Button>
         </form>
