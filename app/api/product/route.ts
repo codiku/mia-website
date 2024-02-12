@@ -1,29 +1,33 @@
 import { createProduct, readAllProduct } from "@/app/actions/product/actions";
-  import { safeEndPoint } from "@/libs/jwt";
-  import { NextRequest, NextResponse } from "next/server";
-  import { PostProductModelBody } from "./models";
+import { safeEndPoint } from "@/libs/jwt";
+import { NextRequest, NextResponse } from "next/server";
+import { PostProductModelBody } from "./models";
 
 /**
-  * @swagger
-  * /api/product:
-  *   get:
-  *     description: Get all products
-  *     responses:
-  *       200:
-  *         description: Returns a list of products
-  *         content:
-  *           application/json:
-  *             schema:
-  *               type: array
-  *               items:
-  *                 $ref: '#/components/schemas/ProductProductModel'
-  *       400:
-  *         description: Bad request if the product data is invalid
-  */
-  export const GET = safeEndPoint(async (_req: NextRequest) => {
-    const product = await readAllProduct();
-    return NextResponse.json(product);
-  }, true);
+ * @swagger
+ * /api/product:
+ *   get:
+ *     description: Get all products
+ *     responses:
+ *       200:
+ *         description: Returns a list of products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ProductProductModel'
+ *       400:
+ *         description: Bad request if the product data is invalid
+ */
+export const GET = async (req: NextRequest) => {
+  try {
+    const response = await readAllProduct();
+    return NextResponse.json(response);
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+};
 /**
  * @swagger
  * /api/product:
@@ -47,8 +51,12 @@ import { createProduct, readAllProduct } from "@/app/actions/product/actions";
  */
 export const POST = safeEndPoint(
   async (_req: NextRequest, _, body) => {
-    const created = await createProduct(body);
-    return NextResponse.json(created);
+    try {
+      const created = await createProduct(body);
+      return NextResponse.json(created);
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
   },
   true,
   undefined,

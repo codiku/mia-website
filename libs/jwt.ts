@@ -54,7 +54,13 @@ export function safeEndPoint<B, P, UriP>(
 
         return routeHandler(req, route, body as never, qParams as P, token);
       } else {
-        return handleUnauthorized();
+        return NextResponse.json(
+          {
+            error: true,
+            message: "You must be authenticated",
+          },
+          { status: StatusCodes.UNAUTHORIZED }
+        );
       }
     } else {
       try {
@@ -69,7 +75,9 @@ export function safeEndPoint<B, P, UriP>(
         }
         return routeHandler(req, route, body as never, params as P, undefined);
       } catch (error) {
-        return errorResponse(error as Error);
+        return NextResponse.json(errorResponse(error as Error), {
+          status: 400,
+        });
       }
     }
   };
@@ -78,12 +86,3 @@ export function safeEndPoint<B, P, UriP>(
 const parseBody = async <T>(req: NextRequest, modelBody: ZodSchema<T>) => {
   return modelBody.parse(await getBodyAsync(req));
 };
-function handleUnauthorized() {
-  return NextResponse.json(
-    {
-      error: true,
-      message: "You must be authenticated",
-    },
-    { status: StatusCodes.UNAUTHORIZED }
-  );
-}

@@ -15,7 +15,6 @@ import { useMutation } from "@tanstack/react-query";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
 import { z } from "zod";
 import { EMAIL_MODEL, PASSWORD_MODEL } from "@/libs/models";
 import { useForm } from "react-hook-form";
@@ -52,16 +51,15 @@ export default withAuth(function Account() {
       password: "",
     },
   });
-  const { mutate: deleteAccount, isLoading } = useMutation(
-    async () => api.delete("/api/auth/delete-account").json<Resp<{}>>(),
-    {
-      onSuccess: async (response) => {
-        await signOut({ redirect: false });
-        router.push("/");
-        router.refresh();
-      },
-    }
-  );
+  const { mutate: deleteAccount, isPending } = useMutation({
+    mutationFn: async () =>
+      api.delete("/api/auth/delete-account").json<Resp<{}>>(),
+    onSuccess: async () => {
+      await signOut({ redirect: false });
+      router.push("/");
+      router.refresh();
+    },
+  });
 
   async function onSubmit(values: Form) {}
 
@@ -79,7 +77,7 @@ export default withAuth(function Account() {
             Cancel
           </AlertDialogCancel>
           <Button
-            disabled={isLoading}
+            disabled={isPending}
             onClick={() => deleteAccount()}
             variant={"destructive"}
           >

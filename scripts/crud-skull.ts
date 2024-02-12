@@ -22,7 +22,10 @@ export const Read${pascalCaseEndpoint}ModelArgs = z.number();
 export const Update${pascalCaseEndpoint}ModelArgs = ${pascalCaseEndpoint}Model.partial().merge(IdArgModels);
 export const Delete${pascalCaseEndpoint}ModelArgs = z.number();`,
 
-  actionSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `"use server";
+  actionSkull: (
+    camelCaseEndpoint: string,
+    pascalCaseEndpoint: string
+  ) => `"use server";
 import { db } from "@/libs/db";
 import { safeAction } from "@/libs/request";
 import { ${pascalCaseEndpoint} } from "@prisma/client";
@@ -107,8 +110,12 @@ import { NextRequest, NextResponse } from "next/server";`,
  */
 export const POST = safeEndPoint(
   async (_req: NextRequest, _, body) => {
-    const created = await create${pascalCaseEndpoint}(body);
-    return NextResponse.json(created);
+    try{
+      const created = await create${pascalCaseEndpoint}(body);
+      return NextResponse.json(created);
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
   },
   true,
   undefined,
@@ -132,8 +139,12 @@ export const POST = safeEndPoint(
   *         description: Bad request if the ${camelCaseEndpoint} data is invalid
   */
   export const GET = safeEndPoint(async (_req: NextRequest) => {
-    const ${camelCaseEndpoint} = await readAll${pascalCaseEndpoint}();
-    return NextResponse.json(${camelCaseEndpoint});
+    try{
+      const ${camelCaseEndpoint} = await readAll${pascalCaseEndpoint}();
+      return NextResponse.json(${camelCaseEndpoint});
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
   }, true);`,
 
   getSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
@@ -156,8 +167,12 @@ export const POST = safeEndPoint(
  */
 export const GET = safeEndPoint(
   async (_req: NextRequest, route) => {
-    const response = await read${pascalCaseEndpoint}(Number(route.params.id));
-    return NextResponse.json(response);
+    try{
+      const response = await read${pascalCaseEndpoint}(Number(route.params.id));
+      return NextResponse.json(response);
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
   },
   true,
   Get${pascalCaseEndpoint}ModelUriParams
@@ -189,8 +204,12 @@ export const GET = safeEndPoint(
  */
 export const PATCH = safeEndPoint(
   async (_req: NextRequest, route, body) => {
-    const updated${pascalCaseEndpoint} = await update${pascalCaseEndpoint}({ id: Number(route.params.id), ...body });
-    return NextResponse.json(updated${pascalCaseEndpoint});
+    try{
+      const updated${pascalCaseEndpoint} = await update${pascalCaseEndpoint}({ id: Number(route.params.id), ...body });
+      return NextResponse.json(updated${pascalCaseEndpoint});
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
   },
   true,
   Patch${pascalCaseEndpoint}ModelUriParams,
@@ -217,8 +236,12 @@ export const PATCH = safeEndPoint(
  */
 export const DELETE = safeEndPoint(
   async (_req: NextRequest, route) => {
-    const deleted${pascalCaseEndpoint} = delete${pascalCaseEndpoint}(Number(route.params.id));
-    return NextResponse.json(deleted${pascalCaseEndpoint});
+    try{
+      const deleted${pascalCaseEndpoint} = delete${pascalCaseEndpoint}(Number(route.params.id));
+      return NextResponse.json(deleted${pascalCaseEndpoint});
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
   },
   true,
   Delete${pascalCaseEndpoint}ModelUriParams

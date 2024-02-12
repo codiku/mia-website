@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import ky from "ky";
+import { api } from "@/configs/ky-config";
 
 type Form = z.infer<typeof FORGOT_PASSWORD_MODEL>;
 
@@ -25,18 +26,15 @@ export default function ForgotPassword() {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [disabledEmailButton, setDisabledEmailButton] = useState(false);
   const t = useTranslations("Auth.forgot-password");
-  const { mutate: forgotPassword, isLoading } = useMutation(
-    async (formValues: Form) => {
-      return ky
+  const { mutate: forgotPassword, isPending } = useMutation({
+    mutationFn: async (formValues: Form) =>
+      api
         .post("/api/auth/forgot-password", { json: formValues })
-        .json<Resp<{}>>();
+        .json<Resp<{}>>(),
+    onSuccess: () => {
+      setIsEmailSent(true);
     },
-    {
-      onSuccess: () => {
-        setIsEmailSent(true);
-      },
-    }
-  );
+  });
 
   const form = useForm<Form>({
     resolver: zodResolver(FORGOT_PASSWORD_MODEL),
@@ -67,10 +65,10 @@ export default function ForgotPassword() {
         <Button
           type="submit"
           variant={"outline"}
-          disabled={isLoading || disabledEmailButton}
+          disabled={isPending || disabledEmailButton}
           className="w-full mt-10"
         >
-          {isLoading
+          {isPending
             ? t("loading")
             : disabledEmailButton
             ? t("waitBeforeSending")
@@ -105,7 +103,7 @@ export default function ForgotPassword() {
                 <FormMessage className="text-xs" />
               </div>
               <Button
-                disabled={isLoading}
+                disabled={isPending}
                 type="submit"
                 className="w-full mt-10"
               >

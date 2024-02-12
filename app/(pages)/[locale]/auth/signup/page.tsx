@@ -24,6 +24,7 @@ import { FieldPassword } from "@/components/ui/field-password";
 import { useTranslations } from "use-intl";
 import ky from "ky";
 import { UnsensitiveUser } from "@/types/user";
+import { api } from "@/configs/ky-config";
 
 const SIGNUP_MODEL = z
   .object({
@@ -51,17 +52,15 @@ export default function Signup() {
   const [disabledEmailButton, setDisabledEmailButton] = useState(false);
   const [currentZodIssues, setCurrentZodIssues] = useState<ZodIssue[]>([]);
   const t = useTranslations("Auth.signup");
-  const { mutate: signup, isLoading } = useMutation(
-    async (formValues: Form) =>
-      ky
+  const { mutate: signup, isPending } = useMutation({
+    mutationFn: async (formValues: Form) =>
+      api
         .post("/api/auth/register/", { json: formValues })
         .json<Resp<UnsensitiveUser>>(),
-    {
-      onSuccess: () => {
-        setIsEmailSent(true);
-      },
-    }
-  );
+    onSuccess: () => {
+      setIsEmailSent(true);
+    },
+  });
 
   const form = useForm<Form>({
     resolver: zodResolver(SIGNUP_MODEL),
@@ -121,10 +120,10 @@ export default function Signup() {
         <Button
           type="submit"
           variant={"outline"}
-          disabled={isLoading || disabledEmailButton}
+          disabled={isPending || disabledEmailButton}
           className="w-full mt-10"
         >
-          {isLoading
+          {isPending
             ? t("loading")
             : disabledEmailButton
             ? t("waitBeforeSending")
@@ -222,7 +221,7 @@ export default function Signup() {
               </div>
 
               <Button
-                disabled={isLoading}
+                disabled={isPending}
                 type="submit"
                 className="w-full mt-10"
               >

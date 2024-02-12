@@ -29,27 +29,23 @@ export default function Signin() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const t = useTranslations("Auth.signin");
-  const { mutate: signinMut, isLoading } = useMutation(
-    async (form: Form) =>
+  const { mutate: signinMut, isPending } = useMutation({
+    mutationFn: async (form: Form) =>
       signIn("credentials", {
         email: form.email,
         password: form.password,
         redirect: false,
       }),
-    {
-      onSuccess: (signinResp) => {
-        // signin comes from next-auth
-        // We have to manually catch it here.
-        if (signinResp?.error) {
-          toast.error("Signin failed");
-        } else {
-          router.refresh();
-          router.push(callbackUrl || "/");
-          toast.success("You are know signed in");
-        }
-      },
-    }
-  );
+    onSuccess: (signinResp) => {
+      if (signinResp?.error) {
+        toast.error("Signin failed");
+      } else {
+        router.refresh();
+        router.push(callbackUrl || "/");
+        toast.success("You are now signed in");
+      }
+    },
+  });
   const router = useRouter();
   const form = useForm<Form>({
     resolver: zodResolver(SIGNIN_MODEL),
@@ -109,7 +105,7 @@ export default function Signin() {
             </Link>
           </div>
 
-          <Button disabled={isLoading} type="submit" className="w-full mt-10">
+          <Button disabled={isPending} type="submit" className="w-full mt-10">
             {t("signIn")}
           </Button>
           <Divider>{t("orContinueWith")}</Divider>

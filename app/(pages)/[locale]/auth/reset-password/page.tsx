@@ -20,7 +20,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { FieldPassword } from "@/components/ui/field-password";
 import { useTranslations } from "next-intl";
-import ky from "ky";
+import { api } from "@/configs/ky-config";
 
 const RESET_PASSWORD_MODEL = z
   .object({
@@ -37,26 +37,24 @@ type Form = z.infer<typeof RESET_PASSWORD_MODEL>;
 export default function ResetPassword() {
   const router = useRouter();
   const t = useTranslations("Auth.reset-password");
-  const { mutate: resetPassword, isLoading } = useMutation(
-    async (data: { token: string; password: string }) =>
-      ky
+  const { mutate: resetPassword, isPending } = useMutation({
+    mutationFn: async (data: { token: string; password: string }) =>
+      api
         .patch("/api/auth/reset-password", {
           headers: { isToastDisabled: "true" },
           json: { token: data.token, password: data.password },
         })
         .json<Resp<{}>>(),
-    {
-      onSuccess: async (response) => {
-        await signOut({
-          redirect: false,
-        });
-        if (!response.error) {
-          router.push("/auth/signin");
-          toast.success(t("passwordUpdated"));
-        }
-      },
-    }
-  );
+    onSuccess: async (response) => {
+      await signOut({
+        redirect: false,
+      });
+      if (!response.error) {
+        router.push("/auth/signin");
+        toast.success(t("passwordUpdated"));
+      }
+    },
+  });
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const form = useForm<Form>({
@@ -125,7 +123,7 @@ export default function ResetPassword() {
             <FormMessage className="text-xs" />
           </div>
 
-          <Button disabled={isLoading} type="submit" className="w-full mt-10">
+          <Button disabled={isPending} type="submit" className="w-full mt-10">
             {t("resetPassword")}
           </Button>
         </form>
