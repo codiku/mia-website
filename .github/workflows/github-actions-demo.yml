@@ -5,7 +5,5 @@ jobs:
   front_end_tests:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Github action event : ${{ github.event_name }}."
-      - run: echo "🔎 Branc name is ${{ github.ref }}"
-      - name: Check out repository code
-        uses: actions/checkout@v4
+      - name: Display greeting
+        run: echo "hello"
