@@ -15,6 +15,7 @@ const customJestConfig = {
   moduleNameMapper: {
     "^.+\\.(css|less|scss)$": "identity-obj-proxy",
     uuid: require.resolve("uuid"),
+    "react-dom/server": "<rootDir>/node_modules/react-dom/server.browser.js",
   },
   testEnvironmentOptions: {
     customExportConditions: [], // don't load "browser" field
