@@ -1,4 +1,4 @@
-name: Build and Test React Application
+name: Run front end tests
 
 on:
   push:
