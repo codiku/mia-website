@@ -34,4 +34,4 @@ export default function RootLayout(p: {
     </ReactQueryProvider>
   );
 }
-// Killing project
+// doing some shiiit
