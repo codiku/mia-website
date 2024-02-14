@@ -34,4 +34,4 @@ export default function RootLayout(p: {
     </ReactQueryProvider>
   );
 }
-// doing some shiiit
+// chill studio
