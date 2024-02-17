@@ -9,6 +9,7 @@ on:
 #      - completed
 jobs:
   deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Display secrets for debugging
@@ -18,15 +19,13 @@ jobs:
           echo OVH_SERVER_USERNAME=${{ secrets.OVH_SERVER_USERNAME }} | sed 's/./& /g'
           echo OVH_SERVER_PASSWORD=${{ secrets.OVH_SERVER_PASSWORD }} | sed 's/./& /g'
       - name: Deploy using ssh
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.OVH_SERVER_HOST }}
-          port: ${{ secrets.OVH_SERVER_HOST }}
           username: ${{ secrets.OVH_SERVER_USERNAME }}
           password: ${{ secrets.OVH_SERVER_PASSWORD }}
-          script: |
-            DATE=$(date +"%Y-%m-%d_%H-%M-%S")
-            echo "Deployment date: $DATE" > test.temp
+          port: ${{ secrets.OVH_SERVER_HOST }}
+          script: whoami
 
       # - name: Add SSH key to agent
       #   run: |
