@@ -12,24 +12,24 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy using ssh
+      - name: Pull using ssh
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.OVH_SERVER_HOST }}
           username: ${{ secrets.OVH_SERVER_USERNAME }}
           password: ${{ secrets.OVH_SERVER_PASSWORD }}
           port: ${{ secrets.OVH_SERVER_PORT }}
+          # This script navigates to the Next.js application directory, fetches the latest changes from the repository,
+          # and pulls them. It then checks if there have been any changes to the package.json file since the last commit.
+          # If there have been changes, it runs 'pnpm i' to install or update dependencies accordingly.
           script: |
             cd /var/www/next-auth
             sudo git fetch
             sudo git pull
-
-      # - name: Add SSH key to agent
-      #   run: |
-      #     chmod 600 /github/deploy-key/id_rsa
-      #     echo "Host ${{ secrets.SERVER_HOST }}" >> ~/.ssh/config
-      #     echo "  StrictHostKeyChecking no" >> ~/.ssh/config
-      #     echo "  IdentityFile /github/deploy-key/id_rsa" >> ~/.ssh/config
+            CHANGED=$(git diff --name-only HEAD HEAD~1 | grep package.json | wc -l)
+            if [ "$CHANGED" -ne "0" ]; then
+              pnpm i
+            fi
 
       # - name: Install dependencies
       #   run: pnpm install --production
