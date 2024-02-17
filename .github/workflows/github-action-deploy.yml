@@ -28,9 +28,11 @@ jobs:
             sudo git pull
             CHANGED=$(git diff --name-only HEAD HEAD~1 | grep package.json | wc -l)
             if [ "$CHANGED" -ne "0" ]; then
+              echo "🔄 Package.json update detected,  installing node modules... "
               sudo pnpm i
-              sudo pnpm run build
             fi
+            echo "📦 Building project"
+            sudo pnpm run build
 
       # - name: Install dependencies
       #   run: pnpm install --production
