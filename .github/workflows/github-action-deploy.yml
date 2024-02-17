@@ -12,20 +12,17 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Display secrets for debugging
-        run: |
-          echo OVH_SERVER_HOST=${{ secrets.OVH_SERVER_HOST }} | sed 's/./& /g'
-          echo OVH_SERVER_PORT=${{ secrets.OVH_SERVER_PORT }} | sed 's/./& /g'
-          echo OVH_SERVER_USERNAME=${{ secrets.OVH_SERVER_USERNAME }} | sed 's/./& /g'
-          echo OVH_SERVER_PASSWORD=${{ secrets.OVH_SERVER_PASSWORD }} | sed 's/./& /g'
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
         with:
-          host: vps-5f7f593b.vps.ovh.net
-          username: debian
-          password: raine64!
-          port: 49153
-          script: whoami
+          host: ${{ secrets.OVH_SERVER_HOST }}
+          username: ${{ secrets.OVH_SERVER_USERNAME }}
+          password: ${{ secrets.OVH_SERVER_PASSWORD }}
+          port: ${{ secrets.OVH_SERVER_PORT }}
+          script: |
+            cd /var/www/next-auth
+            git fetch
+            git pull
 
       # - name: Add SSH key to agent
       #   run: |
