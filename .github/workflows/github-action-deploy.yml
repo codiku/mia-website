@@ -31,29 +31,5 @@ jobs:
               echo "🔄 Package.json update detected,  installing node modules... "
               sudo pnpm i
             fi
-            echo "📦 Building project"
+            echo "📦Building project"
             sudo pnpm run build
-
-      # - name: Install dependencies
-      #   run: pnpm install --production
-
-      # - name: Build Next.js app
-      #   run: next build
-
-      # - name: Copy build files to server
-      #   uses: appleboy/scp-action@v0.1.2
-      #   with:
-      #     host: ${{ secrets.SERVER_HOST }}
-      #     username: ${{ secrets.SERVER_USERNAME }}
-      #     key: ${{ secrets.DEPLOY_KEY_PATH }}
-      #     source: "out/**"
-      #     target: "{{ secrets.SERVER_TARGET_DIR }}"
-
-      # - name: Restart PM2 process
-      #   uses: appleboy/ssh-action@v2
-      #   with:
-      #     host: ${{ secrets.SERVER_HOST }}
-      #     username: ${{ secrets.SERVER_USERNAME }}
-      #     password: ${{ secrets.SERVER_PASSWORD }} # Or use key with `key`
-      #     port: ${{ secrets.SERVER_PORT }}
-      #     script: pm2 restart --no-daemon myapp
