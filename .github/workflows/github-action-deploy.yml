@@ -15,9 +15,9 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.OVH_SERVER_HOST }}
-          username: ${{ secrets.OVH_SERVER_USERNAME }}
-          key: ${{ secrets.OVH_SERVER_PUBLIC_KEY }}
           port: ${{ secrets.OVH_SERVER_HOST }}
+          username: ${{ secrets.OVH_SERVER_USERNAME }}
+          password: ${{ secrets.OVH_SERVER_PASSWORD }}
           script: |
             DATE=$(date +"%Y-%m-%d_%H-%M-%S")
             echo "Deployment date: $DATE" > test.temp
