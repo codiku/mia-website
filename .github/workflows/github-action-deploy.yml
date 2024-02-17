@@ -20,9 +20,9 @@ jobs:
           password: ${{ secrets.OVH_SERVER_PASSWORD }}
           port: ${{ secrets.OVH_SERVER_PORT }}
           script: |
-            sudo cd /var/www/next-auth
-            sudo git fetch
-            sudo git pull
+            sudo -s cd /var/www/next-auth
+            sudo -s git fetch
+            sudo -s git pull
 
       # - name: Add SSH key to agent
       #   run: |
