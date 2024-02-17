@@ -23,8 +23,7 @@ jobs:
         with:
           host: vps-5f7f593b.vps.ovh.net
           username: debian
-          password: rain64!
-          key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBE5HDzF2kDnJKM0kXFWKpmHfKTsMDkWK820WHc0F9hXxRsTInz+mtCT6tnQmlmkDU5at0vOI2gpOVF+Lo+EYmZE=
+          password: raine64!
           port: 49153
           script: whoami
 
