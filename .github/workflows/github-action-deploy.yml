@@ -21,6 +21,8 @@ jobs:
           port: ${{ secrets.OVH_SERVER_PORT }}
           script: |
             cd /var/www/next-auth
+            sudo git fetch
+            sudo git pull
 
       # - name: Add SSH key to agent
       #   run: |
