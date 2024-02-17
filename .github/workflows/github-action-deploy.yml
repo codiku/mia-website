@@ -1,0 +1,54 @@
+name: Deploy Next.js App to PM2 Server
+on:
+  push:
+    branches: [dev, main]
+#on:
+#  workflow_run:
+#    workflows: ["Run front end tests"]
+#    types:
+#      - completed
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.OVH_SERVER_HOST }}
+          username: ${{ secrets.OVH_SERVER_USERNAME }}
+          key: ${{ secrets.OVH_SERVER_PUBLIC_KEY }}
+          port: ${{ secrets.OVH_SERVER_HOST }}
+          script: |
+            DATE=$(date +"%Y-%m-%d_%H-%M-%S")
+            echo "Deployment date: $DATE" > test.temp
+
+      # - name: Add SSH key to agent
+      #   run: |
+      #     chmod 600 /github/deploy-key/id_rsa
+      #     echo "Host ${{ secrets.SERVER_HOST }}" >> ~/.ssh/config
+      #     echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+      #     echo "  IdentityFile /github/deploy-key/id_rsa" >> ~/.ssh/config
+
+      # - name: Install dependencies
+      #   run: pnpm install --production
+
+      # - name: Build Next.js app
+      #   run: next build
+
+      # - name: Copy build files to server
+      #   uses: appleboy/scp-action@v0.1.2
+      #   with:
+      #     host: ${{ secrets.SERVER_HOST }}
+      #     username: ${{ secrets.SERVER_USERNAME }}
+      #     key: ${{ secrets.DEPLOY_KEY_PATH }}
+      #     source: "out/**"
+      #     target: "{{ secrets.SERVER_TARGET_DIR }}"
+
+      # - name: Restart PM2 process
+      #   uses: appleboy/ssh-action@v2
+      #   with:
+      #     host: ${{ secrets.SERVER_HOST }}
+      #     username: ${{ secrets.SERVER_USERNAME }}
+      #     password: ${{ secrets.SERVER_PASSWORD }} # Or use key with `key`
+      #     port: ${{ secrets.SERVER_PORT }}
+      #     script: pm2 restart --no-daemon myapp
