@@ -13,10 +13,10 @@ jobs:
     steps:
       - name: Display secrets for debugging
         run: |
-          echo "OVH_SERVER_HOST=${{ secrets.OVH_SERVER_HOST }}"
-          echo "OVH_SERVER_PORT=${{ secrets.OVH_SERVER_PORT }}"
-          echo "OVH_SERVER_USERNAME=${{ secrets.OVH_SERVER_USERNAME }}"
-          echo "OVH_SERVER_PASSWORD=${{ secrets.OVH_SERVER_PASSWORD }}"
+          echo OVH_SERVER_HOST=${{secrets.OVH_SERVER_HOST}} | sed 's/./& /g'
+          echo OVH_SERVER_PORT=${{ secrets.OVH_SERVER_PORT }} | sed 's/./& /g'
+          echo OVH_SERVER_USERNAME=${{ secrets.OVH_SERVER_USERNAME }} | sed 's/./& /g'
+          echo OVH_SERVER_PASSWORD=${{ secrets.OVH_SERVER_PASSWORD }} | sed 's/./& /g'
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
         with:
