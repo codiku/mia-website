@@ -21,7 +21,7 @@ export function getQueryParams(request: NextRequest) {
       });
     }
   }
-  console.log("sortie de params", queryParamsObject);
+
   return queryParamsObject;
 }
 
