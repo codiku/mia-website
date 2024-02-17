@@ -28,8 +28,8 @@ jobs:
             sudo git pull
             CHANGED=$(git diff --name-only HEAD HEAD~1 | grep package.json | wc -l)
             if [ "$CHANGED" -ne "0" ]; then
-              pnpm i
-              pnpm run build
+              sudo pnpm i
+              sudo pnpm run build
             fi
 
       # - name: Install dependencies
