@@ -1,27 +1,27 @@
-import { createProduct, readAllProduct } from "@/app/actions/product/actions";
+import { createAnimal, readAllAnimal } from "@/app/actions/animal/actions";
 import { safeEndPoint } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { PostProductModelBody } from "./models";
+import { PostAnimalModelBody } from "./models";
+import "./doc";
 
 
   export const GET = safeEndPoint(async (_req: NextRequest) => {
     try{
-      const product = await readAllProduct();
-      return NextResponse.json(product);
+      const animal = await readAllAnimal();
+      return NextResponse.json(animal);
     } catch (error) {
       return NextResponse.json({ error }, { status: 500 });
     }
-  }, {auth: false});
+  }, {auth: true});
 
- 
-export const POST = safeEndPoint(
+  export const POST = safeEndPoint(
   async (_req: NextRequest, _, body) => {
     try{
-      const created = await createProduct(body);
+      const created = await createAnimal(body);
       return NextResponse.json(created);
     } catch (error) {
       return NextResponse.json({ error }, { status: 500 });
     }
   },
-  {auth: true, body: PostProductModelBody }
+  {auth: true, body: PostAnimalModelBody }
 );

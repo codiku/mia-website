@@ -14,6 +14,7 @@ const {
   modelActionSkull,
   actionSkull,
   apiModelSkull,
+  docSkull,
 } = require("./crud-skull");
 
 async function generateCRUDFiles(endpoint: string) {
@@ -55,7 +56,7 @@ async function generateCRUDFiles(endpoint: string) {
     //Actions and model
     fs.writeFile(path.join(actionDirectory, `models.ts`), modelActionSkull(camelCaseEndpoint, pascalCaseEndpoint));
     fs.writeFile(path.join(actionDirectory, `actions.ts`), actionSkull(camelCaseEndpoint, pascalCaseEndpoint));
-
+    fs.writeFile(path.join(apiDirectory, `doc.ts`), docSkull(camelCaseEndpoint, pascalCaseEndpoint));
     console.log(`CRUD files and folders for '${endpoint}' created successfully.`);
 
     // Add an empty model to Prisma schema

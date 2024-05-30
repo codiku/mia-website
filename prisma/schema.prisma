@@ -78,7 +78,12 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Product {
+model Human {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime? @default(now())
+}
+model Animal {
   id        Int       @id @default(autoincrement())
   name      String
   createdAt DateTime? @default(now())

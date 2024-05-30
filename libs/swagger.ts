@@ -1,9 +1,10 @@
 import { createSwaggerSpec } from 'next-swagger-doc';
 import * as PrismaGeneratedZodModels from '@/prisma/zod';
-import * as CustomZodModels from "@/libs/models"
 import { generateSchema } from '@anatine/zod-openapi';
+import * as AnimalApiModels from '@/app/api/animal/models';
+import * as HumanApiModels from '@/app/api/human/models';
 
-const zodModels= {...PrismaGeneratedZodModels, ...CustomZodModels}
+const zodModels= {...PrismaGeneratedZodModels, ...AnimalApiModels, ...HumanApiModels}
 const schemas = Object.keys(zodModels).reduce((acc,curr)=>{
   ((acc as any)[curr]) =  generateSchema(((zodModels as any)[curr]))
   return acc
@@ -45,6 +46,12 @@ export const getApiDocs = async () => {
       security: [],
     },
   });
+ 
   return spec;
 };
+
+
+
+
+
 

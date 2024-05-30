@@ -43,6 +43,12 @@ export const create${pascalCaseEndpoint} = safeAction(async (data): Promise<${pa
   });
 }, Create${pascalCaseEndpoint}ModelArgs);
 
+export const read${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint} | null> => {
+  return db.${camelCaseEndpoint}.findUnique({
+    where: { id },
+  });
+}, Read${pascalCaseEndpoint}ModelArgs);
+
 export const readAll${pascalCaseEndpoint} = safeAction(async (): Promise<${pascalCaseEndpoint}[]> => {
   return db.${camelCaseEndpoint}.findMany();
 });
@@ -53,12 +59,6 @@ export const update${pascalCaseEndpoint} = safeAction(async ({ id, ...data }): P
     data,
   });
 }, Update${pascalCaseEndpoint}ModelArgs);
-
-export const read${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint} | null> => {
-  return db.${camelCaseEndpoint}.findUnique({
-    where: { id },
-  });
-}, Read${pascalCaseEndpoint}ModelArgs);
 
 export const delete${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint}> => {
   return db.${camelCaseEndpoint}.delete({
@@ -72,7 +72,8 @@ export const delete${pascalCaseEndpoint} = safeAction(async (id): Promise<${pasc
   ) => `import { create${pascalCaseEndpoint}, readAll${pascalCaseEndpoint} } from "@/app/actions/${camelCaseEndpoint}/actions";
 import { safeEndPoint } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { Post${pascalCaseEndpoint}ModelBody } from "./models";`,
+import { Post${pascalCaseEndpoint}ModelBody } from "./models";
+import "./doc";`,
 
   pageLevel2ImportsSkull: (
     camelCaseEndpoint: string,
@@ -86,44 +87,36 @@ import {
 } from "@/app/api/${camelCaseEndpoint}/models";
 import { safeEndPoint } from "@/libs/jwt";
 import { NextRequest, NextResponse } from "next/server";`,
-
-  postSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) =>
-    `/**
- * @swagger
- * /api/${camelCaseEndpoint}:
- *   post:
- *     description: Create a new ${camelCaseEndpoint}
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Post${pascalCaseEndpoint}Body'
- *     responses:
- *       200:
- *         description: Returns the created ${camelCaseEndpoint}
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Post${pascalCaseEndpoint}'
- *       400:
- *         description: Bad request if the ${camelCaseEndpoint} data is invalid
- */
-export const POST = safeEndPoint(
-  async (_req: NextRequest, _, body) => {
-    try{
-      const created = await create${pascalCaseEndpoint}(body);
-      return NextResponse.json(created);
-    } catch (error) {
-      return NextResponse.json({ error }, { status: 500 });
-    }
-  },
-  {auth: true, body: Post${pascalCaseEndpoint}ModelBody }
-);`,
-  getAllSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `/**
+  docSkull :(camelCaseEndpoint: string, pascalCaseEndpoint: string) =>`/**
+  * @swagger
+  * /api/${camelCaseEndpoint}:
+  *   post:
+  *     tags:
+  *       - ${pascalCaseEndpoint}
+  *     description: Create a new ${camelCaseEndpoint}
+  *     requestBody:
+  *       required: true
+  *       content:
+  *         application/json:
+  *           schema:
+  *             $ref: '#/components/schemas/Post${pascalCaseEndpoint}ModelBody'
+  *     responses:
+  *       200:
+  *         description: Returns the created ${camelCaseEndpoint}
+  *         content:
+  *           application/json:
+  *             schema:
+  *               $ref: '#/components/schemas/${pascalCaseEndpoint}Model'
+  *       400:
+  *         description: Bad request if the ${camelCaseEndpoint} data is invalid
+  */
+  
+  /**
   * @swagger
   * /api/${camelCaseEndpoint}:
   *   get:
+  *     tags:
+  *       - ${pascalCaseEndpoint}
   *     description: Get all ${camelCaseEndpoint}s
   *     responses:
   *       200:
@@ -137,20 +130,13 @@ export const POST = safeEndPoint(
   *       400:
   *         description: Bad request if the ${camelCaseEndpoint} data is invalid
   */
-  export const GET = safeEndPoint(async (_req: NextRequest) => {
-    try{
-      const ${camelCaseEndpoint} = await readAll${pascalCaseEndpoint}();
-      return NextResponse.json(${camelCaseEndpoint});
-    } catch (error) {
-      return NextResponse.json({ error }, { status: 500 });
-    }
-  }, {auth: true});`,
 
-  getSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
-/**
+  /**
  * @swagger
  * /api/${camelCaseEndpoint}/{id}:
  *   get:
+ *     tags:
+ *       - ${pascalCaseEndpoint}
  *     description: Get a specific ${camelCaseEndpoint} by id
  *     parameters:
  *       - $ref: '#/components/parameters/id'
@@ -164,23 +150,13 @@ export const POST = safeEndPoint(
  *       400:
  *         description: Bad request if the ${camelCaseEndpoint} id is invalid or not found
  */
-export const GET = safeEndPoint(
-  async (_req: NextRequest, route) => {
-    try{
-      const response = await read${pascalCaseEndpoint}(Number(route.params.id));
-      return NextResponse.json(response);
-    } catch (error) {
-      return NextResponse.json({ error }, { status: 500 });
-    }
-  },
-  {auth: true, uriParams: Get${pascalCaseEndpoint}ModelUriParams}
-);`,
 
-  patchSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
-/**
+  /**
  * @swagger
  * /api/${camelCaseEndpoint}/{id}:
  *   patch:
+ *     tags:
+ *       - ${pascalCaseEndpoint}
  *     description: Update a specific ${camelCaseEndpoint} by id
  *     parameters:
  *       - $ref: '#/components/parameters/id'
@@ -200,23 +176,13 @@ export const GET = safeEndPoint(
  *       400:
  *         description: Bad request if the ${camelCaseEndpoint} id is invalid or not found
  */
-export const PATCH = safeEndPoint(
-  async (_req: NextRequest, route, body) => {
-    try{
-      const updated${pascalCaseEndpoint} = await update${pascalCaseEndpoint}({ id: Number(route.params.id), ...body });
-      return NextResponse.json(updated${pascalCaseEndpoint});
-    } catch (error) {
-      return NextResponse.json({ error }, { status: 500 });
-    }
-  },
-  {auth: true, uriParams: Patch${pascalCaseEndpoint}ModelUriParams, body: Patch${pascalCaseEndpoint}ModelBody}
-);`,
 
-  deleteSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
-/**
+  /**
  * @swagger
  * /api/${camelCaseEndpoint}/{id}:
  *   delete:
+ *     tags:
+ *       - ${pascalCaseEndpoint}
  *     description: Delete a specific ${camelCaseEndpoint} by id
  *     parameters:
  *       - $ref: '#/components/parameters/id'
@@ -230,6 +196,56 @@ export const PATCH = safeEndPoint(
  *       400:
  *         description: Bad request if the ${camelCaseEndpoint} id is invalid or not found
  */
+  `,
+  postSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) =>`
+  export const POST = safeEndPoint(
+  async (_req: NextRequest, _, body) => {
+    try{
+      const created = await create${pascalCaseEndpoint}(body);
+      return NextResponse.json(created);
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
+  },
+  {auth: true, body: Post${pascalCaseEndpoint}ModelBody }
+);`,
+  getAllSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
+  export const GET = safeEndPoint(async (_req: NextRequest) => {
+    try{
+      const ${camelCaseEndpoint} = await readAll${pascalCaseEndpoint}();
+      return NextResponse.json(${camelCaseEndpoint});
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
+  }, {auth: true});`,
+
+  getSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
+export const GET = safeEndPoint(
+  async (_req: NextRequest, route) => {
+    try{
+      const response = await read${pascalCaseEndpoint}(Number(route.params.id));
+      return NextResponse.json(response);
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
+  },
+  {auth: true, uriParams: Get${pascalCaseEndpoint}ModelUriParams}
+);`,
+
+  patchSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
+export const PATCH = safeEndPoint(
+  async (_req: NextRequest, route, body) => {
+    try{
+      const updated${pascalCaseEndpoint} = await update${pascalCaseEndpoint}({ id: Number(route.params.id), ...body });
+      return NextResponse.json(updated${pascalCaseEndpoint});
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+    }
+  },
+  {auth: true, uriParams: Patch${pascalCaseEndpoint}ModelUriParams, body: Patch${pascalCaseEndpoint}ModelBody}
+);`,
+
+  deleteSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 export const DELETE = safeEndPoint(
   async (_req: NextRequest, route) => {
     try{

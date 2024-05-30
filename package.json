@@ -8,7 +8,7 @@
     "test": "jest",
     "start": "next start",
     "lint": "next lint",
-    "crud": "ts-node ./scripts/crud.ts",
+    "crud": "ts-node ./scripts/crud.ts && ts-node ./scripts/model-loader.ts",
     "db:start": "docker-compose up",
     "db:migrate": "npx prisma generate && npx prisma migrate dev",
     "db:studio": "npx prisma studio",
