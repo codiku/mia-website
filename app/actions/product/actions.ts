@@ -19,18 +19,15 @@ export const readAllProduct = safeAction(async (): Promise<Product[]> => {
   return db.product.findMany();
 });
 
-export const updateProduct = safeAction(
-  async ({ id, ...data }): Promise<Product> => {
-    return db.product.update({
-      where: { id },
-      data,
-    });
-  },
-  UpdateProductModelArgs
-);
+export const updateProduct = safeAction(async ({ id, ...data }): Promise<Product> => {
+  return db.product.update({
+    where: { id },
+    data,
+  });
+}, UpdateProductModelArgs);
 
 export const readProduct = safeAction(async (id): Promise<Product | null> => {
-  return await db.product.findUnique({
+  return db.product.findUnique({
     where: { id },
   });
 }, ReadProductModelArgs);

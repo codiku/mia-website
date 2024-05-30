@@ -72,5 +72,5 @@ export const IdArgModels = z.object({
 });
 
 export const IdParamsModel = z.object({
-  id: z.string(),
+  id: z.coerce.number()
 });

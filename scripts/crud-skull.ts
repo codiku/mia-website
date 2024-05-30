@@ -9,7 +9,8 @@ export const Post${pascalCaseEndpoint}ModelBody = ${pascalCaseEndpoint}Model.omi
 export const Patch${pascalCaseEndpoint}ModelBody = ${pascalCaseEndpoint}Model.partial().omit({ id: true });
 export const Patch${pascalCaseEndpoint}ModelUriParams = IdParamsModel;
 export const Get${pascalCaseEndpoint}ModelUriParams = IdParamsModel;
-export const Delete${pascalCaseEndpoint}ModelUriParams = IdParamsModel;`,
+export const Delete${pascalCaseEndpoint}ModelUriParams = IdParamsModel;
+`,
   modelActionSkull: (
     camelCaseEndpoint: string,
     pascalCaseEndpoint: string
@@ -117,9 +118,7 @@ export const POST = safeEndPoint(
       return NextResponse.json({ error }, { status: 500 });
     }
   },
-  true,
-  undefined,
-  Post${pascalCaseEndpoint}ModelBody
+  {auth: true, body: Post${pascalCaseEndpoint}ModelBody }
 );`,
   getAllSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `/**
   * @swagger
@@ -134,7 +133,7 @@ export const POST = safeEndPoint(
   *             schema:
   *               type: array
   *               items:
-  *                 $ref: '#/components/schemas/${pascalCaseEndpoint}ProductModel'
+  *                 $ref: '#/components/schemas/${pascalCaseEndpoint}Model'
   *       400:
   *         description: Bad request if the ${camelCaseEndpoint} data is invalid
   */
@@ -145,7 +144,7 @@ export const POST = safeEndPoint(
     } catch (error) {
       return NextResponse.json({ error }, { status: 500 });
     }
-  }, true);`,
+  }, {auth: true});`,
 
   getSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 /**
@@ -174,8 +173,7 @@ export const GET = safeEndPoint(
       return NextResponse.json({ error }, { status: 500 });
     }
   },
-  true,
-  Get${pascalCaseEndpoint}ModelUriParams
+  {auth: true, uriParams: Get${pascalCaseEndpoint}ModelUriParams}
 );`,
 
   patchSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
@@ -211,9 +209,7 @@ export const PATCH = safeEndPoint(
       return NextResponse.json({ error }, { status: 500 });
     }
   },
-  true,
-  Patch${pascalCaseEndpoint}ModelUriParams,
-  Patch${pascalCaseEndpoint}ModelBody
+  {auth: true, uriParams: Patch${pascalCaseEndpoint}ModelUriParams, body: Patch${pascalCaseEndpoint}ModelBody}
 );`,
 
   deleteSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
@@ -243,7 +239,6 @@ export const DELETE = safeEndPoint(
       return NextResponse.json({ error }, { status: 500 });
     }
   },
-  true,
-  Delete${pascalCaseEndpoint}ModelUriParams
+  {auth: true, uriParams: Delete${pascalCaseEndpoint}ModelUriParams}
 );`,
 };

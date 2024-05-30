@@ -34,23 +34,21 @@ export function safeEndPoint<B, P, UriP>(
     queryParams: P,
     token?: JWT
   ) => void,
-  enabled = true,
-  modelUriParams?: ZodSchema<UriP>,
-  modelBody?: ZodSchema<B>,
-  modelQueryParams?: ZodSchema<P>
+  {auth= true,...options}: {auth? : boolean, uriParams?: ZodSchema<UriP>, body?: ZodSchema<B>, queryParams?: ZodSchema<P> } 
+  
 ) {
   return async (req: NextRequest, route: { params: UriP }) => {
-    if (enabled) {
+    if (auth) {
       const token = await getToken({ req });
       if (token) {
-        let body = modelBody ? await parseBody(req, modelBody) : undefined;
+        let body = options.body ? await parseBody(req, options.body) : undefined;
         const qParams = getQueryParams(req);
 
-        if (modelUriParams) {
-          modelUriParams.parse(route.params);
+        if (options.uriParams) {
+          options.uriParams.parse(route.params);
         }
-        if (modelQueryParams) {
-          modelQueryParams.parse(qParams);
+        if (options.queryParams) {
+          options.queryParams.parse(qParams);
         }
 
         return routeHandler(req, route, body as never, qParams as P, token);
@@ -65,15 +63,15 @@ export function safeEndPoint<B, P, UriP>(
       }
     } else {
       try {
-        let body = modelBody ? await parseBody(req, modelBody) : undefined;
+        let body = options.body ? await parseBody(req, options.body) : undefined;
         const qParams = getQueryParams(req);
 
-        if (modelUriParams !== undefined && route?.params) {
-          modelUriParams.parse(route.params);
+        if (options.uriParams !== undefined && route?.params) {
+          options.uriParams.parse(route.params);
         }
         let parseParamsSuccess;
-        if (modelQueryParams && qParams) {
-          parseParamsSuccess = await modelQueryParams.safeParseAsync(qParams);
+        if (options.queryParams && qParams) {
+          parseParamsSuccess = await options.queryParams.safeParseAsync(qParams);
         }
         return routeHandler(
           req,
