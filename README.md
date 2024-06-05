@@ -147,7 +147,7 @@ export const GET = safeEndPoint(async (req: NextRequest) => {
   return NextResponse.json(product || { error: true, message: "Not found" }, {
     status: StatusCodes.BAD_REQUEST,
   });
-}, true);
+}, {auth : true });
 ````
 
 In this example, the `Product` schema from Prisma and Zod is used in the Swagger documentation for the GET endpoint of the `/api/product` route. This provides a clear and accurate description of the data structure expected in the response.
