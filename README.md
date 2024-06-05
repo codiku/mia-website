@@ -85,11 +85,11 @@ export const PATCH = safeEndPoint(
     });
     return NextResponse.json(updatedProduct);
   },
-  true, // Is this end point public or private ?
-  PatchProductModelUriParams, // URI Params zod model
-  PatchProductModelBody // Body params zod model,
-  // Query aprams params zod model
-  // JWT Token (if private endpoint)
+  {
+   auth :true, // Is this end point public or private ?
+   uriParams : PatchProductModelUriParams, // URI Params zod model
+   bodyParams : PatchProductModelBody // Body params zod model,
+ }
 );
 ```
 
