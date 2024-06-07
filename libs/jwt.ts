@@ -34,11 +34,11 @@ export function safeEndPoint<B, P, UriP>(
     queryParams: P,
     token?: JWT
   ) => void,
-  {auth= true,...options}: {auth? : boolean, uriParams?: ZodSchema<UriP>, body?: ZodSchema<B>, queryParams?: ZodSchema<P> } 
+  {auth = true,...options}: {auth? : boolean, uriParams?: ZodSchema<UriP>, body?: ZodSchema<B>, queryParams?: ZodSchema<P> } 
   
 ) {
   return async (req: NextRequest, route: { params: UriP }) => {
-    if (auth) {
+    if (auth===true) {
       const token = await getToken({ req });
       if (token) {
         let body = options.body ? await parseBody(req, options.body) : undefined;

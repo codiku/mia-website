@@ -43,12 +43,6 @@ export const SIGNIN_MODEL = z.object({
   password: PASSWORD_MODEL,
 });
 
-export const REGISTER_MODEL = z.object({
-  email: EMAIL_MODEL,
-  password: PASSWORD_MODEL,
-  resendEmail: z.boolean().optional(),
-});
-
 export const RESET_PASSWORD_MODEL = z.object({
   password: PASSWORD_MODEL,
   token: JWT_TOKEN_MODEL,
@@ -72,5 +66,5 @@ export const IdArgModels = z.object({
 });
 
 export const IdParamsModel = z.object({
-  id: z.coerce.number()
+  id: z.coerce.number(),
 });

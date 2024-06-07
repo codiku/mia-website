@@ -1,33 +1,48 @@
-import { ButtonHTMLAttributes } from "react";
+import { tv, VariantProps } from "tailwind-variants";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary?: boolean;
-  /**
-   * A label displayed
-   */
-  label?: string;
-  /**
-   * Size
-   */
-  size?: "large" | "small";
-  /**
-   * Color
-   */
-  backgroundColor?: { control: string };
-}
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof buttonStyle>;
+
+export const buttonStyle = tv({
+  base: "font-medium bg-primary text-white rounded-userInteraction active:opacity-80",
+  variants: {
+    color: {
+      primary: "bg-primary text-white",
+      secondary: "bg-secondary text-white",
+    },
+    size: {
+      sm: "text-sm",
+      md: "text-base",
+      lg: "px-4 py-3 text-lg",
+    },
+  },
+  compoundVariants: [
+    {
+      size: ["sm", "md"],
+      class: "px-3 py-1",
+    },
+  ],
+  defaultVariants: {
+    size: "md",
+    color: "primary",
+  },
+});
 
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({ primary, children, ...p }: ButtonProps) => {
+export const Button = ({
+  children,
+  size,
+  color,
+  className,
+  ...p
+}: ButtonProps) => {
   return (
     <button
       type="button"
-      style={{ backgroundColor: primary ? "blue" : "" }}
       {...p}
+      className={buttonStyle({ size, color, className })}
     >
       {children}
     </button>

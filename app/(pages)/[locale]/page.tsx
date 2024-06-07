@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { UrlTokenAutoSignin } from "@/components/providers/UrlTokenAutoSignin";
+import { UrlTokenAutoSignin } from "@/providers/UrlTokenAutoSignin";
 import { getServerSession } from "next-auth";
 import { getTranslations } from "next-intl/server";
 import { SVGProps } from "react";
-
 export default async function HomePage(p: { params: { lng: string } }) {
   const serverSession = await getServerSession();
   const t = await getTranslations("Index");
@@ -56,7 +55,7 @@ export default async function HomePage(p: { params: { lng: string } }) {
                         {t("linkSignin")}
                       </Link>
                       <Link
-                        className="no-underline inline-flex h-9 items-center justify-center rounded-md border border-gray-200 border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
+                        className="no-underline inline-flex h-9 items-center justify-center rounded-md border  border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800  dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
                         href="/auth/signup"
                       >
                         {t("linkSignup")}

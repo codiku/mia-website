@@ -9,7 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { withAuth } from "@/components/hoc/with-auth";
+import { withAuth } from "@/hoc/with-auth";
 import { PASSWORD_MODEL, STRING_REQUIRED_MODEL } from "@/libs/models";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";

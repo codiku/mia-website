@@ -17,7 +17,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
-import ky from "ky";
 import { api } from "@/configs/ky-config";
 
 type Form = z.infer<typeof FORGOT_PASSWORD_MODEL>;

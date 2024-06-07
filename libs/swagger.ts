@@ -1,57 +1,55 @@
-import { createSwaggerSpec } from 'next-swagger-doc';
-import * as PrismaGeneratedZodModels from '@/prisma/zod';
-import { generateSchema } from '@anatine/zod-openapi';
-import * as AnimalApiModels from '@/app/api/animal/models';
-import * as HumanApiModels from '@/app/api/human/models';
+import { createSwaggerSpec } from "next-swagger-doc";
+import * as PrismaGeneratedZodModels from "@/prisma/zod";
+import { generateSchema } from "@anatine/zod-openapi";
+import * as AnimalApiModels from "@/app/api/animal/models";
+import * as HumanApiModels from "@/app/api/human/models";
 
-const zodModels= {...PrismaGeneratedZodModels, ...AnimalApiModels, ...HumanApiModels}
-const schemas = Object.keys(zodModels).reduce((acc,curr)=>{
-  ((acc as any)[curr]) =  generateSchema(((zodModels as any)[curr]))
-  return acc
-},{})
+const zodModels = {
+  ...PrismaGeneratedZodModels,
+  ...AnimalApiModels,
+  ...HumanApiModels,
+};
+const schemas = Object.keys(zodModels).reduce((acc, curr) => {
+  (acc as any)[curr] = generateSchema((zodModels as any)[curr]);
+  return acc;
+}, {});
 
 export const getApiDocs = async () => {
   const spec = createSwaggerSpec({
-    apiFolder: 'app/api', // define api folder under app folder
+    apiFolder: "app/api", // define api folder under app folder
     definition: {
-      openapi: '3.0.0',
+      openapi: "3.0.0",
       info: {
-        title: 'Next Auth API',
-        version: '1.0',
+        title: "Next Auth API",
+        version: "1.0",
       },
-      
+
       components: {
         parameters: {
           id: {
-            in: 'path',
-            name: 'id',
+            in: "path",
+            name: "id",
             required: true,
             schema: {
-              type: 'integer',
+              type: "integer",
             },
-            description: 'The entity id',
+            description: "The entity id",
           },
         },
         schemas: {
-         ...schemas
+          ...schemas,
         },
         securitySchemes: {
           BearerAuth: {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
           },
         },
       },
       security: [],
     },
   });
- 
+
   return spec;
 };
-
-
-
-
-
-

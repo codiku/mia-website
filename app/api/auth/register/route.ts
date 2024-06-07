@@ -2,11 +2,11 @@ import { db, excludeField } from "@/libs/db";
 import { hash } from "bcrypt";
 import { sendEmail } from "@/libs/email";
 import { generateJwtToken, safeEndPoint } from "@/libs/jwt";
-import { REGISTER_MODEL } from "@/libs/models";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
 import { User } from "@prisma/client";
+import { PostRegisterBody } from "../model";
 
 // Register can be call, with a resendEmail params , that will just resend an email link
 // to redirect the user to get verified
@@ -48,9 +48,7 @@ export const POST = safeEndPoint(
       });
     }
   },
-  false,
-  undefined,
-  REGISTER_MODEL
+  { auth: false, body: PostRegisterBody }
 );
 
 async function sendVerificationEmail(user: User) {

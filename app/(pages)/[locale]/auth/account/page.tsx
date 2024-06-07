@@ -28,7 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { withAuth } from "@/components/hoc/with-auth";
+import { withAuth } from "@/hoc/with-auth";
 import Link from "next/link";
 import { api } from "@/configs/ky-config";
 import { useTranslations } from "next-intl";
