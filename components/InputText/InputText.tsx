@@ -1,7 +1,8 @@
+import { useCallback, useEffect, useState } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 export const baseInputStyle = tv({
-  base: "w-full bg-white border-[1px] font-semibold py-1 px-3 rounded-userInteraction active:opacity-80  border-primary hover:border-secondary",
+  base: "w-full  border-input font-semibold p-input rounded-input active:opacity-80 border-primary hover:border-secondary",
   variants: {
     variant: {
       error: "border-red-400",
@@ -23,6 +24,8 @@ export function InputText({
   className,
   ...props
 }: InputTextProps) {
+
+
   return (
     <input
       className={baseInputStyle({ className, size, variant })}

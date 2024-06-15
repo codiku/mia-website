@@ -5,21 +5,9 @@ import { InputSelect } from "@/components/InputSelect/InputSelect";
 import { InputText } from "@/components/InputText/InputText";
 import { InputPrice } from "@/components/InputTextPrice/InputPrice";
 import { InputTextarea } from "@/components/InputTextarea/InputTextarea";
-import Pusher from "pusher-js";
-import { useEffect } from "react";
 
 export default function SandboxPage() {
-  useEffect(function () {
-    Pusher.logToConsole = true;
-    var pusher = new Pusher("cd3f1ec10fd05e0d0e72", {
-      cluster: "eu",
-    });
 
-    var channel = pusher.subscribe("my-channel");
-    channel.bind("my-event", function (data: any) {
-      alert(JSON.stringify(data));
-    });
-  }, []);
   return (
     <>
       <h1>This is a h1</h1>

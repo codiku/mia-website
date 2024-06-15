@@ -20,6 +20,7 @@ export const queryClient = new QueryClient({
   }),
   defaultOptions: {
     queries: {
+      staleTime: 1000 * 60, // 60 sec
       retry: false, // Disable automatic retries for all queries
       refetchOnWindowFocus: false,
     },

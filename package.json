@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build-css": "tailwindcss -o output.css --minify",
     "dev": "npx prisma generate && pnpm run db:migrate && next dev",
     "build": "next build",
     "test": "jest",
@@ -30,9 +29,11 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
-    "@tanstack/react-query": "^5.18.1",
-    "@tanstack/react-query-devtools": "^5.18.1",
+
+    "@tanstack/react-query": "^5.45.0",
+    "@tanstack/react-query-devtools": "^5.45.0",
     "@types/swagger-ui-react": "^4.18.3",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-938cd9a-20240601",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "latest",

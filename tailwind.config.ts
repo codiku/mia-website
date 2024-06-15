@@ -51,7 +51,16 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        userInteraction: "50px",
+        input: "var(--input-border-radius)",
+        button: "var(--button-border-radius)",
+      },
+      borderWidth: {
+        input: "var(--input-border-width)",
+        button: "var(--button-border-width)",
+      },
+      padding: {
+        input: "var(--input-padding)",
+        button: "var(--button-padding)",
       },
       keyframes: {
         "accordion-down": {

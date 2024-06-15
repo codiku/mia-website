@@ -1,4 +1,4 @@
-import "./globals.css";
+import "./theme.css";
 import { SessionProvider } from "@/providers/SessionProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";

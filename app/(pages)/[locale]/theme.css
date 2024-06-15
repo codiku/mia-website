@@ -1,17 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "../../../output.css";
 @layer base {
   :root {
+    /* Global */
     --background: #ffffff;
     --foreground: #0a0f1a;
-
-    --card: #ffffff;
-    --card-foreground: #0a0f1a;
-
-    --popover: #ffffff;
-    --popover-foreground: #0a0f1a;
 
     --primary: #7f00ff;
     --primary-foreground: #f5f8ff;
@@ -29,10 +23,27 @@
     --destructive-foreground: #f5f8ff;
 
     --border: #e8f0f9;
-    --input: #e8f0f9;
     --ring: #0a0f1a;
-
     --radius: 0.5rem;
+
+    /* Card */
+    --card: #ffffff;
+    --card-foreground: #0a0f1a;
+
+    /* Input */
+    --input: #e8f0f9;
+    --input-border-radius: 50px;
+    --input-border-width: 1px;
+    --input-padding: 10px;
+
+    /* Button */
+    --button-border-radius: 50px;
+    --button-border-width: 1px;
+    --button-padding: 5px;
+
+    /* Popover */
+    --popover: #ffffff;
+    --popover-foreground: #0a0f1a;
   }
 
   .dark {
