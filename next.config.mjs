@@ -9,4 +9,4 @@ const nextConfig = withNextIntl("./i18n/index.ts")({
   reactStrictMode: false,
 });
 
-export default million.next(nextConfig, millionConfig);
+export default nextConfig

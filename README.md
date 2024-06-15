@@ -1,7 +1,6 @@
 # Next Boiler Plate
 
-Next.JS + Typescript + Next Auth + Tailwind + Shadcnui + Prisma + Supabase + Playwright + Storybook + React Query  + Swagger + Next Intl
-
+Next.JS + Typescript + Next Auth + Tailwind + Shadcnui + Prisma + Supabase + Playwright + Storybook + React Query + Swagger + Next Intl
 
 **⚡️ Unleash the power of Next Auth, Tailwind CSS, and Shadcnui to create stunning web experiences.**
 
@@ -33,12 +32,12 @@ This comprehensive boilerplate provides a solid foundation for building modern w
 
 - 🌍 **Internationalization with Next Intl:** Simplify the process of internationalizing your application with Next Intl, providing built-in support for translations, date, and number formatting.
 
-# Setup
+# Getting started
 
 Install packages
 
 ````shell
-npm i 
+npm i
 ```
 
 Start the local db
@@ -46,6 +45,12 @@ Start the local db
 ```shell
 npm run db:start
 ````
+
+Start the project
+
+```shell
+npm run dev
+```
 
 Display the db
 
@@ -74,14 +79,17 @@ The signature is the following :
 ```javascript
 export const PATCH = safeEndPoint(
   async (_req: NextRequest, route, body) => {
-    const updatedProduct = await updateProduct({ id: Number(route.params.id), ...body });
+    const updatedProduct = await updateProduct({
+      id: Number(route.params.id),
+      ...body,
+    });
     return NextResponse.json(updatedProduct);
   },
-  true, // Is this end point public or private ?
-  PatchProductModelUriParams, // URI Params zod model
-  PatchProductModelBody // Body params zod model,
-  // Query aprams params zod model
-  // JWT Token (if private endpoint)
+  {
+   auth :true, // Is this end point public or private ?
+   uriParams : PatchProductModelUriParams, // URI Params zod model
+   bodyParams : PatchProductModelBody // Body params zod model,
+ }
 );
 ```
 
@@ -112,7 +120,7 @@ To make sure you have access to the session, use withSession
 
 will create GET,POST,PATCH,DELETE, a prisma schema, a zod prisma schema.
 
-## Swagger
+## Swagger documentation
 
 All Prisma and Zod models are automatically added to Swagger and can be used as JS Doc above the endpoint. Here is an example from `route.ts`:
 
@@ -139,7 +147,7 @@ export const GET = safeEndPoint(async (req: NextRequest) => {
   return NextResponse.json(product || { error: true, message: "Not found" }, {
     status: StatusCodes.BAD_REQUEST,
   });
-}, true);
+}, {auth : true });
 ````
 
 In this example, the `Product` schema from Prisma and Zod is used in the Swagger documentation for the GET endpoint of the `/api/product` route. This provides a clear and accurate description of the data structure expected in the response.
@@ -156,7 +164,7 @@ npm run storybook
 
 This command starts Storybook locally and outputs the address. Depending on your system configuration, it will automatically open the address in your default browser.
 
-## End to end testing with Playwright 
+## End to end testing with Playwright
 
 Playwright is a Node.js library to automate Chromium, Firefox, and WebKit with a single API. It enables cross-browser web automation that is ever-green, capable, reliable, and fast.
 
@@ -171,13 +179,9 @@ npm run test:e2e
 ```bash
 npm run test:unit
 ```
+
 or
+
 ```bash
 npm run test:integration
 ```
-
-
-
-
-
-
