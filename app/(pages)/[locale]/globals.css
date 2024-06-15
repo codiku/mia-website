@@ -67,10 +67,6 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   body {
     @apply text-foreground;
   }

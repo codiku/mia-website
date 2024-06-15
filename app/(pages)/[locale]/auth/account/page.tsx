@@ -16,7 +16,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
-import { EMAIL_MODEL, PASSWORD_MODEL } from "@/libs/models";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -33,11 +33,11 @@ import Link from "next/link";
 import { api } from "@/configs/ky-config";
 import { useTranslations } from "next-intl";
 
-const ACCOUNT_FORM_MODEL = z.object({
-  email: EMAIL_MODEL,
-  password: PASSWORD_MODEL,
+const ACCOUNT_FORM_SCHEMA = z.object({
+  email: EMAIL_SCHEMA,
+  password: PASSWORD_SCHEMA,
 });
-type Form = z.infer<typeof ACCOUNT_FORM_MODEL>;
+type Form = z.infer<typeof ACCOUNT_FORM_SCHEMA>;
 
 export default withAuth(function Account() {
   const router = useRouter();
@@ -45,7 +45,7 @@ export default withAuth(function Account() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const t = useTranslations("Auth.account");
   const form = useForm<Form>({
-    resolver: zodResolver(ACCOUNT_FORM_MODEL),
+    resolver: zodResolver(ACCOUNT_FORM_SCHEMA),
     defaultValues: {
       email: session?.user?.email!,
       password: "",

@@ -8,7 +8,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { PASSWORD_MODEL } from "@/libs/models";
+import { PASSWORD_SCHEMA } from "@/libs/schema";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -22,9 +22,9 @@ import { FieldPassword } from "@/components/ui/field-password";
 import { useTranslations } from "next-intl";
 import { api } from "@/configs/ky-config";
 
-const RESET_PASSWORD_MODEL = z
+const RESET_PASSWORD_SCHEMA = z
   .object({
-    password: PASSWORD_MODEL,
+    password: PASSWORD_SCHEMA,
     passwordConfirm: z.string().min(1),
   })
   .refine((data) => data.password === data.passwordConfirm, {
@@ -32,7 +32,7 @@ const RESET_PASSWORD_MODEL = z
     path: ["passwordConfirm"],
   });
 
-type Form = z.infer<typeof RESET_PASSWORD_MODEL>;
+type Form = z.infer<typeof RESET_PASSWORD_SCHEMA>;
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -58,7 +58,7 @@ export default function ResetPassword() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const form = useForm<Form>({
-    resolver: zodResolver(RESET_PASSWORD_MODEL),
+    resolver: zodResolver(RESET_PASSWORD_SCHEMA),
     mode: "onChange",
     defaultValues: {
       password: "",

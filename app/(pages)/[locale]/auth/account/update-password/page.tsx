@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { withAuth } from "@/hoc/with-auth";
-import { PASSWORD_MODEL, STRING_REQUIRED_MODEL } from "@/libs/models";
+import { PASSWORD_SCHEMA, STRING_REQUIRED_SCHEMA } from "@/libs/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -20,11 +20,11 @@ import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
 import { api } from "@/configs/ky-config";
 
-const UPDATE_PASSWORD_FORM_MODEL = z
+const UPDATE_PASSWORD_FORM_SCHEMA = z
   .object({
-    oldPassword: STRING_REQUIRED_MODEL,
-    newPassword: PASSWORD_MODEL,
-    newPasswordConfirm: STRING_REQUIRED_MODEL,
+    oldPassword: STRING_REQUIRED_SCHEMA,
+    newPassword: PASSWORD_SCHEMA,
+    newPasswordConfirm: STRING_REQUIRED_SCHEMA,
   })
   .refine((data) => data.newPassword === data.newPasswordConfirm, {
     message: "Passwords don't match",
@@ -35,7 +35,7 @@ const UPDATE_PASSWORD_FORM_MODEL = z
     path: ["newPassword"],
   });
 
-type Form = z.infer<typeof UPDATE_PASSWORD_FORM_MODEL>;
+type Form = z.infer<typeof UPDATE_PASSWORD_FORM_SCHEMA>;
 
 export default withAuth(function UpdatePassword(p: {}) {
   const { mutate: updatePassword, isPending } = useMutation({
@@ -47,7 +47,7 @@ export default withAuth(function UpdatePassword(p: {}) {
 
   const form = useForm<Form>({
     mode: "onChange",
-    resolver: zodResolver(UPDATE_PASSWORD_FORM_MODEL),
+    resolver: zodResolver(UPDATE_PASSWORD_FORM_SCHEMA),
     defaultValues: {
       oldPassword: "",
       newPassword: "",

@@ -1,6 +1,6 @@
 import { db } from "@/libs/db";
 import { safeEndPoint } from "@/libs/jwt";
-import { UPDATE_PASSWORD_MODEL } from "@/libs/models";
+import { UPDATE_PASSWORD_SCHEMA } from "@/libs/schema";
 import { compare, hash } from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
@@ -52,5 +52,5 @@ export const PATCH = safeEndPoint(
   },
   false,
   undefined,
-  UPDATE_PASSWORD_MODEL
+  UPDATE_PASSWORD_SCHEMA
 );

@@ -1,6 +1,6 @@
 import { db } from "@/libs/db";
 import { decodeJwtToken, safeEndPoint } from "@/libs/jwt";
-import { VERIFY_EMAIL_MODEL } from "@/libs/models";
+import { VERIFY_EMAIL_SCHEMA } from "@/libs/schema";
 import { User } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
@@ -33,5 +33,5 @@ export const GET = safeEndPoint(
   false,
   undefined,
   undefined,
-  VERIFY_EMAIL_MODEL
+  VERIFY_EMAIL_SCHEMA
 );

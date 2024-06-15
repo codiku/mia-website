@@ -1,8 +1,8 @@
-import { EMAIL_MODEL, PASSWORD_MODEL } from "@/libs/models";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schema";
 import { z } from "zod";
 
 export const PostRegisterBody = z.object({
-  email: EMAIL_MODEL,
-  password: PASSWORD_MODEL,
+  email: EMAIL_SCHEMA,
+  password: PASSWORD_SCHEMA,
   resendEmail: z.boolean().optional(),
 });

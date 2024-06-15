@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SIGNIN_MODEL } from "@/libs/models";
+import { SIGNIN_SCHEMA } from "@/libs/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
@@ -23,7 +23,7 @@ import { z } from "zod";
 import { Divider } from "@/components/ui/divider";
 import { useTranslations } from "next-intl";
 
-type Form = z.infer<typeof SIGNIN_MODEL>;
+type Form = z.infer<typeof SIGNIN_SCHEMA>;
 
 export default function Signin() {
   const searchParams = useSearchParams();
@@ -48,7 +48,7 @@ export default function Signin() {
   });
   const router = useRouter();
   const form = useForm<Form>({
-    resolver: zodResolver(SIGNIN_MODEL),
+    resolver: zodResolver(SIGNIN_SCHEMA),
     defaultValues: {
       email: "",
       password: "",

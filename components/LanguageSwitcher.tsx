@@ -4,7 +4,6 @@ import { LOCALES } from "@/i18n";
 import { usePathname, useRouter } from "@/libs/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
-import { readAllProduct, readProduct } from "@/app/actions/product/actions";
 import {
   Select,
   SelectContent,
@@ -21,11 +20,11 @@ export function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations("Components.LanguageSwitcher");
-  const { data, error } = useQuery({
+ /* const { data, error } = useQuery({
     queryKey: ["products"],
     queryFn: async () => api("/api/product").json(),
     //  meta: { isToastDisabled: "false" },
-  });
+  });*/
 
   const handleChange = async (value: string) => {
     router.push(pathname, { locale: value });

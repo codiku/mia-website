@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FORGOT_PASSWORD_MODEL } from "@/libs/models";
+import { FORGOT_PASSWORD_SCHEMA } from "@/libs/schema";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -19,7 +19,7 @@ import { z } from "zod";
 import { useTranslations } from "next-intl";
 import { api } from "@/configs/ky-config";
 
-type Form = z.infer<typeof FORGOT_PASSWORD_MODEL>;
+type Form = z.infer<typeof FORGOT_PASSWORD_SCHEMA>;
 
 export default function ForgotPassword() {
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -36,7 +36,7 @@ export default function ForgotPassword() {
   });
 
   const form = useForm<Form>({
-    resolver: zodResolver(FORGOT_PASSWORD_MODEL),
+    resolver: zodResolver(FORGOT_PASSWORD_SCHEMA),
     defaultValues: {
       email: "",
     },

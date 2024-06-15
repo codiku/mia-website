@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { EMAIL_MODEL, PASSWORD_MODEL } from "@/libs/models";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -25,10 +25,10 @@ import { useTranslations } from "next-intl";
 import { UnsensitiveUser } from "@/types/user";
 import { api } from "@/configs/ky-config";
 
-const SIGNUP_MODEL = z
+const SIGNUP_SCHEMA = z
   .object({
-    email: EMAIL_MODEL,
-    password: PASSWORD_MODEL,
+    email: EMAIL_SCHEMA,
+    password: PASSWORD_SCHEMA,
     passwordConfirm: z.string().min(1, "Required"),
     resendEmail: z.boolean().optional(),
   })
@@ -37,10 +37,10 @@ const SIGNUP_MODEL = z
     path: ["passwordConfirm"],
   });
 
-type Form = z.infer<typeof SIGNUP_MODEL>;
+type Form = z.infer<typeof SIGNUP_SCHEMA>;
 let POSSIBLE_ERRORS: ZodIssue[] = [];
 try {
-  PASSWORD_MODEL.parse("");
+  PASSWORD_SCHEMA.parse("");
 } catch (err) {
   POSSIBLE_ERRORS = (err as ZodError).issues;
 }
@@ -62,7 +62,7 @@ export default function Signup() {
   });
 
   const form = useForm<Form>({
-    resolver: zodResolver(SIGNUP_MODEL),
+    resolver: zodResolver(SIGNUP_SCHEMA),
     defaultValues: {
       email: "",
       password: "",
@@ -98,7 +98,7 @@ export default function Signup() {
       form.clearErrors("passwordConfirm");
     }
     try {
-      PASSWORD_MODEL.parse(password);
+      PASSWORD_SCHEMA.parse(password);
       setCurrentZodIssues([]);
     } catch (err) {
       setCurrentZodIssues((err as ZodError).issues);
