@@ -4,28 +4,15 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonStyle>;
 
 export const buttonStyle = tv({
-  base: "font-medium bg-primary text-white rounded-userInteraction active:opacity-80",
+  base: "px-[var(--button-padding-x)] py-[var(--button-padding-y)] font-button bg-button text-button-text rounded-button active:opacity-80",
   variants: {
     color: {
-      primary: "bg-primary text-white",
-      secondary: "bg-secondary text-white",
-    },
-    size: {
-      sm: "text-sm",
-      md: "text-base",
-      lg: "px-4 py-3 text-lg",
-    },
+      primary: "bg-primary",
+      secondary: "bg-secondary text-black",
+    }
   },
-  compoundVariants: [
-    {
-      size: ["sm", "md"],
-      class: "px-3 py-1",
-    },
-  ],
-  defaultVariants: {
-    size: "md",
-    color: "primary",
-  },
+
+
 });
 
 /**
@@ -33,7 +20,6 @@ export const buttonStyle = tv({
  */
 export const Button = ({
   children,
-  size,
   color,
   className,
   ...p
@@ -42,7 +28,7 @@ export const Button = ({
     <button
       type="button"
       {...p}
-      className={buttonStyle({ size, color, className })}
+      className={buttonStyle({ color, className })}
     >
       {children}
     </button>

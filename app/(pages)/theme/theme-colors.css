@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Colors */
+    --background: #ffffff;
+    --foreground: #0a0f1a;
+
+    --primary: black;
+    --primary-foreground: #f5f8ff;
+
+    --secondary: #e5e7eb;
+    --secondary-foreground: #1d2731;
+
+    --muted: #f4f7fc;
+    --muted-foreground: #778899;
+
+    --accent: #f4f7fc;
+    --accent-foreground: #1d2731;
+
+    --destructive: #ff6a00;
+    --destructive-foreground: #f5f8ff;
+
+    --success: #00ff99;
+    --success-foreground: #f5f8ff;
+  }
+}

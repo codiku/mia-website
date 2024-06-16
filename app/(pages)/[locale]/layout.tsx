@@ -1,4 +1,4 @@
-import "./theme.css";
+import "../theme/index.css";
 import { SessionProvider } from "@/providers/SessionProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -25,8 +25,8 @@ export default function RootLayout(p: {
           <html lang={p.params.locale}>
             <body className={`${inter.className} `}>
               <div className="h-screen p-16">
-              <Toaster richColors position="top-right" />
-              {p.children}
+                <Toaster richColors position="top-right" />
+                {p.children}
               </div>
               <ReactQueryDevtools />
             </body>

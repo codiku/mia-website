@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Button */
+    --button-background: var(--primary);
+    --button-text: var(--secondary);
+    --button-border-radius: 5px;
+    --button-border-width: var(--border-width-small);
+    --button-padding-x: 15px;
+    --button-padding-y: 5px;
+    --button-font-size: 16px;
+
+    /* Card */
+    --card: #ffffff;
+    --card-foreground: #0a0f1a;
+
+    /* Input */
+    --input-background: #ffffff;
+    --input-border-radius: 50px;
+    --input-border-width: 1px;
+    --input-border-color: var(--border);
+    --input-padding: 10px;
+    --input-font-size: 16px;
+
+    /* Popover */
+    --popover: #ffffff;
+    --popover-foreground: #0a0f1a;
+  }
+}

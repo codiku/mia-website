@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+
 import { tv, type VariantProps } from "tailwind-variants";
 
 export const baseInputStyle = tv({
-  base: "w-full  border-input font-semibold p-input rounded-input active:opacity-80 border-primary hover:border-secondary",
+  base: "w-full  border-input border-inputBorderWidth  font-input p-input rounded-input active:opacity-80  hover:border-secondary",
   variants: {
     variant: {
-      error: "border-red-400",
-      success: "border-green-400",
+      error: " !border-destructive border-inputBorderWidth",
+      success: "!border-success border-inputBorderWidth ",
     },
     size: {
       big: "text-lg w-96",
@@ -14,7 +14,6 @@ export const baseInputStyle = tv({
     },
   },
 });
-
 type InputTextProps = React.InputHTMLAttributes<HTMLInputElement> &
   VariantProps<typeof baseInputStyle>;
 

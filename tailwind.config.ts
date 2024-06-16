@@ -14,7 +14,7 @@ const config: Config = {
     extend: {
       colors: {
         border: "var(--border)",
-        input: "var(--input)",
+
         ring: "var(--ring)",
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -30,9 +30,23 @@ const config: Config = {
           DEFAULT: "var(--destructive)",
           foreground: "var(--destructive-foreground)",
         },
+        success: {
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
+        },
         muted: {
           DEFAULT: "var(--muted)",
           foreground: "var(--muted-foreground)",
+        },
+        input: {
+          background: "var(--input-background)",
+          foreground: "var(--input-foreground)",
+          border: "var(--input-border-color)",
+        },
+        button: {
+          DEFAULT: "var(--button-background)",
+          foreground: "var(--button-foreground)",
+          text: "var(--button-text)",
         },
         accent: {
           DEFAULT: "var(--accent)",
@@ -55,12 +69,15 @@ const config: Config = {
         button: "var(--button-border-radius)",
       },
       borderWidth: {
-        input: "var(--input-border-width)",
-        button: "var(--button-border-width)",
+        inputBorderWidth: "var(--input-border-width)",
       },
       padding: {
         input: "var(--input-padding)",
         button: "var(--button-padding)",
+      },
+      fontSize: {
+        button: "var(--button-font-size)",
+        input: "var(--input-font-size)",
       },
       keyframes: {
         "accordion-down": {

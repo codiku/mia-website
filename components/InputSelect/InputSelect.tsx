@@ -26,7 +26,6 @@ export function InputSelect({
     <Select>
       <SelectTrigger
         className={
-          "w-[180px]" +
           baseDropdownStyle({ className: className, size, variant })
         }
       >

@@ -10,7 +10,7 @@ This comprehensive boilerplate provides a solid foundation for building modern w
 
 - 🛡 **Next Auth for Seamless Authentication:** Seamlessly manage user authentication, including login, registration, password resets, and email verification.
 
-- 🎨 **Tailwind CSS for Blazing Speed and Consistency:** Leverage Tailwind CSS's utility-first approach for rapid and consistent styling across all devices.
+- 🎨 **Tailwind CSS for Blazing Speed and Consistency + Theming support :** Leverage Tailwind CSS's utility-first approach + global theme stylesheets for rapid and consistent styling across all devices.
 
 - ✔️ **Data Validation with Zod:** Ensure data integrity and prevent errors with Zod, a powerful JSON schema validator.
 
@@ -23,8 +23,6 @@ This comprehensive boilerplate provides a solid foundation for building modern w
 - 💾 **Database Management with Prisma:** Efficiently interact with your Postgres database with Prisma, an open-source ORM.
 
 - 🌟 **User Interface Enhancements with Shadcnui:** Enhance the user experience with Shadcnui, a react component library for building user interfaces.
-
-- 🚀 **Million JS Integration for Enhanced Performance:** Utilize Million's optimized virtual DOM to minimize re-renders and improve the speed of your application.
 
 - 📚 **Comprehensive Documentation with Swagger:** Easily navigate and understand the API endpoints with Swagger documentation, ensuring a smooth integration process for developers.
 
@@ -86,10 +84,10 @@ export const PATCH = safeEndPoint(
     return NextResponse.json(updatedProduct);
   },
   {
-   auth :true, // Is this end point public or private ?
-   uriParams : PatchProductModelUriParams, // URI Params zod model
-   bodyParams : PatchProductModelBody // Body params zod model,
- }
+    auth: true, // Is this end point public or private ?
+    uriParams: PatchProductModelUriParams, // URI Params zod model
+    bodyParams: PatchProductModelBody, // Body params zod model,
+  }
 );
 ```
 
@@ -185,3 +183,17 @@ or
 ```bash
 npm run test:integration
 ```
+
+Theming in this project is managed using Tailwind CSS, which is a utility-first CSS framework. The theme configuration is primarily handled through the `tailwind.config.js` file where you can define your color palette, font sizes, spacing, and other related settings.
+
+### Theme Configuration Files
+
+The theme-related styles are organized into several CSS files:
+
+- `theme-colors.css`: Defines the color schemes used across the application.
+- `theme-globals.css`: Sets up global styles that apply to all parts of the application.
+- `theme-components.css`: Contains specific styles for components to ensure consistent design.
+
+### Using Tailwind in Components
+
+You can apply the Tailwind classes directly in your React components to control their styling. For example, to use the primary color and apply some padding, you might write:
