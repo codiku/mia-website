@@ -125,8 +125,8 @@ export default function Signup() {
           {isPending
             ? t("loading")
             : disabledEmailButton
-            ? t("waitBeforeSending")
-            : t("sendEmailAgain")}
+              ? t("waitBeforeSending")
+              : t("sendEmailAgain")}
         </Button>
       </div>
     );
@@ -183,11 +183,10 @@ export default function Signup() {
                             POSSIBLE_ERRORS.map((possibleError, index) => (
                               <li
                                 key={possibleError.message}
-                                className={`text-red-500 font-medium ${
-                                  shoudCrossPasswordError(possibleError)
-                                    ? "line-through"
+                                className={`text-red-500 font-medium ${shoudCrossPasswordError(possibleError)
+                                    ? "line-through text-green-400"
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 {possibleError.message}
                               </li>

@@ -23,10 +23,12 @@ export default function RootLayout(p: {
       <NextIntlClientProvider messages={messages}>
         <SessionProvider>
           <html lang={p.params.locale}>
-            <body className={`${inter.className} h-screen p-16`}>
-              <Toaster richColors position="top-right" />
-              {p.children}
-              <ReactQueryDevtools />
+            <body className={`${inter.className} h-screen`}>
+              <div className="p-16">
+                <Toaster richColors position="top-right" />
+                {p.children}
+                <ReactQueryDevtools />
+              </div>
             </body>
           </html>
         </SessionProvider>
