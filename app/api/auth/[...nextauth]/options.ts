@@ -1,10 +1,11 @@
-import { db, excludeField } from "@/libs/db";
+import { db } from "@/libs/db";
 import { decodeJwtToken } from "@/libs/jwt";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { User } from "@prisma/client";
 import { compare } from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { excludeField } from "@/libs/utils";
 
 import { NextAuthOptions } from "next-auth";
 

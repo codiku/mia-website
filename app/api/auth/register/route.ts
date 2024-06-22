@@ -1,4 +1,5 @@
-import { db, excludeField } from "@/libs/db";
+import { db } from "@/libs/db";
+import { excludeField } from "@/libs/utils";
 import { hash } from "bcrypt";
 import { sendEmail } from "@/libs/email";
 import { generateJwtToken, safeEndPoint } from "@/libs/jwt";
