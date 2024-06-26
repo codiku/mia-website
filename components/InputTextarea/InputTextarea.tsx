@@ -3,7 +3,7 @@ import { baseInputStyle } from "../InputText/InputText";
 
 const textareaStyle = tv({
   extend: baseInputStyle,
-  base: [],
+  base: "",
 });
 
 export function InputTextarea(p: { className?: string }) {

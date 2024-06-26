@@ -14,19 +14,19 @@
     --button-font-size: 16px;
 
     /* Card */
-    --card: #ffffff;
-    --card-foreground: #0a0f1a;
+    --card: var(--background);
+    --card-foreground: var(--foreground);
 
     /* Input */
-    --input-background: #ffffff;
+    --input-background: var(--background);
     --input-border-radius: 50px;
-    --input-border-width: 1px;
+    --input-border-width: 5px;
     --input-border-color: var(--border);
     --input-padding: 10px;
     --input-font-size: 16px;
 
     /* Popover */
-    --popover: #ffffff;
-    --popover-foreground: #0a0f1a;
+    --popover: var(--background);
+    --popover-foreground: var(--foreground);
   }
 }

@@ -1,8 +1,7 @@
-
 import { tv, type VariantProps } from "tailwind-variants";
 
 export const baseInputStyle = tv({
-  base: "w-full  border-input border-inputBorderWidth  font-input p-input rounded-input active:opacity-80  hover:border-secondary",
+  base: "w-full  border-input border-[length:var(--input-border-width)]  font-input p-input rounded-input active:opacity-80  hover:border-secondary",
   variants: {
     variant: {
       error: " !border-destructive border-inputBorderWidth",
@@ -23,8 +22,6 @@ export function InputText({
   className,
   ...props
 }: InputTextProps) {
-
-
   return (
     <input
       className={baseInputStyle({ className, size, variant })}

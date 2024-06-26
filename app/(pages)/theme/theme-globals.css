@@ -4,11 +4,9 @@
 @layer base {
   :root {
     /* Borders */
-    --border: #e8f0f9;
     --border-width-small: 1px;
     --border-width-medium: 2px;
     --border-width-large: 3px;
-    --ring: #0a0f1a;
     --radius: 0.5rem;
   }
 }

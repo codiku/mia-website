@@ -4,7 +4,6 @@
 
 @layer base {
   :root {
-    /* Colors */
     --background: #ffffff;
     --foreground: #0a0f1a;
 
@@ -25,5 +24,7 @@
 
     --success: #00ff99;
     --success-foreground: #f5f8ff;
+
+    --border: #e8f0f9;
   }
 }
