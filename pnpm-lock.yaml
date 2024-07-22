@@ -33,14 +33,17 @@ dependencies:
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.2.55)(react@18.2.0)
   '@tanstack/react-query':
-    specifier: ^5.18.1
-    version: 5.20.5(react@18.2.0)
+    specifier: ^5.45.0
+    version: 5.51.11(react@18.2.0)
   '@tanstack/react-query-devtools':
-    specifier: ^5.18.1
-    version: 5.20.5(@tanstack/react-query@5.20.5)(react@18.2.0)
+    specifier: ^5.45.0
+    version: 5.51.11(@tanstack/react-query@5.51.11)(react@18.2.0)
   '@types/swagger-ui-react':
     specifier: ^4.18.3
     version: 4.18.3
+  babel-plugin-react-compiler:
+    specifier: ^0.0.0-experimental-938cd9a-20240601
+    version: 0.0.0
   bcrypt:
     specifier: ^5.1.1
     version: 5.1.1
@@ -5290,31 +5293,31 @@ packages:
       eslint: 8.56.0
     dev: true
 
-  /@tanstack/query-core@5.20.5:
-    resolution: {integrity: sha512-T1W28gGgWn0A++tH3lxj3ZuUVZZorsiKcv+R50RwmPYz62YoDEkG4/aXHZELGkRp4DfrW07dyq2K5dvJ4Wl1aA==}
+  /@tanstack/query-core@5.51.9:
+    resolution: {integrity: sha512-HsAwaY5J19MD18ykZDS3aVVh+bAt0i7m6uQlFC2b77DLV9djo+xEN7MWQAQQTR8IM+7r/zbozTQ7P0xr0bHuew==}
     dev: false
 
-  /@tanstack/query-devtools@5.20.2:
-    resolution: {integrity: sha512-BZfSjhk/NGPbqte5E3Vc1Zbj28uWt///4I0DgzAdWrOtMVvdl0WlUXK23K2daLsbcyfoDR4jRI4f2Z5z/mMzuw==}
+  /@tanstack/query-devtools@5.51.9:
+    resolution: {integrity: sha512-FQqJynaEDuwQxoFLP3/i10HQwNYh4wxgs0NeSoL24BLWvpUdstgHqUm2zgwRov8Tmh5kjndPIWaXenwl0D47EA==}
     dev: false
 
-  /@tanstack/react-query-devtools@5.20.5(@tanstack/react-query@5.20.5)(react@18.2.0):
-    resolution: {integrity: sha512-Wl7IzNuKCb4h41a5iH/YXNwalHItqJPCAr4r8+0iUYOLHNOf3E9P0G4kzZ9sqDoWKxY04qst6Vrij9bwPzLQRQ==}
+  /@tanstack/react-query-devtools@5.51.11(@tanstack/react-query@5.51.11)(react@18.2.0):
+    resolution: {integrity: sha512-8nQRbhdtvl/J9bO+bk/kPQesCOtDgk+oI4AmZJDnkf5OfKTJL3J4tTe+fhuXph7KP4DUOS+ge9o9TGt0OgWFHw==}
     peerDependencies:
-      '@tanstack/react-query': ^5.20.5
-      react: ^18.0.0
+      '@tanstack/react-query': ^5.51.11
+      react: ^18 || ^19
     dependencies:
-      '@tanstack/query-devtools': 5.20.2
-      '@tanstack/react-query': 5.20.5(react@18.2.0)
+      '@tanstack/query-devtools': 5.51.9
+      '@tanstack/react-query': 5.51.11(react@18.2.0)
       react: 18.2.0
     dev: false
 
-  /@tanstack/react-query@5.20.5(react@18.2.0):
-    resolution: {integrity: sha512-6MHwJ8G9cnOC/XKrwt56QMc91vN7hLlAQNUA0ubP7h9Jj3a/CmkUwT6ALdFbnVP+PsYdhW3WONa8WQ4VcTaSLQ==}
+  /@tanstack/react-query@5.51.11(react@18.2.0):
+    resolution: {integrity: sha512-4Kq2x0XpDlpvSnaLG+8pHNH60zEc3mBvb3B2tOMDjcPCi/o+Du3p/9qpPLwJOTliVxxPJAP27fuIhLrsRdCr7A==}
     peerDependencies:
       react: ^18.0.0
     dependencies:
-      '@tanstack/query-core': 5.20.5
+      '@tanstack/query-core': 5.51.9
       react: 18.2.0
     dev: false
 
@@ -6686,6 +6689,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /babel-plugin-react-compiler@0.0.0:
+    resolution: {integrity: sha512-Kigl0V36a/6hLVH7+CCe1CCtU3mFBqBd829V//VtuG7I/pyq+B2QZJqOefd63snQmdfCryNhO9XW1FbGPBvYDA==}
+    dev: false
 
   /babel-preset-current-node-syntax@1.0.1(@babel/core@7.23.9):
     resolution: {integrity: sha512-M7LQ0bxarkxQoN+vz5aJPsLBn77n8QgTFmo8WK0/44auK2xlCXrYcUxHFxgU7qW5Yzw/CjmLRK2uJzaCd7LvqQ==}
@@ -12087,6 +12094,10 @@ packages:
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
 
+  /picocolors@1.0.1:
+    resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
+    dev: true
+
   /picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
@@ -12297,6 +12308,15 @@ packages:
     dependencies:
       nanoid: 3.3.7
       picocolors: 1.0.0
+      source-map-js: 1.2.0
+    dev: true
+
+  /postcss@8.4.39:
+    resolution: {integrity: sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.7
+      picocolors: 1.0.1
       source-map-js: 1.2.0
     dev: true
 
@@ -14929,7 +14949,7 @@ packages:
     dependencies:
       '@types/node': 20.11.17
       esbuild: 0.19.12
-      postcss: 8.4.38
+      postcss: 8.4.39
       rollup: 4.10.0
     optionalDependencies:
       fsevents: 2.3.3

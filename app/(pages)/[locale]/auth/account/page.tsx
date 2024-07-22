@@ -10,15 +10,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-import { Resp } from "@/types/api-type";
-import { useMutation } from "@tanstack/react-query";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { z } from "zod";
-import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -28,10 +19,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { withAuth } from "@/hoc/with-auth";
-import Link from "next/link";
 import { api } from "@/configs/ky-config";
+import { withAuth } from "@/hoc/with-auth";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schemas";
+import { Resp } from "@/types/api-type";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const ACCOUNT_FORM_SCHEMA = z.object({
   email: EMAIL_SCHEMA,
@@ -61,7 +61,7 @@ export default withAuth(function Account() {
     },
   });
 
-  async function onSubmit(values: Form) {}
+  async function onSubmit(values: Form) { }
 
   const confirmDialog = (
     <AlertDialog open={isDialogOpen}>

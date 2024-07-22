@@ -1,6 +1,7 @@
 "use client";
-import { Resp } from "@/types/api-type";
 import { Button } from "@/components/ui/button";
+import { Divider } from "@/components/ui/divider";
+import { FieldPassword } from "@/components/ui/field-password";
 import {
   Form,
   FormControl,
@@ -10,20 +11,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schema";
+import { api } from "@/configs/ky-config";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schemas";
+import { Resp } from "@/types/api-type";
+import { UnsensitiveUser } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ZodError, ZodIssue, z } from "zod";
 import { FcGoogle } from "react-icons/fc";
-import { signIn } from "next-auth/react";
-import { Divider } from "@/components/ui/divider";
-import { FieldPassword } from "@/components/ui/field-password";
-import { useTranslations } from "next-intl";
-import { UnsensitiveUser } from "@/types/user";
-import { api } from "@/configs/ky-config";
+import { ZodError, ZodIssue, z } from "zod";
 
 const SIGNUP_SCHEMA = z
   .object({
@@ -184,8 +184,8 @@ export default function Signup() {
                               <li
                                 key={possibleError.message}
                                 className={`text-red-500 font-medium ${shoudCrossPasswordError(possibleError)
-                                    ? "line-through text-green-400"
-                                    : ""
+                                  ? "line-through text-green-400"
+                                  : ""
                                   }`}
                               >
                                 {possibleError.message}

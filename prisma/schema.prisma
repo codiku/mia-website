@@ -18,7 +18,7 @@ generator zod {
   modelCase = "PascalCase" // (default) Output models using pascal case (ex. UserModel, PostModel)
   // modelCase             = "camelCase" // Output models using camel case (ex. userModel, postModel)
 
-  modelSuffix = "Model" // (default) Suffix to apply to your prisma models when naming Zod schemas
+  modelSuffix = "Schema" // (default) Suffix to apply to your prisma models when naming Zod schemas
 
   // useDecimalJs          = false // (default) represent the prisma Decimal type using as a JS number
   useDecimalJs = true // represent the prisma Decimal type using Decimal.js (as Prisma does)
@@ -78,13 +78,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Human {
-  id        Int       @id @default(autoincrement())
-  name      String
-  createdAt DateTime? @default(now())
-}
-
-model Animal {
+model Product {
   id        Int       @id @default(autoincrement())
   name      String
   createdAt DateTime? @default(now())

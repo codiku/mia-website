@@ -1,4 +1,5 @@
 "use client";
+import { FORGOT_PASSWORD_SCHEMA } from "@/app/api/auth/forgot-password/schemas";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -9,15 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FORGOT_PASSWORD_SCHEMA } from "@/libs/schema";
+import { api } from "@/configs/ky-config";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useTranslations } from "next-intl";
-import { api } from "@/configs/ky-config";
 
 type Form = z.infer<typeof FORGOT_PASSWORD_SCHEMA>;
 
@@ -70,8 +70,8 @@ export default function ForgotPassword() {
           {isPending
             ? t("loading")
             : disabledEmailButton
-            ? t("waitBeforeSending")
-            : t("sendEmailAgain")}
+              ? t("waitBeforeSending")
+              : t("sendEmailAgain")}
         </Button>
       </div>
     );

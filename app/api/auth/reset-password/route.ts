@@ -1,9 +1,9 @@
 import { db } from "@/libs/db";
 import { decodeJwtToken, safeEndPoint } from "@/libs/jwt";
-import { RESET_PASSWORD_SCHEMA } from "@/libs/schema";
 import { compare, hash } from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
+import { RESET_PASSWORD_SCHEMA } from "./schemas";
 
 export const PATCH = safeEndPoint(
   async (req: NextRequest, _, { password, token }) => {
@@ -23,10 +23,7 @@ export const PATCH = safeEndPoint(
             { status: StatusCodes.CONFLICT }
           );
         }
-        const hashedPassword = await hash(
-          password,
-          Number(process.env.HASH_ROUND)
-        );
+        const hashedPassword = await hash(password, Number(process.env.HASH_ROUND));
         const userUpdated = await db.user.update({
           where: { email: data?.email },
           data: { password: hashedPassword },
@@ -49,7 +46,5 @@ export const PATCH = safeEndPoint(
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   },
-  false,
-  undefined,
-  RESET_PASSWORD_SCHEMA
+  { auth: false, body: RESET_PASSWORD_SCHEMA }
 );

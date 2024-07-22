@@ -27,25 +27,13 @@ export const PASSWORD_SCHEMA = z
   .regex(/[0-9]+/, "At least 1 number")
   .regex(/[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/, "At least 1 special character");
 
-export const EMAIL_SCHEMA = z
-  .string()
-  .email("Invalid email")
-  .min(1, "Email is required");
+export const EMAIL_SCHEMA = z.string().email("Invalid email").min(1, "Email is required");
 
 export const STRING_REQUIRED_SCHEMA = z.string().min(1, "Required");
-
-export const FORGOT_PASSWORD_SCHEMA = z.object({
-  email: EMAIL_SCHEMA,
-});
 
 export const SIGNIN_SCHEMA = z.object({
   email: EMAIL_SCHEMA,
   password: PASSWORD_SCHEMA,
-});
-
-export const RESET_PASSWORD_SCHEMA = z.object({
-  password: PASSWORD_SCHEMA,
-  token: JWT_TOKEN_SCHEMA,
 });
 
 export const VERIFY_EMAIL_SCHEMA = z.object({
@@ -56,15 +44,10 @@ export const DELETE_ACCOUNT_SCHEMA = z.object({
   token: JWT_TOKEN_SCHEMA,
 });
 
-export const UPDATE_PASSWORD_SCHEMA = z.object({
-  oldPassword: STRING_REQUIRED_SCHEMA,
-  newPassword: PASSWORD_SCHEMA,
-});
-
-export const IdArgModels = z.object({
+export const IdArgSchema = z.object({
   id: z.number(),
 });
 
-export const IdParamsModel = z.object({
+export const IdParamsSchema = z.object({
   id: z.coerce.number(),
 });

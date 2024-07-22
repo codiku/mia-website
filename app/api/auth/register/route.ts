@@ -1,13 +1,13 @@
 import { db } from "@/libs/db";
-import { excludeField } from "@/libs/utils";
-import { hash } from "bcrypt";
 import { sendEmail } from "@/libs/email";
 import { generateJwtToken, safeEndPoint } from "@/libs/jwt";
+import { excludeField } from "@/libs/utils";
+import { User } from "@prisma/client";
+import { hash } from "bcrypt";
+import { StatusCodes } from "http-status-codes";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { StatusCodes } from "http-status-codes";
-import { User } from "@prisma/client";
-import { PostRegisterBody } from "../model";
+import { REGISTER_SCHEMA } from "./schemas";
 
 // Register can be call, with a resendEmail params , that will just resend an email link
 // to redirect the user to get verified
@@ -25,16 +25,10 @@ export const POST = safeEndPoint(
         });
       } else {
         // Just trying to create the same account twice
-        return NextResponse.json(
-          { message: "User already exist", error: true },
-          { status: StatusCodes.CONFLICT }
-        );
+        return NextResponse.json({ message: "User already exist", error: true }, { status: StatusCodes.CONFLICT });
       }
     } else {
-      const hashedPassword = await hash(
-        password,
-        Number(process.env.HASH_ROUND)
-      );
+      const hashedPassword = await hash(password, Number(process.env.HASH_ROUND));
       const newUser = await db.user.create({
         data: {
           email,
@@ -49,7 +43,7 @@ export const POST = safeEndPoint(
       });
     }
   },
-  { auth: false, body: PostRegisterBody }
+  { auth: false, body: REGISTER_SCHEMA }
 );
 
 async function sendVerificationEmail(user: User) {
@@ -61,9 +55,7 @@ async function sendVerificationEmail(user: User) {
     `<html>
       <body>
         <p>Click the following link to verify your account:</p>
-        <a href="http://${headers().get(
-          "host"
-        )}/api/auth/verify-email?token=${token}">
+        <a href="http://${headers().get("host")}/api/auth/verify-email?token=${token}">
           Verify account
         </a>
       </body>

@@ -1,9 +1,9 @@
 import { db } from "@/libs/db";
 import { sendEmail } from "@/libs/email";
 import { generateJwtToken, safeEndPoint } from "@/libs/jwt";
-import { FORGOT_PASSWORD_SCHEMA } from "@/libs/schema";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
+import { FORGOT_PASSWORD_SCHEMA } from "./schemas";
 
 export const POST = safeEndPoint(
   async (req: NextRequest, _, { email }) => {
@@ -45,7 +45,5 @@ export const POST = safeEndPoint(
       );
     }
   },
-  false,
-  undefined,
-  FORGOT_PASSWORD_SCHEMA
+  { auth: false, body: FORGOT_PASSWORD_SCHEMA }
 );

@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { FieldPassword } from "@/components/ui/field-password";
 import {
   Form,
   FormControl,
@@ -8,19 +9,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { PASSWORD_SCHEMA } from "@/libs/schema";
+import { api } from "@/configs/ky-config";
+import { PASSWORD_SCHEMA } from "@/libs/schemas";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { FieldPassword } from "@/components/ui/field-password";
-import { useTranslations } from "next-intl";
-import { api } from "@/configs/ky-config";
 
 const RESET_PASSWORD_SCHEMA = z
   .object({

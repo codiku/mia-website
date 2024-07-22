@@ -1,9 +1,9 @@
 import { db } from "@/libs/db";
 import { safeEndPoint } from "@/libs/jwt";
-import { UPDATE_PASSWORD_SCHEMA } from "@/libs/schema";
 import { compare, hash } from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
+import { UPDATE_PASSWORD_SCHEMA } from "./schemas";
 
 export const PATCH = safeEndPoint(
   async (req: NextRequest, _, { newPassword, oldPassword }, __, token) => {
@@ -24,10 +24,7 @@ export const PATCH = safeEndPoint(
           });
         }
         // It's ok it's a new password and the user remember his old password
-        const newPasswordHash = await hash(
-          newPassword,
-          Number(process.env.HASH_ROUND)
-        );
+        const newPasswordHash = await hash(newPassword, Number(process.env.HASH_ROUND));
         // Updating the password with the hash of the new one
         const updatedUser = await db.user.update({
           where: { id: user.id },
@@ -50,7 +47,5 @@ export const PATCH = safeEndPoint(
       }
     }
   },
-  false,
-  undefined,
-  UPDATE_PASSWORD_SCHEMA
+  { auth: false, body: UPDATE_PASSWORD_SCHEMA }
 );

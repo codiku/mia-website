@@ -11,9 +11,9 @@ const {
   deleteSkull,
   pageLevel1ImportsSkull,
   pageLevel2ImportsSkull,
-  modelActionSkull,
+  schemaActionSkull,
   actionSkull,
-  apiModelSkull,
+  apiSchemaSkull,
   docSkull,
 } = require("./crud-skull");
 
@@ -52,9 +52,9 @@ async function generateCRUDFiles(endpoint: string) {
         deleteSkull(camelCaseEndpoint, pascalCaseEndpoint)
     );
     //Api models
-    fs.writeFile(path.join(apiDirectory, `models.ts`), apiModelSkull(camelCaseEndpoint, pascalCaseEndpoint));
+    fs.writeFile(path.join(apiDirectory, `schemas.ts`), apiSchemaSkull(camelCaseEndpoint, pascalCaseEndpoint));
     //Actions and model
-    fs.writeFile(path.join(actionDirectory, `models.ts`), modelActionSkull(camelCaseEndpoint, pascalCaseEndpoint));
+    fs.writeFile(path.join(actionDirectory, `schemas.ts`), schemaActionSkull(camelCaseEndpoint, pascalCaseEndpoint));
     fs.writeFile(path.join(actionDirectory, `actions.ts`), actionSkull(camelCaseEndpoint, pascalCaseEndpoint));
     fs.writeFile(path.join(apiDirectory, `doc.ts`), docSkull(camelCaseEndpoint, pascalCaseEndpoint));
     console.log(`CRUD files and folders for '${endpoint}' created successfully.`);

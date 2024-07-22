@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/libs/db";
-import { StatusCodes } from "http-status-codes";
 import { safeEndPoint } from "@/libs/jwt";
+import { StatusCodes } from "http-status-codes";
+import { NextRequest, NextResponse } from "next/server";
 
 export const DELETE = safeEndPoint(
   async (req: NextRequest, _uriParams, _body, _queryParams, token) => {
@@ -23,5 +23,5 @@ export const DELETE = safeEndPoint(
       { status: StatusCodes.BAD_REQUEST }
     );
   },
-  true
+  { auth: true }
 );

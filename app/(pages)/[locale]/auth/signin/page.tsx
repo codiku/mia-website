@@ -1,6 +1,6 @@
 "use client";
-import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
+import { Divider } from "@/components/ui/divider";
 import { FieldPassword } from "@/components/ui/field-password";
 import {
   Form,
@@ -11,17 +11,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SIGNIN_SCHEMA } from "@/libs/schema";
+import { SIGNIN_SCHEMA } from "@/libs/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Divider } from "@/components/ui/divider";
-import { useTranslations } from "next-intl";
 
 type Form = z.infer<typeof SIGNIN_SCHEMA>;
 
