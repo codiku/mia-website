@@ -1,14 +1,11 @@
 import nodemailer from "nodemailer";
 
 // Function to send an email with the token
-export async function sendEmail(
-  toEmail: string,
-  subject: string,
-  html: string
-) {
+export async function sendEmail(toEmail: string, subject: string, html: string) {
   try {
     // Create a transporter for sending email
     const transporter = nodemailer.createTransport({
+      service: process.env.SMTP_SERVICE,
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT as unknown as number,
       auth: {
@@ -30,4 +27,3 @@ export async function sendEmail(
     throw error;
   }
 }
-

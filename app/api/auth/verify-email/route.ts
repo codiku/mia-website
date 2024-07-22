@@ -6,8 +6,9 @@ import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = safeEndPoint(
-  async (req: NextRequest, { params }: { params: { token: string } }) => {
-    const user = decodeJwtToken<User>(params.token);
+  async (req: NextRequest, _uriParams, _body, queryParams) => {
+    console.log("***", queryParams);
+    const user = decodeJwtToken<User>(queryParams.token);
     if (user?.id) {
       const existingUser = await db.user.findUnique({
         where: { email: user.email },
@@ -20,7 +21,7 @@ export const GET = safeEndPoint(
           });
         }
       }
-      return NextResponse.redirect((process.env.SIGNUP_CALLBACK_URL as string) + "?token=" + params.token);
+      return NextResponse.redirect((process.env.SIGNUP_CALLBACK_URL as string) + "?token=" + queryParams.token);
     } else {
       return NextResponse.json(
         { message: "User not found from token", error: true },
@@ -28,5 +29,5 @@ export const GET = safeEndPoint(
       );
     }
   },
-  { auth: false, body: VERIFY_EMAIL_SCHEMA }
+  { auth: false, queryParams: VERIFY_EMAIL_SCHEMA }
 );
