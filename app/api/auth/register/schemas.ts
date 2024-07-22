@@ -1,4 +1,4 @@
-import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schema";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schemas";
 import { z } from "zod";
 
 export const REGISTER_SCHEMA = z.object({

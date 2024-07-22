@@ -7,7 +7,6 @@ export const authProcedure = createServerActionProcedure().handler(async ({}) =>
     if (!session) {
       throw new Error("User not authenticated");
     }
-
     return session;
   } catch {
     throw new Error("Could not get session");

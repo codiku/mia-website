@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SIGNIN_SCHEMA } from "@/libs/schema";
+import { SIGNIN_SCHEMA } from "@/libs/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";

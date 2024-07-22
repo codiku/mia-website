@@ -1,4 +1,4 @@
-import { IdArgSchema } from "@/libs/schema";
+import { IdArgSchema } from "@/libs/schemas";
 import { ProductSchema } from "@/prisma/zod";
 
 export const CreateProductSchemaArgs = ProductSchema.omit({ id: true });

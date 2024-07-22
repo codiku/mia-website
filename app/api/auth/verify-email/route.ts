@@ -1,6 +1,6 @@
 import { db } from "@/libs/db";
 import { decodeJwtToken, safeEndPoint } from "@/libs/jwt";
-import { VERIFY_EMAIL_SCHEMA } from "@/libs/schema";
+import { VERIFY_EMAIL_SCHEMA } from "@/libs/schemas";
 import { User } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";

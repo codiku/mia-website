@@ -30,7 +30,8 @@ export const readAllProduct = createServerAction().handler(async () => {
   return db.product.findMany();
 });
 
-export const updateProduct = createServerAction()
+export const updateProduct = authProcedure
+  .createServerAction()
   .input(UpdateProductSchemaArgs)
   .handler(async ({ input }) => {
     const { id, ...data } = input;
@@ -40,7 +41,8 @@ export const updateProduct = createServerAction()
     });
   });
 
-export const deleteProduct = createServerAction()
+export const deleteProduct = authProcedure
+  .createServerAction()
   .input(DeleteProductSchemaArgs)
   .handler(async ({ input }) => {
     return db.product.delete({
