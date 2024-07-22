@@ -78,7 +78,6 @@ export default function Signup() {
       formDataRef.current = values;
       signup({ ...values });
     } else {
-      console.log("resend an email ?");
       signup({ ...values, resendEmail: true });
       setDisabledEmailButton(true);
       setTimeout(() => {

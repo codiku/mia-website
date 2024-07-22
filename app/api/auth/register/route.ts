@@ -13,7 +13,6 @@ import { REGISTER_SCHEMA } from "./schemas";
 // to redirect the user to get verified
 export const POST = safeEndPoint(
   async (req: NextRequest, { body, queryParams, uriParams, token }) => {
-    console.log("****** ", body, queryParams, uriParams, token);
     const existingUser = await db.user.findUnique({ where: { email: body.email } });
     if (existingUser) {
       if (body.resendEmail) {

@@ -7,7 +7,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = safeEndPoint(
   async (req: NextRequest, { queryParams, body, uriParams, token }) => {
-    console.log("***", queryParams);
     const user = decodeJwtToken<User>(queryParams.token);
     if (user?.id) {
       const existingUser = await db.user.findUnique({

@@ -40,10 +40,8 @@ export function safeEndPoint<B, P, UriP>(
   }: { auth?: boolean; uriParams?: ZodSchema<UriP>; body?: ZodSchema<B>; queryParams?: ZodSchema<P> }
 ) {
   return async (req: NextRequest, params: { uriParams: UriP }) => {
-    console.log("111111");
     if (auth === true) {
       const token = await getToken({ req });
-      console.log("****** ", token);
       if (token) {
         let body = options.body ? await parseBody(req, options.body) : undefined;
         const qParams = getQueryParams(req);

@@ -1,6 +1,6 @@
-import { toast } from "sonner";
+import { ApiResponse } from "@/types/api-type";
 import ky from "ky";
-import { ApiResponse, Resp } from "@/types/api-type";
+import { toast } from "sonner";
 
 export const api = ky.extend({
   headers: {
@@ -9,7 +9,6 @@ export const api = ky.extend({
   hooks: {
     beforeError: [
       async (error) => {
-        console.log("BEFORE ERROR", error);
         const { response } = error;
         const resp: ApiResponse = await response.clone().json();
         if (resp.error && resp.message) {
@@ -24,11 +23,7 @@ export const api = ky.extend({
       async (_request, _options, response) => {
         const resp: ApiResponse = await response.clone().json();
         // You could do something with the response, for example, logging.
-        if (
-          resp.message &&
-          !resp.error &&
-          _request.headers.get("isToastDisabled") !== "true"
-        ) {
+        if (resp.message && !resp.error && _request.headers.get("isToastDisabled") !== "true") {
           toast.success(resp.message);
         }
 
