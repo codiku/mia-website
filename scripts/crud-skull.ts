@@ -14,19 +14,18 @@ export const Delete${pascalCaseEndpoint}SchemaUriParams = IdParamsSchema;
   schemaActionSkull: (
     camelCaseEndpoint: string,
     pascalCaseEndpoint: string
-  ) => `import { IdArgSchema } from "@/libs/schemas";
+  ) => `import { IdArgSchema } from "@/libs/schemas"
 import { ${pascalCaseEndpoint}Schema } from "@/prisma/zod";
-import { z } from "zod";
 
 export const Create${pascalCaseEndpoint}SchemaArgs = ${pascalCaseEndpoint}Schema.omit({ id: true });
-export const Read${pascalCaseEndpoint}SchemaArgs = z.number();
+export const Read${pascalCaseEndpoint}SchemaArgs = IdArgSchema;
 export const Update${pascalCaseEndpoint}SchemaArgs = ${pascalCaseEndpoint}Schema.partial().merge(IdArgSchema);
-export const Delete${pascalCaseEndpoint}SchemaArgs = z.number();`,
+export const Delete${pascalCaseEndpoint}SchemaArgs = IdArgSchema`,
 
   actionSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `"use server";
 import { db } from "@/libs/db";
-import { safeAction } from "@/libs/request";
-import { ${pascalCaseEndpoint} } from "@prisma/client";
+import { createServerAction } from "zsa";
+import { authProcedure } from "../auth/actions";
 import {
   Create${pascalCaseEndpoint}SchemaArgs,
   Delete${pascalCaseEndpoint}SchemaArgs,
@@ -34,34 +33,43 @@ import {
   Update${pascalCaseEndpoint}SchemaArgs,
 } from "./schemas";
 
-export const create${pascalCaseEndpoint} = safeAction(async (data): Promise<${pascalCaseEndpoint}> => {
-  return db.${camelCaseEndpoint}.create({
-    data,
+export const create${pascalCaseEndpoint} = authProcedure.createServerAction()
+  .input(Create${pascalCaseEndpoint}SchemaArgs)
+  .handler(async ({ input }) => {
+    return db.${camelCaseEndpoint}.create({
+      data: input,
+    });
   });
-}, Create${pascalCaseEndpoint}SchemaArgs);
 
-export const read${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint} | null> => {
-  return db.${camelCaseEndpoint}.findUnique({
-    where: { id },
+export const read${pascalCaseEndpoint} = createServerAction()
+  .input(Read${pascalCaseEndpoint}SchemaArgs)
+  .handler(async ({ input }) => {
+    return db.${camelCaseEndpoint}.findUnique({
+      where: { id: input.id },
+    });
   });
-}, Read${pascalCaseEndpoint}SchemaArgs);
 
-export const readAll${pascalCaseEndpoint} = safeAction(async (): Promise<${pascalCaseEndpoint}[]> => {
+export const readAll${pascalCaseEndpoint} = createServerAction().handler(async () => {
   return db.${camelCaseEndpoint}.findMany();
 });
 
-export const update${pascalCaseEndpoint} = safeAction(async ({ id, ...data }): Promise<${pascalCaseEndpoint}> => {
-  return db.${camelCaseEndpoint}.update({
-    where: { id },
-    data,
+export const update${pascalCaseEndpoint} = authProcedure.createServerAction()
+  .input(Update${pascalCaseEndpoint}SchemaArgs)
+  .handler(async ({ input }) => {
+    const { id, ...data } = input;
+    return db.${camelCaseEndpoint}.update({
+      where: { id },
+      data,
+    });
   });
-}, Update${pascalCaseEndpoint}SchemaArgs);
 
-export const delete${pascalCaseEndpoint} = safeAction(async (id): Promise<${pascalCaseEndpoint}> => {
-  return db.${camelCaseEndpoint}.delete({
-    where: { id },
-  });
-}, Delete${pascalCaseEndpoint}SchemaArgs);`,
+export const delete${pascalCaseEndpoint} = authProcedure.createServerAction()
+  .input(Delete${pascalCaseEndpoint}SchemaArgs)
+  .handler(async ({ input }) => {
+    return db.${camelCaseEndpoint}.delete({
+      where: { id: input.id },
+    });
+  });`,
 
   pageLevel1ImportsSkull: (
     camelCaseEndpoint: string,

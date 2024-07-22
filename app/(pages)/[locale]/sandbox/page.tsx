@@ -1,15 +1,20 @@
 "use client";
 
+import { createProduct } from "@/app/actions/product/actions";
 import { Button } from "@/components/Button/Button";
 import { InputSelect } from "@/components/InputSelect/InputSelect";
 import { InputText } from "@/components/InputText/InputText";
 import { InputPrice } from "@/components/InputTextPrice/InputPrice";
 import { InputTextarea } from "@/components/InputTextarea/InputTextarea";
+import { useServerAction } from "zsa-react";
 
 export default function SandboxPage() {
 
+  const { isPending, execute: createProductMutation, data } = useServerAction(createProduct);
   return (
     <>
+      {isPending && <h1>Loading...</h1>}
+      {data && <h1>Data: {data.id}</h1>}
       <h1>This is a h1</h1>
       <h2>This is a h2</h2>
       <h3>This is a h3</h3>
@@ -57,7 +62,7 @@ export default function SandboxPage() {
           </div>
           <div className="flex flex-col">
             Buttons Secondary
-            <Button color="secondary">Secondary</Button>
+            <Button color="secondary" onClick={() => createProductMutation({ name: "Nice" })}>Secondary</Button>
           </div>
         </div>
       </div>

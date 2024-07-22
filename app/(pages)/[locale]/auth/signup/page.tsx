@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { api } from "@/configs/ky-config";
-import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schemas";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schema";
 import { Resp } from "@/types/api-type";
 import { UnsensitiveUser } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";

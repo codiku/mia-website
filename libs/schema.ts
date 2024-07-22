@@ -7,10 +7,8 @@ export const JWT_TOKEN_SCHEMA = z
   .refine(
     (value) => {
       try {
-        console.log("REFINE TEST");
         return decodeJwtToken<string>(value) !== null;
       } catch (e) {
-        console.log("REFINE FAIL");
         return false;
       }
     },

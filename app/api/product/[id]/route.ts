@@ -1,4 +1,4 @@
-import { deleteProduct, readProduct, updateProduct } from "@/app/actions/product/actions";
+import { deleteProduct, readProduct, updateProduct } from "@/app/actions/product-actions";
 import {
   DeleteProductSchemaUriParams,
   GetProductSchemaUriParams,

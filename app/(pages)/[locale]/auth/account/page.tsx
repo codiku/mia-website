@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { api } from "@/configs/ky-config";
 import { withAuth } from "@/hoc/with-auth";
-import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schemas";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "@/libs/schema";
 import { Resp } from "@/types/api-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";

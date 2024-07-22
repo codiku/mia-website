@@ -29,7 +29,6 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
-
     "@tanstack/react-query": "^5.45.0",
     "@tanstack/react-query-devtools": "^5.45.0",
     "@types/swagger-ui-react": "^4.18.3",
@@ -55,7 +54,9 @@
     "tailwind-merge": "latest",
     "tailwind-variants": "^0.2.1",
     "tailwindcss-animate": "latest",
-    "zod": "latest"
+    "zod": "latest",
+    "zsa": "^0.5.1",
+    "zsa-react": "^0.2.2"
   },
   "devDependencies": {
     "@anatine/zod-openapi": "^2.2.3",
