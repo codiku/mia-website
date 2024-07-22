@@ -27,31 +27,40 @@ export function decodeJwtToken<T>(token: string) {
 export function safeEndPoint<B, P, UriP>(
   routeHandler: (
     req: NextRequest,
-    route: {
-      params: UriP;
-    },
-    body: Awaited<B>,
-    queryParams: P,
-    token?: JWT
+    params: {
+      uriParams: UriP;
+      body: Awaited<B>;
+      queryParams: P;
+      token?: JWT;
+    }
   ) => void,
-  {auth = true,...options}: {auth? : boolean, uriParams?: ZodSchema<UriP>, body?: ZodSchema<B>, queryParams?: ZodSchema<P> } 
-  
+  {
+    auth = true,
+    ...options
+  }: { auth?: boolean; uriParams?: ZodSchema<UriP>; body?: ZodSchema<B>; queryParams?: ZodSchema<P> }
 ) {
-  return async (req: NextRequest, route: { params: UriP }) => {
-    if (auth===true) {
+  return async (req: NextRequest, params: { uriParams: UriP }) => {
+    console.log("111111");
+    if (auth === true) {
       const token = await getToken({ req });
+      console.log("****** ", token);
       if (token) {
         let body = options.body ? await parseBody(req, options.body) : undefined;
         const qParams = getQueryParams(req);
 
         if (options.uriParams) {
-          options.uriParams.parse(route.params);
+          options.uriParams.parse(params.uriParams);
         }
         if (options.queryParams) {
           options.queryParams.parse(qParams);
         }
 
-        return routeHandler(req, route, body as never, qParams as P, token);
+        return routeHandler(req, {
+          uriParams: params.uriParams,
+          body: body as never,
+          queryParams: qParams as P,
+          token,
+        });
       } else {
         return NextResponse.json(
           {
@@ -66,20 +75,19 @@ export function safeEndPoint<B, P, UriP>(
         let body = options.body ? await parseBody(req, options.body) : undefined;
         const qParams = getQueryParams(req);
 
-        if (options.uriParams !== undefined && route?.params) {
-          options.uriParams.parse(route.params);
+        if (options.uriParams !== undefined && params.uriParams) {
+          options.uriParams.parse(params.uriParams);
         }
         let parseParamsSuccess;
         if (options.queryParams && qParams) {
           parseParamsSuccess = await options.queryParams.safeParseAsync(qParams);
         }
-        return routeHandler(
-          req,
-          route,
-          body as never,
-          parseParamsSuccess ? (qParams as P) : ({} as P),
-          undefined
-        );
+        return routeHandler(req, {
+          uriParams: params.uriParams,
+          body: body as never,
+          queryParams: qParams as P,
+          token: undefined,
+        });
       } catch (error) {
         return NextResponse.json(errorResponse(error as Error), {
           status: 400,

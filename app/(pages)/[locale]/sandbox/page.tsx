@@ -6,6 +6,7 @@ import { InputSelect } from "@/components/InputSelect/InputSelect";
 import { InputText } from "@/components/InputText/InputText";
 import { InputPrice } from "@/components/InputTextPrice/InputPrice";
 import { InputTextarea } from "@/components/InputTextarea/InputTextarea";
+import { api } from "@/configs/ky-config";
 import { useServerAction } from "zsa-react";
 
 export default function SandboxPage() {
@@ -58,11 +59,11 @@ export default function SandboxPage() {
         <div className="">
           <div className="flex flex-col">
             Buttons Primary
-            <Button>Primary</Button>
+            <Button onClick={() => api.post("http://localhost:3000/api/product", { json: { name: "Nice" } })}>CALL API (safe)</Button>
           </div>
           <div className="flex flex-col">
             Buttons Secondary
-            <Button color="secondary" onClick={() => createProductMutation({ name: "Nice" })}>Secondary</Button>
+            <Button color="secondary" onClick={() => createProductMutation({ name: "Nice" })}>CALL ACTION (safe)</Button>
           </div>
         </div>
       </div>

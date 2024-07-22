@@ -6,14 +6,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { RESET_PASSWORD_SCHEMA } from "./schemas";
 
 export const PATCH = safeEndPoint(
-  async (req: NextRequest, _, { password, token }) => {
-    const data = decodeJwtToken<{ email: string }>(token);
+  async (req: NextRequest, { queryParams, body, uriParams }) => {
+    const data = decodeJwtToken<{ email: string }>(body.token);
     if (data?.email) {
       const user = await db.user.findUnique({ where: { email: data?.email } });
 
       if (user && user.isVerified) {
         // compare body password and hashed user password
-        const passwordMatch = await compare(password, user.password!);
+        const passwordMatch = await compare(body.password, user.password!);
         if (passwordMatch) {
           return NextResponse.json(
             {
@@ -23,7 +23,7 @@ export const PATCH = safeEndPoint(
             { status: StatusCodes.CONFLICT }
           );
         }
-        const hashedPassword = await hash(password, Number(process.env.HASH_ROUND));
+        const hashedPassword = await hash(body.password, Number(process.env.HASH_ROUND));
         const userUpdated = await db.user.update({
           where: { email: data?.email },
           data: { password: hashedPassword },

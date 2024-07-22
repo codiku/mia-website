@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
 export const DELETE = safeEndPoint(
-  async (req: NextRequest, _uriParams, _body, _queryParams, token) => {
+  async (req: NextRequest, { queryParams, body, uriParams, token }) => {
     if (token?.email) {
       const userDeleted = await db.user.delete({
         where: { email: token.email },

@@ -6,7 +6,7 @@ import { StatusCodes } from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = safeEndPoint(
-  async (req: NextRequest, _uriParams, _body, queryParams) => {
+  async (req: NextRequest, { queryParams, body, uriParams, token }) => {
     console.log("***", queryParams);
     const user = decodeJwtToken<User>(queryParams.token);
     if (user?.id) {

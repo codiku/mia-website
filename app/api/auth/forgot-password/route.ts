@@ -6,13 +6,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { FORGOT_PASSWORD_SCHEMA } from "./schemas";
 
 export const POST = safeEndPoint(
-  async (req: NextRequest, _, { email }) => {
-    const token = generateJwtToken({ email });
-    const existingUser = await db.user.findUnique({ where: { email: email } });
+  async (req: NextRequest, { queryParams, body, uriParams }) => {
+    const token = generateJwtToken({ email: body.email });
+    const existingUser = await db.user.findUnique({ where: { email: body.email } });
 
     if (existingUser) {
       const emailResponse = await sendEmail(
-        email,
+        body.email,
         "Reset password", // Email subject
         `<html>
       <body>

@@ -12,10 +12,11 @@ import { REGISTER_SCHEMA } from "./schemas";
 // Register can be call, with a resendEmail params , that will just resend an email link
 // to redirect the user to get verified
 export const POST = safeEndPoint(
-  async (req: NextRequest, _, { email, password, resendEmail }) => {
-    const existingUser = await db.user.findUnique({ where: { email: email } });
+  async (req: NextRequest, { body, queryParams, uriParams, token }) => {
+    console.log("****** ", body, queryParams, uriParams, token);
+    const existingUser = await db.user.findUnique({ where: { email: body.email } });
     if (existingUser) {
-      if (resendEmail) {
+      if (body.resendEmail) {
         // If the user exist and just want another email
         sendVerificationEmail(existingUser);
         //RETURN RESPONSE
@@ -28,10 +29,10 @@ export const POST = safeEndPoint(
         return NextResponse.json({ message: "User already exist", error: true }, { status: StatusCodes.CONFLICT });
       }
     } else {
-      const hashedPassword = await hash(password, Number(process.env.HASH_ROUND));
+      const hashedPassword = await hash(body.password, Number(process.env.HASH_ROUND));
       const newUser = await db.user.create({
         data: {
-          email,
+          email: body.email,
           password: hashedPassword,
           isVerified: false,
         },
