@@ -1,14 +1,15 @@
 import { getServerSession } from "next-auth";
-import { createServerActionProcedure } from "zsa";
+import { ZSAError, createServerActionProcedure } from "zsa";
 
 export const authProcedure = createServerActionProcedure().handler(async ({}) => {
   try {
     const session = await getServerSession();
+    console.log("THE session", session);
     if (!session) {
-      throw new Error("User not authenticated");
+      throw new ZSAError("FORBIDDEN", "User not authenticated");
     }
     return session;
   } catch {
-    throw new Error("Could not get session");
+    throw new ZSAError("NOT_FOUND", "Could not get session");
   }
 });

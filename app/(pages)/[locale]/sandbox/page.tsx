@@ -7,17 +7,19 @@ import { InputText } from "@/components/InputText/InputText";
 import { InputPrice } from "@/components/InputTextPrice/InputPrice";
 import { InputTextarea } from "@/components/InputTextarea/InputTextarea";
 import { api } from "@/configs/ky-config";
-import { useServerAction } from "zsa-react";
+import { useAction } from "@/libs/use-action";
 
 export default function SandboxPage() {
 
-  const { isPending, execute: createProductMutation, data } = useServerAction(createProduct);
-  const { isPending: isPendingReadProduct, execute: readProductMutation, data: readProductData } = useServerAction(readProduct);
+  const { isPending, execute: createProductMutation, data, error } = useAction(createProduct);
+  const { isPending: isPendingReadProduct, execute: readProductMutation, data: readProductData } = useAction(readProduct);
+
   return (
     <>
       {isPending && <h1>Loading...</h1>}
       {data && <h1>Data: {data.id}</h1>}
       {readProductData && <h1>Data: {JSON.stringify(readProductData)}</h1>}
+      <div>{error?.message}</div>
       <h1>This is a h1</h1>
       <h2>This is a h2</h2>
       <h3>This is a h3</h3>
