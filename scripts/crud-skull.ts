@@ -204,7 +204,7 @@ import { NextRequest, NextResponse } from "next/server";`,
   `,
   postSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
   export const POST = safeEndPoint(
-  async (_req: NextRequest, _, body) => {
+  async (_req: NextRequest, { body }) => {
     try{
       const created = await create${pascalCaseEndpoint}(body);
       return NextResponse.json(created);
@@ -226,9 +226,9 @@ import { NextRequest, NextResponse } from "next/server";`,
 
   getSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 export const GET = safeEndPoint(
-  async (_req: NextRequest, route) => {
+  async (_req: NextRequest, { uriParams }) => {
     try{
-      const response = await read${pascalCaseEndpoint}(Number(route.params.id));
+      const response = await read${pascalCaseEndpoint}(Number(uriParams.id));
       return NextResponse.json(response);
     } catch (error) {
       return NextResponse.json({ error }, { status: 500 });
@@ -239,9 +239,9 @@ export const GET = safeEndPoint(
 
   patchSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 export const PATCH = safeEndPoint(
-  async (_req: NextRequest, route, body) => {
+  async (_req: NextRequest, { uriParams, body }) => {
     try{
-      const updated${pascalCaseEndpoint} = await update${pascalCaseEndpoint}({ id: Number(route.params.id), ...body });
+      const updated${pascalCaseEndpoint} = await update${pascalCaseEndpoint}({ id: Number(uriParams.id), ...body });
       return NextResponse.json(updated${pascalCaseEndpoint});
     } catch (error) {
       return NextResponse.json({ error }, { status: 500 });
@@ -252,9 +252,9 @@ export const PATCH = safeEndPoint(
 
   deleteSkull: (camelCaseEndpoint: string, pascalCaseEndpoint: string) => `
 export const DELETE = safeEndPoint(
-  async (_req: NextRequest, route) => {
+  async (_req: NextRequest, { uriParams }) => {
     try{
-      const deleted${pascalCaseEndpoint} = delete${pascalCaseEndpoint}(Number(route.params.id));
+      const deleted${pascalCaseEndpoint} = delete${pascalCaseEndpoint}(Number(uriParams.id));
       return NextResponse.json(deleted${pascalCaseEndpoint});
     } catch (error) {
       return NextResponse.json({ error }, { status: 500 });

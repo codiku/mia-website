@@ -1,6 +1,6 @@
 "use client";
 
-import { createProduct } from "@/app/actions/product/actions";
+import { createProduct, readProduct } from "@/app/actions/product/actions";
 import { Button } from "@/components/Button/Button";
 import { InputSelect } from "@/components/InputSelect/InputSelect";
 import { InputText } from "@/components/InputText/InputText";
@@ -12,10 +12,12 @@ import { useServerAction } from "zsa-react";
 export default function SandboxPage() {
 
   const { isPending, execute: createProductMutation, data } = useServerAction(createProduct);
+  const { isPending: isPendingReadProduct, execute: readProductMutation, data: readProductData } = useServerAction(readProduct);
   return (
     <>
       {isPending && <h1>Loading...</h1>}
       {data && <h1>Data: {data.id}</h1>}
+      {readProductData && <h1>Data: {JSON.stringify(readProductData)}</h1>}
       <h1>This is a h1</h1>
       <h2>This is a h2</h2>
       <h3>This is a h3</h3>
@@ -59,11 +61,15 @@ export default function SandboxPage() {
         <div className="">
           <div className="flex flex-col">
             Buttons Primary
-            <Button onClick={() => api.post("http://localhost:3000/api/product", { json: { name: "Nice" } })}>CALL API (safe)</Button>
+            <Button onClick={() => api.post("http://localhost:3000/api/product", { json: { name: "Nice" } })}>CREATE PRODUCT CALL API (private)</Button>
           </div>
           <div className="flex flex-col">
             Buttons Secondary
-            <Button color="secondary" onClick={() => createProductMutation({ name: "Nice" })}>CALL ACTION (safe)</Button>
+            <Button color="secondary" onClick={() => createProductMutation({ name: "Nice" })}>CREATE PRODUCT CALL ACTION (private)</Button>
+          </div>
+          <div className="flex flex-col">
+            Buttons Secondary
+            <Button color="secondary" onClick={() => readProductMutation({ id: 1 })}>READ PRODUCT CALL ACTION (public)</Button>
           </div>
         </div>
       </div>
