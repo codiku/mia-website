@@ -1,16 +1,16 @@
 import request from "supertest";
 
-describe("Test back", () => {
-  it("shows the products from our server", async () => {
+describe("/products", () => {
+  it("GET ALL PRODUCTS should be protected", async () => {
     await request("http://localhost:3000")
       .get("/api/product")
-      .expect(500)
-      .expect("Content-Type", "application/json")
-      .expect({
-        error: {
-          name: "PrismaClientInitializationError",
-          clientVersion: "5.8.1",
-        },
-      });
+      .expect(401)
+      .expect("Content-Type", "application/json");
+    // .expect({
+    //   error: {
+    //     name: "PrismaClientInitializationError",
+    //     clientVersion: "5.8.1",
+    //   },
+    // });
   });
 });
