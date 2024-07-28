@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import { Button } from "@/components/Button/Button";
+import { expect } from "@playwright/test";
 
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
