@@ -197,3 +197,16 @@ The theme-related styles are organized into several CSS files:
 ### Using Tailwind in Components
 
 You can apply the Tailwind classes directly in your React components to control their styling. For example, to use the primary color and apply some padding, you might write:
+
+### Calling Server actions component side
+
+```ts
+import { useAction } from "@/libs/use-action";
+
+export default function SandboxPage() {
+
+  const { isPending, execute: createProductMutation, data, error } = useAction(createProduct);
+  const { isPending: isPendingReadProduct, execute: readProductMutation, data: readProductData } = useAction(readProduct);
+
+}
+```
