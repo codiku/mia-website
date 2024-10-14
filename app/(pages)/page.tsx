@@ -2,7 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowDownToLine } from "lucide-react";
 
-export default async function HomePage(p: { params: { lng: string } }) {
+
+export default async function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 relative">
       <header className="px-4 lg:px-6 h-14 flex items-center">
@@ -54,14 +55,14 @@ export default async function HomePage(p: { params: { lng: string } }) {
                   </p>
                   <p>It <strong>can browse</strong> and <strong>learn</strong> from the web.</p>
                   <p>
-                    Call it from <strong>anywhere</strong>, anytime (ctrl+p)
+                    Call it from <strong>anywhere</strong>, anytime (⌘+p)
                   </p>
                 </div>
               </div>
 
               {/* Add video component */}
               <div className="mt-8 flex justify-center rounded-lg w-fit">
-                <iframe style={{ borderRadius: "12px" }} src="https://drive.google.com/file/d/1WOnowIm87cBQqfPHQCkXJwgYONwVTm1f/preview" width="640" height="480" allow="autoplay"></iframe>
+                <iframe style={{ borderRadius: "12px" }} src="https://drive.google.com/file/d/1GuQgAfhZ-QQHCxextHilTTaEPrr3KZ7C/preview" width="640" height="480" allow="autoplay"></iframe>
               </div>
             </div>
           </div>

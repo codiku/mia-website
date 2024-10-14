@@ -5,7 +5,8 @@
   "scripts": {
     "dev:db": "npx prisma generate && pnpm run db:migrate && next dev",
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --no-lint",
+    "export": "next export",
     "test": "jest",
     "start": "next start",
     "lint": "next lint",

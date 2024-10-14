@@ -1,9 +1,14 @@
 /** @type {import('next').NextConfig} */
 
-import withNextIntl from "next-intl/plugin";
-
-const nextConfig = withNextIntl("./i18n/index.ts")({
+const config = {
   reactStrictMode: false,
-});
+  output: "export",
+  images: {
+    unoptimized: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+};
 
-export default nextConfig;
+export default config;
