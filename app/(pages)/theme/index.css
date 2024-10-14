@@ -33,9 +33,3 @@
     @apply flex justify-center items-center;
   }
 }
-
-@layer components {
-  .card {
-    @apply w-96 bg-white p-6 rounded-xl space-y-6 shadow-md;
-  }
-}

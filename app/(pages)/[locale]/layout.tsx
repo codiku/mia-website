@@ -9,8 +9,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
-  title: "App",
-  description: "Application",
+  title: "Mia",
+  description: "AI desktop chat assistant",
 };
 
 export default function RootLayout(p: {
@@ -21,17 +21,15 @@ export default function RootLayout(p: {
   return (
     <ReactQueryProvider>
       <NextIntlClientProvider messages={messages}>
-        <SessionProvider>
-          <html lang={p.params.locale}>
-            <body className={`${inter.className} `}>
-              <div className="h-screen p-16">
-                <Toaster richColors position="top-right" />
-                {p.children}
-              </div>
-              <ReactQueryDevtools />
-            </body>
-          </html>
-        </SessionProvider>
+        <html lang={p.params.locale}>
+          <body className={`${inter.className} `}>
+            <div className="h-screen p-4">
+              <Toaster richColors position="top-right" />
+              {p.children}
+            </div>
+            <ReactQueryDevtools />
+          </body>
+        </html>
       </NextIntlClientProvider>
     </ReactQueryProvider>
   );
