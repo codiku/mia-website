@@ -63,7 +63,7 @@ export default async function HomePage(p: { params: { lng: string } }) {
               </div>
 
               {/* Add video component */}
-              <div className="mt-8 w-full flex justify-center rounded-lg">
+              <div className="mt-8 flex justify-center rounded-lg w-fit">
                 <iframe style={{ borderRadius: "12px" }} src="https://drive.google.com/file/d/1WOnowIm87cBQqfPHQCkXJwgYONwVTm1f/preview" width="640" height="480" allow="autoplay"></iframe>
               </div>
             </div>
