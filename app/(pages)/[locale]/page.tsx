@@ -2,9 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowDownToLine } from "lucide-react";
 
-// Add this import for the Mac icon
-import { Apple } from "lucide-react";
-
 export default async function HomePage(p: { params: { lng: string } }) {
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 relative">
