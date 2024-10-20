@@ -2,6 +2,7 @@ import { ArrowDownToLine } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+// Hello
 export default async function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 relative">
